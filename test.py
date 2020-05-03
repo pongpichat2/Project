@@ -1,12 +1,14 @@
 import numpy as np
 class calculated():
-    timeTextUpper = 0.5
-    timeTextLower = 0.2
-    timedistance = 0.15
-    timeSpacbar = 0.2
-    timetextnumber = 0.1
-    ##ประกาศค่าคงที่จากค่าที่คิดเอง
-    ##ชื่อให้สื่อความหมาย
+    timeTextUpper = 0.5 #เวลาของตัวพิมพ์ใหญ่
+    timeTextLower = 0.1 #เวลาของตัวพิมพ์เล็ก
+    timedistance = 0.15 #เวลาของระยะห่างต่อ 1 จุด
+    timeSpacbar = 0.2 #เวลาของ Spacbar
+    timetextnumber = 0.1 #เวลาของตัวเลข
+    totaltime = 0.0 #เวลาโดยรวม
+    nonArea = 0.15 #เวลาของตัวพิมพ์ใหญ่
+    timeDuplicate = 0.01 #เวลาของตัวอักษรที่ซ้ำ
+    
     def inputchoice():
         x = input("กรอกตัวอักษร : ")
         text = list(x)

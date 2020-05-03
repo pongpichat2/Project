@@ -7,19 +7,19 @@ def Calchoice(Answer):
     timedistance = 0.15 #เวลาของระยะห่างต่อ 1 จุด
     timeSpacbar = 0.2 #เวลาของ Spacbar
     timetextnumber = 0.1 #เวลาของตัวเลข
-    totaltime = 0.0 #เวลาโดยรวม
     nonArea = 0.15 #เวลาของตัวพิมพ์ใหญ่
     timeDuplicate = 0.01 #เวลาของตัวอักษรที่ซ้ำ
+    totaltime = 0.0 #เวลาโดยรวม
 
-    x = Answer
-    text = list(x)
+
+    asw = Answer
+    text = list(asw)
     TextUpper = np.array([['Q','A','Z'], ['W','S','X'], ['E','D','C'], ['R','F','V','T','G','B'], 
                             ['U','J','M','Y','H','N'], ['I','K'], ['O','L'], ['P']])
     TextLower = np.array([['q','a','z'], ['w','s','x'], ['e','d','c'],['r','f','v','t','g','b'], 
                         ['u','j','m','y','h','n'], ['i','k'], ['o','l'], ['p']])
 
-    Empty = text[0].isspace()
-    if Empty == True: ##ค่าว่าง
+    if text[0].isspace(): ##ค่าว่าง
         print("ว่างงงงงงงง")
     else:
         if text[0].isupper(): ##ตัวใหญ่
@@ -27,7 +27,7 @@ def Calchoice(Answer):
         else:
             totaltime += timeTextLower
         print(text[0],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
-    for z in range(1, len(x)):
+    for z in range(1, len(asw)):
         if text[z] == text[z-1]:#ตัวอักษรซ้ำกันน
             totaltime += timeDuplicate
             print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
@@ -86,7 +86,11 @@ def Calchoice(Answer):
             #กรณีที่ Z เป็นตัวเลข
             else:
                 totaltime += timetextnumber
-            
-            print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
+
+    timeAvg = ('%.3f'%(totaltime))
+    return timeAvg
+        # print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
+
+
 
 

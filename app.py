@@ -28,10 +28,14 @@ def insertChoice():
         choice4 = request.form['Ch4']
         Answer = request.form['Answer']
 
-        # Cal.Calchoice(Answer)
-        Insert = {'Subject':subject,'Quiz':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer}
+        
+        Avgtime = Cal.Calchoice(Answer)
+
+        Insert = {'Subject':subject,'Quiz':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime}
         
         result = messenger.post('/Quiz',Insert)
+
+        return render_template('Addchoice.html')
         
 
         

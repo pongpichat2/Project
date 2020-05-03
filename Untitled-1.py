@@ -1,222 +1,94 @@
-qwertyKeyboardArray = [
-    ['`','1','2','3','4','5','6','7','8','9','0','-','='],
-    ['q','w','e','r','t','y','u','i','o','p','[',']','\\'],
-    ['a','s','d','f','g','h','j','k','l',';','\''],
-    ['z','x','c','v','b','n','m',',','.','/'],
-    ['', '', ' ', ' ', ' ', ' ', ' ', '', '']
-    ]
+import numpy as np
 
-qwertyShiftedKeyboardArray = [
-    ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+'],
-    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|'],
-    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"'],
-    ['Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?'],
-    ['', '', ' ', ' ', ' ', ' ', ' ', '', '']
-    ]
 
-layoutDict = {'QWERTY': (qwertyKeyboardArray, qwertyShiftedKeyboardArray)} #ตั้งค่าแป้นพิมให้เป็น QWERTY
+def Calchoice():
+    timeTextUpper = 0.5 #เวลาของตัวพิมพ์ใหญ่
+    timeTextLower = 0.1 #เวลาของตัวพิมพ์เล็ก
+    timedistance = 0.15 #เวลาของระยะห่างต่อ 1 จุด
+    timeSpacbar = 0.2 #เวลาของ Spacbar
+    timetextnumber = 0.1 #เวลาของตัวเลข
+    nonArea = 0.15 #เวลาของตัวพิมพ์ใหญ่
+    timeDuplicate = 0.01 #เวลาของตัวอักษรที่ซ้ำ
+    totaltime = 0.0 #เวลาโดยรวม
 
-# Sets the default keyboard to use to be QWERTY.
-keyboardArray = qwertyKeyboardArray
-shiftedKeyboardArray = qwertyShiftedKeyboardArray
 
-class InsertionAction:
-    def __init__(self, i, c):
-        self.i = i
-        self.c = c
-    def cost(self, s):
-        return insertionCost(s, self.i, self.c)
-    def perform(self, s):
-        return s[:self.i] + self.c + s[self.i:]
+    asw = input("กรุณากรอกค่า : ")
+    text = list(asw)
+    TextUpper = np.array([['Q','A','Z'], ['W','S','X'], ['E','D','C'], ['R','F','V','T','G','B'], 
+                            ['U','J','M','Y','H','N'], ['I','K'], ['O','L'], ['P']])
+    TextLower = np.array([['q','a','z'], ['w','s','x'], ['e','d','c'],['r','f','v','t','g','b'], 
+                        ['u','j','m','y','h','n'], ['i','k'], ['o','l'], ['p']])
 
-class SubstitutionAction:
-    def __init__(self, i, c):
-        self.i = i
-        self.c = c
-    def cost(self, s):
-        return substitutionCost(s, self.i, self.c)
-    def perform(self, s):
-        return s[:self.i] + self.c + s[(self.i + 1):]
-
-class DeletionAction:
-    def __init__(self, i):
-        self.i = i
-    def cost(self, s):
-        return deletionCost(s, self.i)
-    def perform(self, s):
-        return s[:self.i] + s[(self.i + 1):]
-
-# Returns the keyboard layout c "lives in"; for instance, if c is A, this will
-# return the shifted keyboard array, but if it is a, it will return the regular
-# keyboard array.  Raises a ValueError if character is in neither array
-def arrayForChar(c):
-    if (True in [c in r for r in keyboardArray]):
-        return keyboardArray
-    elif (True in [c in r for r in shiftedKeyboardArray]):
-        return shiftedKeyboardArray
+    if text[0].isspace(): ##ค่าว่าง
+        print("ว่างงงงงงงง")
     else:
-        raise ValueError(c + " not found in any keyboard layouts")
-
-# Finds a 2-tuple representing c's position on the given keyboard array.  If
-# the character is not in the given array, throws a ValueError
-def getCharacterCoord(c, array):
-    row = -1
-    column = -1
-    for r in array:
-        if c in r:
-            row = array.index(r)
-            column = r.index(c)
-            return (row, column)
-    raise ValueError(c + " not found in given keyboard layout")
-
-# Finds the Euclidean distance between two characters, regardless of whether
-# they're shifted or not.
-def euclideanKeyboardDistance(c1, c2):
-    coord1 = getCharacterCoord(c1, arrayForChar(c1))
-    coord2 = getCharacterCoord(c2, arrayForChar(c2))
-    return ((coord1[0] - coord2[0])**2 + (coord1[1] - coord2[1])**2)**(0.5)
-
-# The cost of inserting c at position i in string s
-def insertionCost(s, i, c):
-    if not s or i >= len(s):
-        return INSERTION_COST
-    cost = INSERTION_COST
-    if arrayForChar(s[i]) != arrayForChar(c):
-        # We weren't holding down the shift key when we were typing the original
-        # string, but started holding it down while inserting this character, or
-        # vice versa.  Either way, this action should have a higher cost.
-        cost += SHIFT_COST
-    cost += euclideanKeyboardDistance(s[i], c)
-    return cost
-
-# The cost of omitting the character at position i in string s
-def deletionCost(s, i):
-    return DELETION_COST
-
-# The cost of substituting c at position i in string s
-def substitutionCost(s, i, c):
-    cost = SUBSTITUTION_COST
-    if len(s) == 0 or i >= len(s):
-        return INSERTION_COST
-    if arrayForChar(s[i]) != arrayForChar(c):
-        # We weren't holding down the shift key when we were typing the original
-        # string, but started holding it down while inserting this character, or
-        # vice versa.  Either way, this action should have a higher cost.
-        cost += SHIFT_COST
-    cost += euclideanKeyboardDistance(s[i], c)
-    return cost
-
-# Finds the typo distance (a floating point number) between two strings, based
-# on the canonical Levenshtein distance algorithm.
-def typoDistance(s, t, layout='QWERTY'):
-    if layout in layoutDict:
-        keyboardArray, shiftedKeyboardArray = layoutDict[layout]
-    else:
-        raise KeyError(layout + " keyboard layout not supported")
-    
-    # A multidimensional array of 0s with len(s) rows and len(t) columns.
-    d = [[0]*(len(t) + 1) for i in range(len(s) + 1)]
-
-    for i in range(len(s) + 1):
-        d[i][0] = sum([deletionCost(s, j - 1) for j in range(i)])
-    for i in range(len(t) + 1):
-        intermediateString = ""
-        cost = 0.0
-        for j in range(i):
-            cost += insertionCost(intermediateString, j - 1, t[j - 1])
-            intermediateString = intermediateString + t[j - 1]
-        d[0][i] = cost
-
-    for j in range(1, len(t) + 1):
-        for i in range(1, len(s) + 1):
-            if s[i - 1] == t[j - 1]:
-                d[i][j] = d[i - 1][j - 1]
-            else:
-                delCost = deletionCost(s, i - 1)
-                insertCost = insertionCost(s, i, t[j - 1])
-                subCost = substitutionCost(s, i - 1, t[j - 1])
-                d[i][j] = min(d[i - 1][j] + delCost,
-                              d[i][j - 1] + insertCost,
-                              d[i - 1][j - 1] + subCost)
-
-    return d[len(s)][len(t)]
-
-# Returns a list of the possible actions than can be performed on a string s.
-def getPossibleActions(s, layout='QWERTY'):
-    if layout in layoutDict:
-        keyboardArray, shiftedKeyboardArray = layoutDict[layout]
-    else:
-        raise KeyError(layout + " keyboard layout not supported")
-    actions = []
-    for i in range(len(s)):
-        actions.append(DeletionAction(i))
-        for key in (sum([r for r in keyboardArray], []) + sum([r for r in shiftedKeyboardArray], [])):
-            actions.append(SubstitutionAction(i, key))
-            actions.append(InsertionAction(i, key))
-    return actions
-
-# Returns a generator which generates all possible typos that are less than
-# or equal to the given maximum typo distance d from the start phrase s.  Based
-# on Knuth's Algorithm F in Pre-Facsicle 3A.
-def typoGenerator(s, d, layout='QWERTY'):
-    t = 0
-    r = d
-    actions = getPossibleActions(s, layout)
-    # A list of the actions we will perform on this string.  We store the
-    # indices of the actions in the action list above; the 0th action in
-    # currentActions is simply a placeholder value and is not used.
-    c = [len(actions)]
-    # We update the string as we go along, so that we can check the cost
-    # of performing, say, an individual assertion.  This variable is "one
-    # behind" the actions in c, so we can check the cost of performing
-    # the last action in c versus some other action.
-    changedString = s
-
-    while(True):
-        if t == 0:
-            # No actions
-            yield s
+        if text[0].isupper(): ##ตัวใหญ่
+            totaltime += timeTextUpper
         else:
-            # Perform the last action
-            yield actions[c[t]].perform(changedString)
-
-        # Let's try adding a new action
-        if c[t] > 0 and r >= actions[0].cost(changedString):
-            t += 1
-            c.append(0)
-            r -= actions[0].cost(changedString)
-            changedString = s
-            for a in c[1:-1]:
-                changedString = actions[a].perform(changedString)
-            continue
-
-        while True:
-            if t == 0:
-                return
-            i = 1
-            brokeOut = False
-            # Let's try replacing the last action with a new candidate
-            while(c[t - 1] > c[t] + i):
-                if r >= (actions[c[t] + i].cost(changedString) - actions[c[t]].cost(changedString)):
-                    # Our new candidate is cheap enough; use it.
-                    c[t] += i
-                    r -= actions[c[t]].cost(changedString) - actions[c[t] - i].cost(changedString)
-                    changedString = s
-                    for a in c[1:-1]:
-                        changedString = actions[a].perform(changedString)
-                    brokeOut = True
-                    break
+            totaltime += timeTextLower
+        print(text[0],'เวลาที่ได้ %.4f'%(totaltime))
+    for z in range(1, len(asw)):
+        if text[z] == text[z-1]:#ตัวอักษรซ้ำกันน
+            totaltime += timeDuplicate
+            print(text[z],'เวลาที่ได้ %.4f'%(totaltime))
+        else:
+            if not text[z].isspace(): 
+                for j in range(len(TextUpper)):##หาตำแหน่ง Z-1
+                    if (text[z-1] in TextUpper[j]) or (text[z-1] in TextLower[j]):
+                        posZ = j+1
+                        break
+                for v in range(len(TextUpper)):##หาตำแหน่ง Z
+                    if (text[z] in TextUpper[v]) or (text[z] in TextLower[v]):
+                        posZi = v+1
+                        break
+            ##ตัวพิมพ์ใหญ่
+            if text[z].isupper():
+                if text[z-1].isupper():
+                    if posZ == posZi:
+                        position = posZi
+                        dis = abs((TextUpper[position-1].index(text[z])) - (TextUpper[position-1].index(text[z-1])))
+                        dis *= timedistance
+                        print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
+                        totaltime += dis
+                    else:
+                        #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์
+                        totaltime += nonArea
+                        #กรณีที่ Z and Z-1 เป็นตัวพิมพ์ใหญ่เหมือนกันโดยไม่มีการปล่อยปุ่ม Shift
+                        if text[z].isupper() == text[z-1].isupper():
+                            totaltime -= 0.05
+                #กรณีที่ Z-1 เป็นตัวพิมพ์เล็กและตัวเลข
                 else:
-                    # The candidate was too expensive; move onto the next
-                    i += 1
-                    
-            if not brokeOut:
-                # Let's try removing an action
-                r += actions[c[t]].cost(changedString)
-                c.pop(t)
-                changedString = s
-                for a in c[1:-1]:
-                    changedString = actions[a].perform(changedString)
-                t -= 1
+                    totaltime += nonArea
+                ##หาค่าเมื่อกด spacbar
+            elif text[z].isspace(): 
+                totaltime += timeSpacbar
+            ## กรณีที่ Z เป็นตัวพิมพ์เล็ก
+            elif text[z].islower():
+                ##ถ้าตัวก่อนหน้านี้(z-1) ไม่เป็น Spacbar
+                if not text[z-1].isspace():
+                    ##ถ้าตัวก่อนหน้านี้(z-1) เป็นตัวพิมพ์เล็ก
+                    if text[z-1].islower():
+                        if posZ == posZi:
+                            position = posZi
+                            dis = abs((TextLower[position-1].index(text[z])) - (TextLower[position-1].index(text[z-1])))
+                            dis *= timedistance
+                            print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
+                            totaltime += dis
+                        #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์
+                        else:
+                            totaltime += nonArea
+                    #กรณีที่ตัวก่อหน้า(Z-1) เป็นตัวพิมใหญ่
+                    else:
+                         totaltime += nonArea
+                #กรณีที่ตัวก่อหน้า(Z-1) เป็น Spacbar
+                else:
+                    totaltime += nonArea
+            #กรณีที่ Z เป็นตัวเลข
             else:
-                break
+                totaltime += timetextnumber
+
+    # timeAvg = ('%.3f'%(totaltime))
+    # return timeAvg
+            print(text[z],'เวลาที่ได้ %.4f'%(totaltime))
+    print('เวลาที่ได้ %.4f'%(totaltime))
+Calchoice()
