@@ -2,94 +2,197 @@ import numpy as np
 
 
 def Calchoice(Answer):
-    timeTextUpper = 0.5 #เวลาของตัวพิมพ์ใหญ่
-    timeTextLower = 0.1 #เวลาของตัวพิมพ์เล็ก
+    timeText = 0.2
+    Shift = 0.1 #เมื่อมีการ กด Shift
     timedistance = 0.15 #เวลาของระยะห่างต่อ 1 จุด
     timeSpacbar = 0.2 #เวลาของ Spacbar
     timetextnumber = 0.1 #เวลาของตัวเลข
-    nonArea = 0.15 #เวลาของตัวพิมพ์ใหญ่
     timeDuplicate = 0.01 #เวลาของตัวอักษรที่ซ้ำ
     totaltime = 0.0 #เวลาโดยรวม
 
+    TextOnShift = [['!','Q','A','Z',], ['@','W','S','X'], ['#','E','D','C'], ['$','R','F','V','%','T','G','B'], 
+                                ['&','U','J','M','^','Y','H','N'], ['*','I','K','<'], ['(','O','L','>'], [')','P',':','?','"','{','}','_','+']]
+
+        #---------------ปุ่ม  "  ' and  \  " ไม่สามารถใส่ได้เนื่องจากเป็นเครื่องหมายในภาษา----------------------------#
+    TextNonShift = [['1','q','a','z'], ['2','w','s','x'], ['3','e','d','c'],['4','r','f','v','5','t','g','b'], 
+                            ['7','u','j','m','6','y','h','n'], ['8','i','k',','], ['9','o','l','.'], ['0','p',';','/','[',']','-','=']]
+    
 
     asw = Answer
     text = list(asw)
-    TextUpper = np.array([['Q','A','Z'], ['W','S','X'], ['E','D','C'], ['R','F','V','T','G','B'], 
-                            ['U','J','M','Y','H','N'], ['I','K'], ['O','L'], ['P']])
-    TextLower = np.array([['q','a','z'], ['w','s','x'], ['e','d','c'],['r','f','v','t','g','b'], 
-                        ['u','j','m','y','h','n'], ['i','k'], ['o','l'], ['p']])
+
 
     if text[0].isspace(): ##ค่าว่าง
-        print("ว่างงงงงงงง")
+            print("ว่างงงงงงงง")
     else:
         if text[0].isupper(): ##ตัวใหญ่
-            totaltime += timeTextUpper
+            totaltime += (timeText + Shift)
+        elif text[0].islower():
+            totaltime += timeText
         else:
-            totaltime += timeTextLower
-        print(text[0],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
+            #เป็นการหาตัวอักษรพิเศษ isalnum คือ ตรวจสอบ ค่าที่รับมาเป็น ฮักขระหรือตัวเลข
+            if not text[0].isalnum():
+                    #เป็นการหา ว่า อักษรพิเศษออยู่ใน TextOnShift หรือไม
+                for xi in range(len(TextOnShift)):
+                    if text[0] in TextOnShift[xi]:
+                        totaltime += (timeText + Shift)
+                        break
+                        #เมื่อไม่อยู่ใน Array ของ TextOnShift 
+                    elif text[0] in TextNonShift[xi]:
+                        totaltime += timeText
+                        break
+            elif text[0].isdigit():
+                totaltime += timeText
+                    # totaltime += timeTextLower
+        # print(text[0],'เวลาที่ได้ %.4f'%(totaltime))
     for z in range(1, len(asw)):
         if text[z] == text[z-1]:#ตัวอักษรซ้ำกันน
             totaltime += timeDuplicate
-            print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
+            # print(text[z],'เวลาที่ได้ %.4f'%(totaltime))
         else:
             if not text[z].isspace(): 
-                for j in range(len(TextUpper)):##หาตำแหน่ง Z-1
-                    if (text[z-1] in TextUpper[j]) or (text[z-1] in TextLower[j]):
-                        posZ = j+1
+                for j in range(len(TextOnShift)):##หาตำแหน่ง Z-1
+                    if (text[z-1] in TextOnShift[j]) or (text[z-1] in TextNonShift[j]):
+                        posZ = j
                         break
-                for v in range(len(TextUpper)):##หาตำแหน่ง Z
-                    if (text[z] in TextUpper[v]) or (text[z] in TextLower[v]):
-                        posZi = v+1
+                for v in range(len(TextOnShift)):##หาตำแหน่ง Z
+                    if (text[z] in TextOnShift[v]) or (text[z] in TextNonShift[v]):
+                        posZi = v
                         break
-            ##ตัวพิมพ์ใหญ่
+                ##ตัวพิมพ์ใหญ่ ณ ปัจจุบัน
             if text[z].isupper():
-                if text[z-1].isupper():
-                    if posZ == posZi:
-                        position = posZi
-                        dis = abs((TextUpper[position-1].index(text[z])) - (TextUpper[position-1].index(text[z-1])))
-                        dis *= timedistance
-                        print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
-                        totaltime += dis
-                    else:
-                        #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์
-                        totaltime += nonArea
-                        #กรณีที่ Z and Z-1 เป็นตัวพิมพ์ใหญ่เหมือนกันโดยไม่มีการปล่อยปุ่ม Shift
-                        if text[z].isupper() == text[z-1].isupper():
-                            totaltime -= 0.05
-                #กรณีที่ Z-1 เป็นตัวพิมพ์เล็กและตัวเลข
-                else:
-                    totaltime += nonArea
+                    #หาว่า z-1 อยู่ใน Array  TextOnShift
+                for Upper in range(len(TextOnShift)): 
+                    ##ถ้า z-1 อยู่ใน Array  TextOnShift
+                    if text[z-1] in TextOnShift[Upper]:
+                        if posZ == posZi:
+                            position = posZi
+                            dis = abs((TextOnShift[position].index(text[z])) - (TextOnShift[position].index(text[z-1])))
+                            # print("ระยะห่าง ",dis)
+                            dis *= timedistance
+                            # print("เวลาที่ได้ ",dis)
+                            # print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
+                            totaltime += dis
+                        else:
+                            #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์ แต่ไม่มีการปล่อย Shift
+                            totaltime += timeText
+                        break
+                    #------------เมื่อตัวก่อนหน้าเป็น spacebar------------#
+                    elif text[z-1].isspace():
+                        totaltime += timeSpacbar
+                        break
+                    #------------เมื่อตัวก่อนหน้าอยู่ใน Array TextNonShift------------#
+                    elif text[z-1] in TextNonShift[Upper]:
+                        totaltime += (timeSpacbar + Shift)
+                        break
                 ##หาค่าเมื่อกด spacbar
             elif text[z].isspace(): 
                 totaltime += timeSpacbar
-            ## กรณีที่ Z เป็นตัวพิมพ์เล็ก
+                ## กรณีที่ Z เป็นตัวพิมพ์เล็ก
             elif text[z].islower():
-                ##ถ้าตัวก่อนหน้านี้(z-1) ไม่เป็น Spacbar
-                if not text[z-1].isspace():
+                ##การวนหา ว่า z-1 อยู่ใน Array ของ TextNonShift
+                for lower in range(len(TextNonShift)):
                     ##ถ้าตัวก่อนหน้านี้(z-1) เป็นตัวพิมพ์เล็ก
-                    if text[z-1].islower():
+                    if text[z-1] in TextNonShift[lower]:
                         if posZ == posZi:
                             position = posZi
-                            dis = abs((TextLower[position-1].index(text[z])) - (TextLower[position-1].index(text[z-1])))
+                            dis = abs((TextNonShift[position].index(text[z])) - (TextNonShift[position].index(text[z-1])))
+                            # print("ระยะห่าง ",dis)
                             dis *= timedistance
-                            print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
+                            # print("เวลาที่ได้ ",dis)
+                            # print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
                             totaltime += dis
-                        #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์
+                            
                         else:
-                            totaltime += nonArea
-                    #กรณีที่ตัวก่อหน้า(Z-1) เป็นตัวพิมใหญ่
-                    else:
-                        totaltime += nonArea
-                #กรณีที่ตัวก่อหน้า(Z-1) เป็น Spacbar
-                else:
-                    totaltime += nonArea
-            #กรณีที่ Z เป็นตัวเลข
-            else:
-                totaltime += timetextnumber
+                            #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์
+                            totaltime += timeText
+                        break         
+                    #------------เมื่อตัวก่อนหน้าเป็น spacebar------------#
+                    elif text[z-1].isspace():
+                        totaltime += timeSpacbar
+                        break
+                    #------------เมื่อตัวก่อนหน้าอยู่ใน Array TextOnShift------------#
+                    elif text[z-1] in TextOnShift[lower]:
+                        totaltime += timeSpacbar 
+                        break
 
+            else:
+                if not text[z].isalnum():
+                    #หา z กรณีที่เป็น อักษรพิเศษว่าอยู่ใน TextOnShift
+                    for scZ in range(len(TextOnShift)):
+                        # ถ้า z อยู่ใน Array TextOnShift
+                        if text[z] in TextOnShift[scZ]:
+                            for scZi in range(len(TextOnShift)):
+                                #ถ้า z-1 อยู่ใน Array TextOnShift เหมือนกัน 
+                                if text[z-1] in TextOnShift[scZi]:
+                                    if posZ == posZi:
+                                        position = posZi
+                                        dis = abs((TextOnShift[position].index(text[z])) - (TextOnShift[position].index(text[z-1])))
+                                        # print("ระยะห่าง ",dis)
+                                        dis *= timedistance
+                                        # print("เวลาที่ได้ ",dis)
+                                        # print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
+                                        totaltime += dis
+                                    else:
+                                        #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์ แต่ไม่มีการปล่อย Shift
+                                        totaltime += timeText
+                                    break
+                                elif text[z-1].isspace():
+                                    totaltime += timeSpacbar
+                                    break
+                                elif text[z-1] in TextNonShift[scZi]:
+                                    totaltime += (timeSpacbar + Shift)
+                                    break
+                        # ถ้า z อยู่ใน Array TextNonShift       
+                        elif text[z] in TextNonShift[scZ]:
+                            for scZi in range(len(TextNonShift)):
+                                if text[z-1] in TextNonShift[scZi]:
+                                    if posZ == posZi:
+                                        position = posZi
+                                        dis = abs((TextNonShift[position].index(text[z])) - (TextNonShift[position].index(text[z-1])))
+                                        # print("ระยะห่าง ",dis)
+                                        dis *= timedistance
+                                        # print("เวลาที่ได้ ",dis)
+                                        # print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
+                                        totaltime += dis
+                                    else:
+                                        #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์
+                                        totaltime += timeText
+                                    break
+                                elif text[z-1].isspace():
+                                    totaltime += timeSpacbar
+                                    break
+                                elif text[z-1] in TextOnShift[scZi]:
+                                    totaltime += timeSpacbar 
+                                    break
+
+                elif text[z].isdigit():
+                    for lowerNum in range(len(TextNonShift)):
+                        if text[z-1] in TextNonShift[lowerNum]:
+                            if posZ == posZi:
+                                position = posZi
+                                dis = abs((TextNonShift[position].index(text[z])) - (TextNonShift[position].index(text[z-1])))
+                                # print("ระยะห่าง ",dis)
+                                dis *= timedistance
+                                # print("เวลาที่ได้ ",dis)
+                                # print(text[z],'ตน. นิ้วเดียวกัน',text[z-1])
+                                totaltime += dis
+                            else:
+                                #กรณีที่ Z and Z-1 ไม่ได้อยู่ช่องในช่องที่นิ้วเดิมพิมพ์
+                                totaltime += timeText
+                            break
+                        #------------เมื่อตัวก่อนหน้าเป็น spacebar------------#
+                        elif text[z-1].isspace():
+                            totaltime += timeSpacbar
+                            break
+                        #------------เมื่อตัวก่อนหน้าอยู่ใน Array TextOnShift------------#
+                        elif text[z-1] in TextOnShift[lowerNum]:
+                            totaltime += timeSpacbar 
+                            break
+    # print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
     timeAvg = ('%.3f'%(totaltime))
     return timeAvg
-        # print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
+        
 
 
 

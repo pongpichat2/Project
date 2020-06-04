@@ -4,36 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AddChoice</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice3.css') }}"> -->
 
     <style>
-        div{
+        .borderform{
+            width:500px;
+            height: 550px;
+            border:black solid 3px;
             text-align: center;
+            border-radius: 20px;
         }
+        
         .AddQuiz input[type=text]{
             text-align: center;
             width: 200px;
             height: 30px;
-            border: none solid 2px;
+            border: #000000 solid 2px;
         }
+        .Answer-Choice input[type=radio]{
+            display: none;
+            margin:20px;
+        }
+        .Answer-Choice input[type=radio] + label{
+            display:inline-block;
+            width: 80px;
+            height: 40px;
+            margin-left: 15px;
+            background-color: none;
+            border: rgb(255, 0, 0) solid 1.5px;
+            transition: 0.5s;
+        }
+        .Answer-Choice label{
+            line-height: 40px;
+        }
+        .Answer-Choice input[type=radio]:checked + label{
+            font-size: 20px;
+            border: rgb(72, 255, 0) solid 2px;
+            color: rgb(54, 255, 14);
+            border-radius: 20px;
+        }
+        
     </style>
 </head>
-<body>
-    <div class="title-web">
-        <h1>Hello Add Choice</h1>
-    </div>
-    <div class="AddQuiz">
 
-        <!-- url_for เป็นการอ้างไปยัง ฟังก์ชัน ที่มี route ตามชื่อที่ส่ง -->
-    <form action="{{ url_for('insertChoice') }}" method="POST">
-        <h2>Subject Name : <input type="text" placeholder="ชื่อวิชา" name="Subject"></h2>
-        <h2>Proposition : <input type="text" placeholder="โจทย์" name="Proposition"></h2>
-        <h2>Choice 1 : <input type="text" placeholder="ตัวเลือกที่ 1" name="Ch1"></h2>
-        <h2>Choice 2 : <input type="text" placeholder="ตัวเลือกที่ 2" name="Ch2"></h2>
-        <h2>Choice 3 : <input type="text" placeholder="ตัวเลือกที่ 3" name="Ch3"></h2>
-        <h2>Choice 4 : <input type="text" placeholder="ตัวเลือกที่ 4" name="Ch4"></h2>
-        <h2>Answer : <input type="text" placeholder="คำตอบ" name="Answer"></h2>
-        <button type="submit">Submit</button>
+<body>
+    <div class="borderform">
+        <div class="title-web">
+            <h1> Add Choice</h1>
+        </div>
+
+        <div class="AddQuiz">
+
+            <!-- url_for เป็นการอ้างไปยัง ฟังก์ชัน ที่มี route ตามชื่อที่ส่ง -->
+            <form action="{{ url_for('insertChoice') }}" method="POST">
+                <h2>Subject Name : <input type="text" placeholder="ชื่อวิชา" name="Subject" ></h2>
+                <h2>Proposition : <input type="text" placeholder="โจทย์" name="Proposition"></h2>
+                <h2>Choice 1 : <input type="text" placeholder="ตัวเลือกที่ 1" name="Ch1"></h2>
+                <h2>Choice 2 : <input type="text" placeholder="ตัวเลือกที่ 2" name="Ch2"></h2>
+                <h2>Choice 3 : <input type="text" placeholder="ตัวเลือกที่ 3" name="Ch3"></h2>
+                <h2>Choice 4 : <input type="text" placeholder="ตัวเลือกที่ 4" name="Ch4"></h2>
+                <!-- <h2>Answer : <input type="text" placeholder="คำตอบ" name="Answer"></h2> -->
+
+                <div class="Answer-Choice">
+                    <input type="radio" id="radio1" name="Answer" value="Answer1"><label for="radio1">Choice 1</label>
+                    <input type="radio" id="radio2" name="Answer" value="Answer2"><label for="radio2">Choice 2</label>
+                    <input type="radio" id="radio3" name="Answer" value="Answer3"><label for="radio3">Choice 3</label> 
+                    <input type="radio" id="radio4" name="Answer" value="Answer4"><label for="radio4">Choice 4</label> 
+                </div><br>
+                <div class="Button-Add">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                </div>
+            </form>
+        </div>
     </div>
-    </form>
 </body>
 </html>

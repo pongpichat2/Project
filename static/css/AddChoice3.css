@@ -1,0 +1,24 @@
+.title-web{
+    text-align: center;
+    font-size: 20px;
+}
+.AddQuiz {
+    text-align: center;
+}
+.AddQuiz input[type=text]{
+    text-align: center;
+    width: 200px;
+    height: 30px;
+    border: none solid 2px;
+}
+.Answer-Choice input[type=radio]{
+    display:none; 
+    margin:10px;
+
+}
+.Answer-Choice input[type=radio] + label{
+    display:inline-block;
+    padding: 4px 12px;
+    background-color: #ffffff;
+    border-color: #ddd;
+}

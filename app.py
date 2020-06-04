@@ -1,20 +1,24 @@
-from flask import Flask,render_template,request,redirect,url_for,session
+from flask import *
 # import pymysql.cursors
 
 from firebase import firebase
 import Calculat as Cal
 
 # URL Project #
-url = "https://project-e54fe.firebaseio.com" 
+url = "https://project-e54fe.firebaseio.com/" 
 # ตัวกำการเชื่อมกับ Firebase #
-messenger = firebase.FirebaseApplication(url, None)
+firebase = firebase.FirebaseApplication(url, authentication = None)
+
+
+# db = firebase.get('/messages', None)
+
 
 
 app = Flask(__name__,template_folder='template')
 
 @app.route("/Addchoice") #URL
 def hello():
-    return render_template('Addchoice.html') 
+    return render_template('Addchoice.html')
 
 # Insert คำถามลงใน Database #
 @app.route("/insertChoice", methods=['GET','POST'])
@@ -28,20 +32,24 @@ def insertChoice():
         choice4 = request.form['Ch4']
         Answer = request.form['Answer']
 
-        
+        if Answer == 'Answer1':
+            Answer = choice1
+        elif Answer == 'Answer2':
+            Answer = choice2
+        elif Answer == 'Answer3':
+            Answer = choice3
+        elif Answer == 'Answer4':
+            Answer = choice4
+
         Avgtime = Cal.Calchoice(Answer)
 
-        Insert = {'Subject':subject,'Quiz':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime}
-        
-        result = messenger.post('/Quiz',Insert)
+        countDataQuiz = str(len(firebase.get('/Quiz', None))+1)
+        Insert = {'Subject':subject,'QuizName':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime}
+
+        result = firebase.post('Quiz'+countDataQuiz,Insert)
 
         return render_template('Addchoice.html')
-        
-
-        
 
 
-
-       
 if __name__ == "__main__":
     app.run(debug=True)
