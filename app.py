@@ -46,7 +46,7 @@ def insertChoice():
         countDataQuiz = str(len(firebase.get('/Quiz', None))+1)
         Insert = {'Subject':subject,'QuizName':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime}
 
-        result = firebase.post('Quiz'+countDataQuiz,Insert)
+        result = firebase.post('Quiz/'+countDataQuiz,Insert)
 
         return render_template('Addchoice.html')
 
