@@ -5,21 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AddChoice</title>
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice3.css') }}"> -->
+    <script>
+         function openNav() {
+            document.getElementById("mySidebar").style.width = "300px";
+            document.getElementById("main").style.marginLeft = "300px";
+            }
 
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft= "0";
+            }
+    </script>
     <style>
+        body{
+            
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+        }
         .borderform{
+            background-color: rgb(255, 255, 255,0.6);
+            margin: 5% 33%;
             width:500px;
-            height: 550px;
-            border:black solid 3px;
+            height: 520px;
+            border:black solid 1px;
             text-align: center;
             border-radius: 20px;
+            box-shadow: 0 0 15px
         }
-        
         .AddQuiz input[type=text]{
             text-align: center;
-            width: 200px;
+            width: 150px;
             height: 30px;
-            border: #000000 solid 2px;
+            border: #000000 solid 1.5px;
+            transition: 0.5s;
+        }
+        .AddQuiz input[type=text]:focus{
+            width: 200px;
+            height: 33px;
+            border: #09ff00 solid 2px;
+            box-shadow: 0 0 15px rgb(72, 255, 0,0.5)
         }
         .Answer-Choice input[type=radio]{
             display: none;
@@ -43,18 +70,103 @@
             color: rgb(54, 255, 14);
             border-radius: 20px;
         }
+        .Button-Add .BTSubmit {
+            background-color: white;
+            width: 100px;
+            height: 40px;
+            border: rgb(40, 133, 21) solid 1.5px;
+            color: rgb(28, 168, 0);
+            transition: 0.8s;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .Button-Add .BTSubmit:hover {
+            background-color: rgba(12, 173, 52, 0.726);
+            border: rgb(59, 190, 33) solid 1.5px;
+            color: rgb(255, 255, 255);
+        }
+        .Button-Add .BTReset {
+            background-color: white;
+            width: 100px;
+            height: 40px;
+            border: rgb(236, 69, 69) solid 1.5px;
+            color: rgb(248, 0, 0);
+            transition: 0.8s;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .Button-Add .BTReset:hover {
+            background-color: rgba(255, 0, 0, 0.726);
+            border: rgba(255, 0, 0, 0.726) solid 1.5px;
+            color: rgb(255, 255, 255);
+        }
+        .sidepanel{
+            width: 200px;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+
+        }
+        .sidepanel a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            font-family: 'Gotu', sans-serif;
+        }
         
+        .sidepanel a:hover {
+            color: #f1f1f1;
+        }
+        
+        .sidepanel .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 50px;
+        }
+        
+        .openbtn {
+            margin: 0;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+        
+        .openbtn:hover {
+            background-color:#444;
+        }
     </style>
 </head>
 
 <body>
+    <button class="openbtn" onclick="openNav()">☰</button>
+    <div id="mySidebar" class="sidepanel">
+        <a href="#" class="closebtn" onclick="closeNav()">×</a>
+        <a href="HAdmin.php">รายชื่อผู้เช่า</a>  
+        <a href="adduser.php">เพิ่มสมาชิก</a>
+        <a href="Accrued.php">ยอดค้าง</a>
+        <a href="addprice.php">ค่าเช่าประจำเดือน</a>
+        <a href="Logout.php" >Log Out</a>
+    </div>
     <div class="borderform">
         <div class="title-web">
             <h1> Add Choice</h1>
         </div>
 
         <div class="AddQuiz">
-
             <!-- url_for เป็นการอ้างไปยัง ฟังก์ชัน ที่มี route ตามชื่อที่ส่ง -->
             <form action="{{ url_for('insertChoice') }}" method="POST">
                 <h2>Subject Name : <input type="text" placeholder="ชื่อวิชา" name="Subject" ></h2>
@@ -63,8 +175,6 @@
                 <h2>Choice 2 : <input type="text" placeholder="ตัวเลือกที่ 2" name="Ch2"></h2>
                 <h2>Choice 3 : <input type="text" placeholder="ตัวเลือกที่ 3" name="Ch3"></h2>
                 <h2>Choice 4 : <input type="text" placeholder="ตัวเลือกที่ 4" name="Ch4"></h2>
-                <!-- <h2>Answer : <input type="text" placeholder="คำตอบ" name="Answer"></h2> -->
-
                 <div class="Answer-Choice">
                     <input type="radio" id="radio1" name="Answer" value="Answer1"><label for="radio1">Choice 1</label>
                     <input type="radio" id="radio2" name="Answer" value="Answer2"><label for="radio2">Choice 2</label>
@@ -72,8 +182,8 @@
                     <input type="radio" id="radio4" name="Answer" value="Answer4"><label for="radio4">Choice 4</label> 
                 </div><br>
                 <div class="Button-Add">
-                    <button type="submit">Submit</button>
-                    <button type="reset">Reset</button>
+                    <button type="submit" class="BTSubmit">Submit</button>
+                    <button type="reset" class="BTReset">Reset</button>
                 </div>
             </form>
         </div>
