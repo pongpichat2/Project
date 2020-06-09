@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>AddChoice</title>
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice3.css') }}"> -->
     <script>
@@ -18,7 +19,6 @@
     </script>
     <style>
         body{
-            
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -30,11 +30,12 @@
             margin: 5% 33%;
             width:500px;
             height: 520px;
-            border:black solid 1px;
+            border:rgb(0, 0, 0, 0.8) solid 2px;
             text-align: center;
             border-radius: 20px;
-            box-shadow: 0 0 15px
+            box-shadow: 0 0 20px
         }
+
         .AddQuiz input[type=text]{
             text-align: center;
             width: 150px;
@@ -59,7 +60,7 @@
             margin-left: 15px;
             background-color: none;
             border: rgb(255, 0, 0) solid 1.5px;
-            transition: 0.5s;
+            transition: 0.6s;
         }
         .Answer-Choice label{
             line-height: 40px;
@@ -102,72 +103,56 @@
             border: rgba(255, 0, 0, 0.726) solid 1.5px;
             color: rgb(255, 255, 255);
         }
-        .sidepanel{
-            width: 200px;
-            position: fixed;
+        .sidebar {
             height: 100%;
+            width: 160px;
+            position: fixed;
+            z-index: 1;
             top: 0;
             left: 0;
             background-color: #111;
             overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-
-        }
-        .sidepanel a {
-            padding: 8px 8px 8px 32px;
+            padding-top: 16px;
+            }
+        .sidebar a {
+            padding: 6px 8px 6px 16px;
             text-decoration: none;
-            font-size: 25px;
+            font-size: 20px;
             color: #818181;
             display: block;
-            transition: 0.3s;
-            font-family: 'Gotu', sans-serif;
-        }
-        
-        .sidepanel a:hover {
+            }
+        .sidebar a:hover {
             color: #f1f1f1;
-        }
-        
-        .sidepanel .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 50px;
-        }
-        
-        .openbtn {
-            margin: 0;
-            font-size: 20px;
-            cursor: pointer;
-            background-color: #111;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-        }
-        
-        .openbtn:hover {
-            background-color:#444;
-        }
+            }
+        .main {
+            margin-left: 160px;
+            padding: 0px 10px;
+            }
+
+        @media screen and (max-height: 450px) {
+        .sidebar {padding-top: 15px;}
+        .sidebar a {font-size: 18px;}
+            }
+            
     </style>
 </head>
 
 <body>
-    <button class="openbtn" onclick="openNav()">☰</button>
-    <div id="mySidebar" class="sidepanel">
-        <a href="#" class="closebtn" onclick="closeNav()">×</a>
-        <a href="HAdmin.php">รายชื่อผู้เช่า</a>  
-        <a href="adduser.php">เพิ่มสมาชิก</a>
-        <a href="Accrued.php">ยอดค้าง</a>
-        <a href="addprice.php">ค่าเช่าประจำเดือน</a>
-        <a href="Logout.php" >Log Out</a>
+    
+    <div class="sidebar">
+    <a href="#home"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a href="#services"><i class="fa fa-fw fa-wrench"></i> Services</a>
+    <a href="#clients"><i class="fa fa-fw fa-user"></i> Clients</a>
+    <a href=""><i class="fa fa-fw fa-envelope"></i> Contact</a>
     </div>
+
     <div class="borderform">
         <div class="title-web">
             <h1> Add Choice</h1>
         </div>
-
+        
         <div class="AddQuiz">
-            <!-- url_for เป็นการอ้างไปยัง ฟังก์ชัน ที่มี route ตามชื่อที่ส่ง -->
+
             <form action="{{ url_for('insertChoice') }}" method="POST">
                 <h2>Subject Name : <input type="text" placeholder="ชื่อวิชา" name="Subject" ></h2>
                 <h2>Proposition : <input type="text" placeholder="โจทย์" name="Proposition"></h2>
@@ -185,8 +170,11 @@
                     <button type="submit" class="BTSubmit">Submit</button>
                     <button type="reset" class="BTReset">Reset</button>
                 </div>
+                <a href="/AddMember">page 2</a>
             </form>
         </div>
     </div>
+    
+    
 </body>
 </html>

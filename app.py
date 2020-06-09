@@ -10,10 +10,6 @@ url = "https://project-e54fe.firebaseio.com/"
 firebase = firebase.FirebaseApplication(url, authentication = None)
 
 
-# db = firebase.get('/messages', None)
-
-
-
 app = Flask(__name__,template_folder='template')
 
 @app.route("/Addchoice") #URL
@@ -43,13 +39,36 @@ def insertChoice():
 
         Avgtime = Cal.Calchoice(Answer)
 
-        countDataQuiz = str(len(firebase.get('/Quiz', None))+1)
+        # countDataQuiz = str(len(firebase.get('/Quiz', None))+1)
         Insert = {'Subject':subject,'QuizName':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime}
 
-        result = firebase.post('Quiz/'+countDataQuiz,Insert)
+        # result = firebase.post('Quiz/'+countDataQuiz,Insert)
+        result = firebase.post('Quiz/',Insert)
 
         return render_template('Addchoice.html')
 
+@app.route("/AddMember")
+def PageAddMem():
+    return render_template('AddMember.html')
+
+@app.route("/insertMember", methods=['GET','POST'])
+def insertMember():
+    if request.method == "POST":
+        fname = request.form['Fname']
+        lname = request.form['Lname']
+        ProSub = request.form['ProSubject']
+        Username = request.form['Username']
+        password = request.form['Password']
+        Conpass = request.form['ComPass']
+        email = request.form['Email']
+        tel = request.form['Tel']
+
+        Insert = {'Firstname':fname,'Lname':lname,'ProSubject':ProSub,'Username':Username,
+        'Password':password,'ConfirmPass':Conpass,'Email':email,'Tel':tel}
+
+        execute = firebase.post('Member/',Insert)
+
+        return render_template('AddMember.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
