@@ -193,7 +193,3 @@ def Calchoice(Answer):
     timeAvg = ('%.3f'%(totaltime))
     return timeAvg
         
-
-
-
-

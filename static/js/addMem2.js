@@ -1,6 +1,5 @@
 
 function CheckDatanull() {
-    var username = document.forms["AddMember"]["Username"].value;
     var Password = document.forms["AddMember"]["Password"].value;
     var fname = document.forms["AddMember"]["Fname"].value;
     var lname = document.forms["AddMember"]["Lname"].value;
@@ -17,11 +16,7 @@ function CheckDatanull() {
         document.getElementById("Lname").focus();
         return false;
     }
-    if (username == "" || username == null) {
-        alert("กรุณากรอก Username ด้วยครับ!! ");
-        document.getElementById("Username").focus();
-        return false;
-    }
+
     if (Password == "" || Password == null) {
         alert("กรุณากรอก Password ด้วยครับ!! ");
         document.getElementById("Password").focus();

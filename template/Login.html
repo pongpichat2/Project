@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&family=Piedra&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body{
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            /* background-image: linear-gradient(-20deg, #0b0b31 0%, #181131 100%); */
+            background-image: url("/static/image/wallpaper.jpg");
+        }
+
+        .form-login{
+            margin: 2% 33%;
+            width: 450px;
+            height: 330px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            color: rgba(190, 51, 0, 0.89);
+            border: 1px solid rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0);
+            font-family: 'Acme', sans-serif;
+            font-size: 20px;
+        }
+        .form-login input[type=text]{
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 270px;
+            height: 50px;
+            text-align: center;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 25px;
+            font-size: 20px;
+            font-family: 'Acme', sans-serif;
+            transition: 0.8s;
+        }
+        .form-login input[type=text]:focus{
+            width: 300px;
+            background: rgb(255, 255, 255,0.8);
+            color: rgb(255, 115, 0);
+            box-shadow: 0 0 15px rgb(255, 30, 0);
+
+        }
+        .form-login .title{
+            text-align: center;
+            font-weight: bold;
+            font-size: 35px;
+            color: rgb(131, 34, 10);
+        }
+        .form-login .Datainput{
+            text-align: center;
+            margin: 10px 20px;
+        }
+        .Logo {
+            margin: 2% 38%;
+            width: 300px;
+            height: 300px;
+            background:none;
+        }
+        .form-login .GoPlay{
+            margin: 5% 10%;
+            width: 100%;
+            height: 20px;
+            color: rgb(6, 95, 51);
+        }
+        .form-login .buttonSub{
+            margin-left: 150px ;
+            width: 100px;
+            height: 45px;
+            color: white;
+            background: rgb(3, 84, 206,0.6);
+            border: rgb(255, 255, 255) solid 2px ;
+            border-radius: 20px;
+            font-family: 'Acme', sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.8s;
+        }
+        .form-login .buttonSub:hover{
+            background: rgba(27, 102, 216, 0.6);
+            color: rgb(0, 255, 0);
+            border: rgb(9, 255, 0) solid 2px ;
+            box-shadow: 0 0 15px rgb(9, 255, 0) ;
+        }
+    </style>
+</head>
+<body>
+
+        <div class="Logo">
+             <img src="{{ url_for('static', filename='image/Logo2.png') }}" alt="">
+        </div>
+        <form action="" method="post">
+            <div class="form-login">
+                <p class="title" >Sign in</p>
+                <p style="font-weight: bold;" class="Datainput">E - mail &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp; <input type="text"></p>
+                <p style="font-weight: bold;" class="Datainput">Password &nbsp;:&nbsp;&nbsp; <input type="text"></p>
+                
+                <p class="GoPlay" style="font-size: 15px;">Go to Play !<a href=""> Game </a><button type="submit" class="buttonSub">Log in</button></p>
+            </div>
+        </form>
+</body>
+</html>
