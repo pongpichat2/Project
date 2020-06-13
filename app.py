@@ -1,13 +1,36 @@
-from flask import *
-# import pymysql.cursors
+from flask import Flask, render_template, request, url_for,session, redirect
 
-from firebase import firebase
+
+import pyrebase
 import Calculat as Cal
 
-# URL Project #
-url = "https://project-e54fe.firebaseio.com/" 
-# ตัวกำการเชื่อมกับ Firebase #
-firebase = firebase.FirebaseApplication(url, authentication = None)
+config = {
+    "apiKey": "AIzaSyAJ0CmanmUEWcn-Of-OdbdOERhXxOXsTB8",
+    "authDomain": "project-e54fe.firebaseapp.com",
+    "databaseURL": "https://project-e54fe.firebaseio.com",
+    "projectId": "project-e54fe",
+    "storageBucket": "project-e54fe.appspot.com",
+    "messagingSenderId": "539702287057",
+    "appId": "1:539702287057:web:969f76c2ab05a0051843f0",
+    "measurementId": "G-X6XZJ3QC44"
+}
+
+
+fierbase = pyrebase.initialize_app(config)
+db = fierbase.database()
+
+nook = "sanook"
+za = {'Firstname': 'asasdasd'}
+
+
+# # check = nook in z
+
+all_users = db.child("Member/sanook/").get()
+for user in all_users.each():
+    # x = za in user.val()
+    # print(x)
+    # print(user.key()) # Morty
+    print(user.val())
 
 
 app = Flask(__name__,template_folder='template')
@@ -39,13 +62,13 @@ def insertChoice():
 
         Avgtime = Cal.Calchoice(Answer)
 
-        countDataQuiz = str(len(firebase.get('/Quiz', None))+1)
+        countDataQuiz = str(len(db.child("Quiz").get().val())+1)
         Insert = {'Subject':subject,'QuizName':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime,'NO':countDataQuiz}
+        
+        result = db.child("Quiz/").push(Insert)
 
-        # result = firebase.post('Quiz/'+countDataQuiz,Insert)
-        result = firebase.post('Quiz/',Insert)
+        return redirect(url_for('hello'))
 
-        return render_template('Addchoice.html')
 
 @app.route("/AddMember")
 def PageAddMem():
@@ -57,22 +80,28 @@ def insertMember():
         fname = request.form['Fname']
         lname = request.form['Lname']
         ProSub = request.form['ProSubject']
-
         password = request.form['Password']
         Conpass = request.form['ComPass']
         email = request.form['Email']
         tel = request.form['Tel']
+        username = request.form['Username']
 
-        Insert = {'Firstname':fname,'Lname':lname,'ProSubject':ProSub,'Password':password,'ConfirmPass':Conpass,'Email':email,'Tel':tel}
-
-        execute = firebase.post('Member/',Insert)
-
-        return render_template('AddMember.html')
+        Insert = {'Firstname':fname,'Lname':lname,'ProSubject':ProSub,'Password':password,'ConfirmPass':Conpass,'Email':email,'Tel':tel, 'Username':username}
+        execute = db.push('Member/'+username,Insert)
+        return redirect(url_for('PageAddMem'))
 
 @app.route("/Login")
 def Login():
     return render_template('Login.html')
 
-    
+@app.route("/CheckLogin", methods=['GET','POST'])
+def CheckLogin():
+
+    email = request.form['Username']
+    password = request.form['password']
+
+
+ 
+  
 if __name__ == "__main__":
     app.run(debug=True)
