@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for,session, redirect
 
-
+from getpass import getpass
 import pyrebase
 import Calculat as Cal
 
@@ -15,22 +15,38 @@ config = {
     "measurementId": "G-X6XZJ3QC44"
 }
 
-
 fierbase = pyrebase.initialize_app(config)
+
 db = fierbase.database()
+auth = fierbase.auth()
 
-nook = "sanook"
-za = {'Firstname': 'asasdasd'}
+# email = input("E-mail : \n")
+# password = input("Password : \n")
+
+# user = auth.create_user_with_email_and_password(email,password)
+# user = auth.sign_in_with_email_and_password(email,password)
+
+# auth.send_password_reset_email(email)
+# auth.send_email_verification(user['idToken'])
+# print(auth.get_account_info(user['idToken']))
+
+# print("Seccess")
+# nook = "sanook"
+# za = {'Firstname': 'asasdasd'}
 
 
-# # check = nook in z
+# # # check = nook in z
 
-all_users = db.child("Member/sanook/").get()
-for user in all_users.each():
-    # x = za in user.val()
-    # print(x)
-    # print(user.key()) # Morty
-    print(user.val())
+# all_users = db.child("Member/sanook/").get().val().values()
+
+
+# print(zxc)
+
+# for user in all_users.each():
+#     # x = za in user.val()
+#     # print(x)
+#     # print(user.key()) # Morty
+#     print(user.val())
 
 
 app = Flask(__name__,template_folder='template')
@@ -65,7 +81,7 @@ def insertChoice():
         countDataQuiz = str(len(db.child("Quiz").get().val())+1)
         Insert = {'Subject':subject,'QuizName':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime,'NO':countDataQuiz}
         
-        result = db.child("Quiz/").push(Insert)
+        result = db.child("Quiz").push(Insert)
 
         return redirect(url_for('hello'))
 
@@ -96,12 +112,19 @@ def Login():
 
 @app.route("/CheckLogin", methods=['GET','POST'])
 def CheckLogin():
+    unlogin = 'Check E-mail and Password'
+    if request.method == 'POST':
+        email = request.form['Username']
+        password = request.form['password']
+        try:
+            user = auth.sign_in_with_email_and_password(email,password)
+            return render_template('Addchoice.html')
+        except:
 
-    email = request.form['Username']
-    password = request.form['password']
+            return render_template('Login.html', us=unlogin)
 
 
- 
-  
+
+
 if __name__ == "__main__":
     app.run(debug=True)
