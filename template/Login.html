@@ -27,7 +27,7 @@
             font-family: 'Acme', sans-serif;
             font-size: 20px;
         }
-        .form-login input[type=text],input[type=password]{
+        .form-login input[type=email],input[type=password]{
             background-color: rgba(255, 255, 255, 0.2);
             width: 270px;
             height: 50px;
@@ -39,7 +39,7 @@
             font-family: 'Acme', sans-serif;
             transition: 0.8s;
         }
-        .form-login input[type=text]:focus ,input[type=password]:focus{
+        .form-login input[type=email]:focus ,input[type=password]:focus{
             width: 300px;
             background: rgb(255, 255, 255,0.8);
             color: rgb(255, 115, 0);
@@ -90,12 +90,12 @@
     </style>
     <script>
         function CheckLogin(){
-            var Username = document.forms["Login"]["Username"].value;
+            var email = document.forms["Login"]["email"].value;
             var pass = document.forms["Login"]["password"].value;
 
-            if (Username == "" || Username == null) {
-                alert("กรุณากรอก Username ด้วยครับ!! ");
-                document.getElementById("Username").focus();
+            if (email == "" || email == null) {
+                alert("กรุณากรอก email ด้วยครับ!! ");
+                document.getElementById("email").focus();
                 return false;
             }
             if (pass == "" || pass == null) {
@@ -114,7 +114,7 @@
         <form action="/CheckLogin" method="POST" onsubmit="return CheckLogin()" name="Login">
             <div class="form-login">
                 <p class="title" >Sign in</p>
-                <p style="font-weight: bold;" class="Datainput">Username &nbsp;:&nbsp;&nbsp; <input type="text" id="Username" name="Username"></p>
+                <p style="font-weight: bold;" class="Datainput">Username &nbsp;:&nbsp;&nbsp; <input type="email" id="email" name="email"></p>
                 <p style="font-weight: bold;" class="Datainput">Password &nbsp;:&nbsp;&nbsp; <input type="password" id="password" name="password"></p>
                 
                 <p class="GoPlay" style="font-size: 15px;">Go to Play !<a href=""> Game </a><button type="submit" class="buttonSub">Log in</button></p>

@@ -20,6 +20,8 @@ fierbase = pyrebase.initialize_app(config)
 db = fierbase.database()
 auth = fierbase.auth()
 
+
+
 # email = input("E-mail : \n")
 # password = input("Password : \n")
 
@@ -30,23 +32,16 @@ auth = fierbase.auth()
 # auth.send_email_verification(user['idToken'])
 # print(auth.get_account_info(user['idToken']))
 
-# print("Seccess")
-# nook = "sanook"
-# za = {'Firstname': 'asasdasd'}
-
-
-# # # check = nook in z
 
 # all_users = db.child("Member/sanook/").get().val().values()
 
-
-# print(zxc)
 
 # for user in all_users.each():
 #     # x = za in user.val()
 #     # print(x)
 #     # print(user.key()) # Morty
 #     print(user.val())
+
 
 
 app = Flask(__name__,template_folder='template')
@@ -90,21 +85,37 @@ def insertChoice():
 def PageAddMem():
     return render_template('AddMember.html')
 
-@app.route("/insertMember", methods=['GET','POST'])
-def insertMember():
-    if request.method == "POST":
-        fname = request.form['Fname']
-        lname = request.form['Lname']
-        ProSub = request.form['ProSubject']
-        password = request.form['Password']
-        Conpass = request.form['ComPass']
-        email = request.form['Email']
-        tel = request.form['Tel']
-        username = request.form['Username']
+# @app.route("/insertMember", methods=['GET','POST'])
+# def insertMember():
+#     if request.method == "POST":
+#         fname = request.form['Fname']
+#         lname = request.form['Lname']
+#         ProSub = request.form['ProSubject']
+#         password = request.form['Password']
+#         Conpass = request.form['ComPass']
+#         email = request.form['Email']
+#         tel = request.form['Tel']
+#         username = request.form['Username']
 
-        Insert = {'Firstname':fname,'Lname':lname,'ProSubject':ProSub,'Password':password,'ConfirmPass':Conpass,'Email':email,'Tel':tel, 'Username':username}
-        execute = db.push('Member/'+username,Insert)
-        return redirect(url_for('PageAddMem'))
+#         Insert = {'Firstname':fname,'Lname':lname,'ProSubject':ProSub,'Password':password,'ConfirmPass':Conpass,'Email':email,'Tel':tel, 'Username':username}
+#         execute = db.push('Member/'+username,Insert)
+#         return redirect(url_for('PageAddMem'))
+
+@app.route("/Register", methods=['GET','POST'])
+def Signup():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['email']
+        try:
+            user = auth.create_user_with_email_and_password(email,password)
+            auth.send_email_verification(user['idToken'])
+
+            
+            return "Seccess"
+
+        except:
+            return "Fail"
+    return render_template('signup.html')
 
 @app.route("/Login")
 def Login():
@@ -114,14 +125,17 @@ def Login():
 def CheckLogin():
     unlogin = 'Check E-mail and Password'
     if request.method == 'POST':
-        email = request.form['Username']
+        email = request.form['email']
         password = request.form['password']
         try:
             user = auth.sign_in_with_email_and_password(email,password)
+            Check = auth.get_account_info(user['idToken'])
+            
+
             return render_template('Addchoice.html')
         except:
-
             return render_template('Login.html', us=unlogin)
+
 
 
 
