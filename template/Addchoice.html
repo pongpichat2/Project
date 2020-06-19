@@ -5,11 +5,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
     <title>AddChoice</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice4.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice4.css') }}"> -->
     <script src="{{ url_for('static', filename='js/addchioce.js') }}"></script>
 
 </head>
 <style>
+    body{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0 0;
+    background-image: url("/static/image/addchiose.jpg");
+}
+
+.borderform{
+    margin: 3% 23%;
+    background-color: rgb(255, 255, 255,0.6);
+    width:700px;
+    height: 630px;
+    border:rgb(0, 0, 0, 0.8) solid 2px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px
+}
+.AddQuiz p {
+    margin: 3px 50px;
+    font-family: 'Odibee Sans', cursive;
+    font-size: 20px;
+}
+.AddQuiz p input[type=text]{
+    text-align: center;
+    width: 600px;
+    height: 30px;
+    border: #000000 solid 2px;
+    transition: 0.5s;
+    font-family: 'Itim', cursive;
+    font-size: 20px;
+
+}
+.AddQuiz input[type=text]:focus{
+    font-size: 25px;
+    font-weight: bold;
+    height: 33px;
+    border: #09ff00 solid 2px;
+    box-shadow: 0 0 15px rgb(72, 255, 0,0.5)
+}
+.Answer-Choice{
+    text-align: center;
+    font-family: 'Odibee Sans', cursive;
+}
+.radio-con{
+    margin: 4px;
+}
+.Answer-Choice input[type=radio]{
+
+    display: none;
+    margin:20px;
+}
+.Answer-Choice input[type=radio] + label{
+    display:inline-block;
+    width: 80px;
+    height: 40px;
+    margin-left: 40px;
+    background-color: none;
+    border: rgb(0, 0, 0) solid 2.5px;
+    transition: 0.6s;
+    text-align: center;
+}
+.Answer-Choice label{
+    line-height: 40px;
+}
+.Answer-Choice input[type=radio]:checked + label{
+    border: rgb(72, 255, 0) solid 3px;
+    color: rgb(54, 255, 14);
+    box-shadow: 0 0 20px rgba(0, 255, 34, 0.6);
+    border-radius: 20px;
+}
+.Button-Add{
+    text-align: center;
+    margin-top: 15px;
+
+}
+.Button-Add .BTSubmit {
+    background-color: white;
+    width: 150px;
+    height: 50px;
+    border: rgb(40, 133, 21) solid 1.5px;
+    color: rgb(28, 168, 0);
+    transition: 0.8s;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Odibee Sans', cursive;
+}
+.Button-Add .BTSubmit:hover {
+    background-color: rgba(12, 173, 52, 0.726);
+    border: rgb(59, 190, 33) solid 1.5px;
+    color: rgb(255, 255, 255);
+}
+.Button-Add .BTReset {
+    background-color: white;
+    width: 150px;
+    height: 50px;
+    border: rgb(236, 69, 69) solid 1.5px;
+    color: rgb(248, 0, 0);
+    transition: 0.8s;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Odibee Sans', cursive;
+}
+.Button-Add .BTReset:hover {
+    background-color: rgba(255, 0, 0, 0.726);
+    border: rgba(255, 0, 0, 0.726) solid 1.5px;
+    color: rgb(255, 255, 255);
+}
+
+fieldset {
+    margin-left: 35px;
+    border: 2px solid #ff0000;
+    width: 600px;
+    height: 90px;
+    border-radius: 10px;
+}
+
+fieldset legend {
+    color: rgb(255, 0, 0);
+    font-size: 20px;
+    border-radius: 5px;
+    margin-left: 40px;
+}
     select{
     text-align: center;
     width: 610px;
@@ -19,70 +143,120 @@
     font-family: 'Odibee Sans', cursive;
     font-size: 20px;
     }
-    .Btu-AddSubject{
-        background: white;
-        font-size: 19px;
-        font-weight: bold;
+    .Add-Sub{
+        position: absolute;
+        margin-left: 70%;
         border: rgb(0, 0, 0) solid 2px;
-        margin-left: 5px;
-        width: 35px;
+        width: 300px;
+        height: 200px;
+        border:rgb(0, 0, 0, 0.8) solid 2px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px;
+        background-color: rgb(255, 255, 255,0.6);
+    }
+    .Add-Sub p {
+        margin: 15px 30px;
+        font-size: 15px;
+
+        font-family: 'Odibee Sans', cursive;
+    }
+    .Add-Sub input[type=text]{
+        font-family: 'Odibee Sans', cursive;
+        text-align: center;
+        width: 230px;
+        height: 20px;
+        background: rgb(255, 255, 255,0.6);
+        border: black solid 2px;
+        transition: 0.6s;
+    }
+    .Add-Sub input[type=text]:focus{
+        border: rgb(255, 0, 0) solid 2px;
+        box-shadow: 0 0 15px red;
+        font-size: 18px;
+    }
+    .BT-ADDSUB{
+        margin-left: 30px;
+        border: red solid 1.5px;
+        font-family: 'Odibee Sans', cursive;
+        width: 50px;
         height: 30px;
-        transition: 0.8s;
+        background: rgba(255, 255, 255, 0.5);
+        transition: 0.5s;
     }
-    .Btu-AddSubject:hover{
-        background: rgb(248, 0, 165);
+    .BT-ADDSUB:hover{
+        color: rgb(255, 255, 255);
+        background: rgb(255, 0, 0);
+        border: black solid 1.5px;
     }
-
 </style>
+<script>
+    function dataNull(){
+        var subname = document.forms["Addsub"]["Subname"].value;
+        var subid = document.forms["Addsub"]["Subid"].value;
 
+        if (subname == "" || subname == null) {
+        alert("กรุณากรอกข้อมูลให้ครบด้วย !! ");
+        document.getElementById("Subname").focus();
+        return false;
+        }
+        if (subid == "" || subid == null) {
+            alert("กรุณากรอกข้อมูลให้ครบด้วย !! ");
+            document.getElementById("Subid").focus();
+            return false;
+        }
+    }
+</script>
 <body>
-    <div class="sidebar">
-    <a href="#home"><i class="fa fa-fw fa-home"></i> Home</a>
-    <a href="#services"><i class="fa fa-fw fa-wrench"></i> Services</a>
-    <a href="#clients"><i class="fa fa-fw fa-user"></i> Clients</a>
-    <a href=""><i class="fa fa-fw fa-envelope"></i> Contact</a>
-    </div>
-
-    <div class="borderform">
-        <div class="title-web">
-            <h1 style="text-align: center; font-family: 'Odibee Sans', cursive; font-size: 45px; margin: 10px;"> Add Choice</h1>
-        </div>
-        
-        <div class="AddQuiz">
-
-            <form action="{{ url_for('insertChoice') }}" method="POST" name="AddChoice" >
-                <p>SUBJECT : <br> <select name="Sucject" class="Select">
-                    {% for Sub in data.each() %}
-                    <option value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>
-                    {% endfor %}
-                </select></p>
-                <p>Quiz ? : <br><input type="text" placeholder="โจทย์" name="Proposition" id="Proposition"></p>
-                <p>Choice 1 : <br><input type="text" placeholder="ตัวเลือกที่ 1" name="Ch1" id="Ch1" ></p>
-                <p>Choice 2 : <br><input type="text" placeholder="ตัวเลือกที่ 2" name="Ch2" id="Ch2" ></p>
-                <p>Choice 3 : <br><input type="text" placeholder="ตัวเลือกที่ 3" name="Ch3" id="Ch3" ></p>
-                <p>Choice 4 : <br><input type="text" placeholder="ตัวเลือกที่ 4" name="Ch4" id="Ch4" ></p><br>
-
-                <fieldset class="fieldset">
-                    <legend> <p>Answer Chioce</p></legend>
+    <div class="container">
+             <div class="Add-Sub" >
+                 <p style="text-align: center; margin-top: 15px; font-weight: bold;" >- ADD SUBJECT -</p>
+            <form action="/AddSubject" method="POST" name="Addsub">
+                <p class="textinput">Subject Name : <br><input type="text" placeholder="Subject Name" name="Subname" id="Subname"></p>
+                <p class="textinput">Subject ID : <br><input type="text" placeholder="Subject ID" name="Subid" id="Subid"></p>
+                <button type="submit" class="BT-ADDSUB" onclick="return dataNull()">ADD</button> <a href="/AddSubject" style="margin-left: 120px;font-family: 'Odibee Sans', cursive;">Go to Page!</a>
                 
-                    <div class="Answer-Choice">
-                        <div class="radio-con">
-                        <input type="radio" id="radio1" name="Answer" value="Answer1"><label for="radio1">Choice 1</label>
-                        <input type="radio" id="radio2" name="Answer" value="Answer2"><label for="radio2">Choice 2</label>
-                        <input type="radio" id="radio3" name="Answer" value="Answer3"><label for="radio3">Choice 3</label> 
-                        <input type="radio" id="radio4" name="Answer" value="Answer4"><label for="radio4">Choice 4</label>
+            </form> 
+           
+            </div> 
+        <div class="borderform">
+            <div class="title-web">
+                <h1 style="text-align: center; font-family: 'Odibee Sans', cursive; font-size: 45px; margin: 10px;"> Add Choice</h1>
+            </div>
+            
+            <div class="AddQuiz">
+                <form action="{{ url_for('insertChoice') }}" method="POST" name="AddChoice" >
+                    <p>SUBJECT : <br> <select name="Sucject" class="Select">
+                        {% for Sub in data.each() %}
+                        <option value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>
+                        {% endfor %}
+                    </select></p>
+                    <p>Quiz ? : <br><input type="text" placeholder="โจทย์" name="Proposition" id="Proposition"></p>
+                    <p>Choice 1 : <br><input type="text" placeholder="ตัวเลือกที่ 1" name="Ch1" id="Ch1" ></p>
+                    <p>Choice 2 : <br><input type="text" placeholder="ตัวเลือกที่ 2" name="Ch2" id="Ch2" ></p>
+                    <p>Choice 3 : <br><input type="text" placeholder="ตัวเลือกที่ 3" name="Ch3" id="Ch3" ></p>
+                    <p>Choice 4 : <br><input type="text" placeholder="ตัวเลือกที่ 4" name="Ch4" id="Ch4" ></p><br>
+
+                    <fieldset class="fieldset">
+                        <legend> <p>Answer Chioce</p></legend>
+                    
+                        <div class="Answer-Choice">
+                            <div class="radio-con">
+                            <input type="radio" id="radio1" name="Answer" value="Answer1"><label for="radio1">Choice 1</label>
+                            <input type="radio" id="radio2" name="Answer" value="Answer2"><label for="radio2">Choice 2</label>
+                            <input type="radio" id="radio3" name="Answer" value="Answer3"><label for="radio3">Choice 3</label> 
+                            <input type="radio" id="radio4" name="Answer" value="Answer4"><label for="radio4">Choice 4</label>
+                            </div>
                         </div>
+                    </fieldset>
+                    <div class="Button-Add">
+                        <button type="submit" class="BTSubmit" onclick="return checkdata()">Submit</button>
+                        <button type="reset" class="BTReset">Reset</button>
                     </div>
-                </fieldset>
-                <div class="Button-Add">
-                    <button type="submit" class="BTSubmit" onclick="return checkdata()">Submit</button>
-                    <button type="reset" class="BTReset">Reset</button>
-                </div>
-            </form>
-            <a href="/AddSubject"><button class="Btu-AddSubject">+</button></a>
+                </form>
+
+            </div>
         </div>
     </div>
-    
-    
+
 </body>
 </html>

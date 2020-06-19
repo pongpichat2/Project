@@ -26,10 +26,10 @@ firebase = Firebase(config)
 db = firebase.database()
 auth = firebase.auth()
 
-Sub = db.child('Subject/').get()
-for subject in Sub.each():
-    print(subject.key())
-    print(subject.val()['SubID'])
+# Sub = db.child('Subject/').get()
+# for subject in Sub.each():
+#     print(subject.key())
+#     print(subject.val()['SubID'])
 
 
 
@@ -86,13 +86,17 @@ def insertChoice():
 
 
 
-@app.route("/AddSubject")
+@app.route("/AddSubject", methods=['GET','POST'])
 def AddSubject():
+    if request.method == 'POST':
+        subname = request.form['Subname']
+        subid = request.form['Subid']
+
+        db.child("Subject").child(subname).set({"SUBID" : subid})
+        
     return render_template('AddSubject.html')
 
-@app.route("/inserSubject", methods=['GET','POST'])
-def insertMember():
-    return render_template('AddSubject.html')
+
 
 @app.route("/Register", methods=['GET','POST'])
 def Signup():
