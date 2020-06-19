@@ -1,24 +1,35 @@
 from flask import Flask, render_template, request, url_for,session, redirect
 
-from getpass import getpass
-import pyrebase
+# import pyrebase
+from firebase import Firebase
 import Calculat as Cal
 
+# import firebase_admin
+# from firebase_admin import credentials
+# from firebase_admin import db
+
+
+
 config = {
-    "apiKey": "AIzaSyAJ0CmanmUEWcn-Of-OdbdOERhXxOXsTB8",
-    "authDomain": "project-e54fe.firebaseapp.com",
-    "databaseURL": "https://project-e54fe.firebaseio.com",
-    "projectId": "project-e54fe",
-    "storageBucket": "project-e54fe.appspot.com",
-    "messagingSenderId": "539702287057",
-    "appId": "1:539702287057:web:969f76c2ab05a0051843f0",
-    "measurementId": "G-X6XZJ3QC44"
+    "apiKey": "AIzaSyAh2ji3JKKX-QHZv53sxXlNbpc_qet9yDU",
+    "authDomain": "quiz-game-37caa.firebaseapp.com",
+    "databaseURL": "https://quiz-game-37caa.firebaseio.com",
+    "projectId": "quiz-game-37caa",
+    "storageBucket": "quiz-game-37caa.appspot.com",
+    "messagingSenderId": "699719760867",
+    "appId": "1:699719760867:web:52dfbfbb32972b3692bed6",
+    "measurementId": "G-L1E1RDRKYQ"
 }
 
-fierbase = pyrebase.initialize_app(config)
+firebase = Firebase(config)
 
-db = fierbase.database()
-auth = fierbase.auth()
+db = firebase.database()
+auth = firebase.auth()
+
+Sub = db.child('Subject/').get()
+for subject in Sub.each():
+    print(subject.key())
+    print(subject.val()['SubID'])
 
 
 
@@ -33,22 +44,12 @@ auth = fierbase.auth()
 # print(auth.get_account_info(user['idToken']))
 
 
-# all_users = db.child("Member/sanook/").get().val().values()
-
-
-# for user in all_users.each():
-#     # x = za in user.val()
-#     # print(x)
-#     # print(user.key()) # Morty
-#     print(user.val())
-
-
-
 app = Flask(__name__,template_folder='template')
 
 @app.route("/Addchoice") #URL
 def hello():
-    return render_template('Addchoice.html')
+    Sub = db.child('Subject').get()
+    return render_template('Addchoice.html', data = Sub)
 
 # Insert คำถามลงใน Database #
 @app.route("/insertChoice", methods=['GET','POST'])
@@ -73,33 +74,25 @@ def insertChoice():
 
         Avgtime = Cal.Calchoice(Answer)
 
-        countDataQuiz = str(len(db.child("Quiz").get().val())+1)
-        Insert = {'Subject':subject,'QuizName':Propo,'Ch1':choice1,'Ch2':choice2,'Ch3':choice3,'Ch4':choice4,'Answer':Answer,'Time':Avgtime,'NO':countDataQuiz}
         
-        result = db.child("Quiz").push(Insert)
-
+        checkdata = db.child("items-Hunter").get().val()
+        
+        if checkdata == None:
+            db.child("items-Hunter").child("1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
+        else:
+            countDataQuiz = str(len(db.child("items-Hunter").get().val()))
+            db.child("items-Hunter").child(countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
         return redirect(url_for('hello'))
 
 
-@app.route("/AddMember")
-def PageAddMem():
-    return render_template('AddMember.html')
 
-# @app.route("/insertMember", methods=['GET','POST'])
-# def insertMember():
-#     if request.method == "POST":
-#         fname = request.form['Fname']
-#         lname = request.form['Lname']
-#         ProSub = request.form['ProSubject']
-#         password = request.form['Password']
-#         Conpass = request.form['ComPass']
-#         email = request.form['Email']
-#         tel = request.form['Tel']
-#         username = request.form['Username']
+@app.route("/AddSubject")
+def AddSubject():
+    return render_template('AddSubject.html')
 
-#         Insert = {'Firstname':fname,'Lname':lname,'ProSubject':ProSub,'Password':password,'ConfirmPass':Conpass,'Email':email,'Tel':tel, 'Username':username}
-#         execute = db.push('Member/'+username,Insert)
-#         return redirect(url_for('PageAddMem'))
+@app.route("/inserSubject", methods=['GET','POST'])
+def insertMember():
+    return render_template('AddSubject.html')
 
 @app.route("/Register", methods=['GET','POST'])
 def Signup():
@@ -109,8 +102,6 @@ def Signup():
         try:
             user = auth.create_user_with_email_and_password(email,password)
             auth.send_email_verification(user['idToken'])
-
-            
             return "Seccess"
 
         except:
@@ -128,9 +119,8 @@ def CheckLogin():
         email = request.form['email']
         password = request.form['password']
         try:
-            user = auth.sign_in_with_email_and_password(email,password)
-            Check = auth.get_account_info(user['idToken'])
-            
+            auth.sign_in_with_email_and_password(email,password)
+            # auth.get_account_info(user['idToken'])
 
             return render_template('Addchoice.html')
         except:
@@ -139,6 +129,26 @@ def CheckLogin():
 
 
 
+@app.route("/Update")
+def Update():
+    to =  db.child("items/")
+    
+    return render_template('Update.html', data = to)
+
+# all_users = db.child("ID/").get()
+# # # print(all_users['name'])
+# for key in all_users.each():
+
+#     childz = key.key()
+# #     # print(childz)
+#     x = db.child("ID/"+childz).get().val()
+#     print("ยืนยันรหัส : ",x['copassword'])
+#     print("Name : ",x['name'])
+#     print("Email : ",x['email'])
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+

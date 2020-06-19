@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpDate or Delete</title>
+</head>
+<body>
+    
+    <table border="2px">
+        <tr>
+            <td>NO.</td>
+            <td>Subject</td>
+            <td>Quiz ?</td>
+            <td>Choice1</td>
+            <td>Choice2</td>
+            <td>Choice3</td>
+            <td>Choice4</td>
+            <td>Answer</td>
+        </tr>
+
+        {% for l in data.get().each() %}
+             
+        <form action="" method="GET">
+        <tr>
+               
+            <td><input type="text" value="{% print(l.val()['ID']) %}" readonly name="NO"></td>
+            <td><input type="text" value="{% print(l.val()['subject']) %}"  ></td>
+            <td><input type="text" value="{% print(l.val()['Qu']) %}"  ></td>
+            <td><input type="text" value="{% print(l.val()['C1']) %}" ></td>
+            <td><input type="text" value="{% print(l.val()['C2']) %}" ></td>
+            <td><input type="text" value="{% print(l.val()['C3']) %}" ></td>
+            <td><input type="text" value="{% print(l.val()['C4']) %}" ></td>
+            <td><input type="text" value="{% print(l.val()['ans']) %}" ></td>
+            <td><button type="submit" value="Edit" name="Action">Edit</button></td>
+            <td><button type="submit" value="Delete" name="Action">Delete</button></td>
+            
+        </tr>
+        
+        </form>
+        {% endfor %}
+        
+    </table>
+    
+
+</body>
+</html>
