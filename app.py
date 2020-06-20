@@ -91,10 +91,59 @@ def AddSubject():
     if request.method == 'POST':
         subname = request.form['Subname']
         subid = request.form['Subid']
+        checkdata = db.child("Subject").get().val()
 
-        db.child("Subject").child(subname).set({"SUBID" : subid})
+        if checkdata == None:
+            db.child("Subject").child("1").set({"SUBNAME":subname,"SUBID" : subid})
+        else:
+            countDataSub = str(len(db.child("Subject").get().val()))
+            db.child("Subject").child(countDataSub).set({"SUBNAME":subname,"SUBID" : subid,"NO":countDataSub})
         
-    return render_template('AddSubject.html')
+    return redirect(url_for('hello'))
+
+@app.route("/SubjectHome")
+def SubjectHome():
+
+    to =  db.child("Subject")
+
+    return render_template('AddSubject.html',data = to)
+
+@app.route("/AddSubjectHome", methods=['GET','POST'])
+def Subject():
+    
+    if request.method == 'POST':
+        subname = request.form['Subname']
+        subid = request.form['SubID']
+
+        checkdata = db.child("Subject").get().val()
+        if checkdata == None:
+            db.child("Subject").child("1").set({"SUBNAME":subname,"SUBID" : subid,"NO":"1"})
+            return redirect(url_for('SubjectHome'))
+
+        else:
+            countDataSub = str(len(db.child("Subject").get().val()))
+            db.child("Subject").child(countDataSub).set({"SUBNAME":subname,"SUBID" : subid,"NO":countDataSub})
+            return redirect(url_for('SubjectHome'))
+        
+@app.route("/UpdateSubject", methods=['GET','POST'])
+def UpDatesub():
+    
+    if request.method == 'POST':
+        no = request.form['NOSUB']
+        subname = request.form['Subname']
+        subid = request.form['SubID']
+        button = request.form['BTN']
+
+        if button == "Edit":
+            db.child("Subject").child(no).update({"SUBNAME":subname,"SUBID":subid})
+            return redirect(url_for('SubjectHome'))
+        elif button == "Delete":
+            db.child("Subject").child(no).remove()
+            return redirect(url_for('SubjectHome'))
+            
+    
+
+
 
 
 

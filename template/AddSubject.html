@@ -3,47 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/addMem2.js') }}"></script>
-    <title>Document</title>
+    <title>ADD SUBJECT</title>
 
     <style>
         body{
             background-size: cover;
             background-position: center;
             height: 100vh;
-            margin: 0;
-            background-image: linear-gradient(-20deg, #122735 0%, #20183d 100%);
-        }
-        .form-addmem{
-            margin: 10% 33%;
-            width: 600px;
-            height: 500px;
-            background: cadetblue;
-        }
-        .Navbar{
-            position: fixed;
-            top: 0;
             margin: 0 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.7);
-            transition: 0.6s;
-            font-size: 20px;
-            box-shadow: 0 0 15px rgb(0, 0, 0);
+            background-image: url("/static/image/AddSub.jpg");
         }
-        .Navbar:hover{
-            height: 75px;
+        .Add-Sub{
+            margin: 5% 12%;
+            background: rgba(44, 43, 43, 0.6);
+            width: 450px;
+            height: 280px;
+            border: black solid 2px;
+            box-shadow: 0 0 20px rgb(0, 0, 0);
+            border-radius: 15px ;
+            font-family: 'Odibee Sans', cursive;
+            position: absolute;
         }
-        .Navbar .title{
-            margin-top: 25px;
-            margin-left: 35px ;
-            list-style: none;
-            display: block;
+        .Add-Sub h2{
+            text-align: center; 
+            margin-top: 10px; 
+            color: rgb(0, 0, 0);
+            font-size: 35px;
+        }
+        .Add-Sub p {
+            color: rgb(230, 77, 22);
+            margin-left: 30px;
+        }
+        .Add-Sub input[type=text]{
+            text-align: center;
+            margin-top: 5px;
+            width: 380px;
+            height: 30px;
+            background: rgb(255, 255, 255);
+            border: rgb(0, 0, 0) solid 2px;
+            border-radius: 10px;
+            transition: 0.7s;
+            font-family: 'Odibee Sans', cursive;
+        }
+        .Add-Sub input[type=text]:focus{
+            height: 35px ;
+            background: black;
+            color: rgb(255, 255, 255);
+            border: rgb(255, 255, 255) solid 2px;
+        }
+        .Add-Sub button{
+            margin-left: 40%;
+            text-align: center;
+            width: 90px;
+            height: 35px;
+            background: rgb(255, 255, 255);
+            border: black solid 2px;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Odibee Sans', cursive;
+            transition: 0.8s;
+        }
+        .Add-Sub button:hover{
+            background: rgb(44, 44, 44);
+            border: orangered solid 2px;
+            color: orangered;
+            border-radius: 25px;
+        }
+        .tableShow{
+            position: absolute;
+            margin-top: 5%;
+            margin-left: 50%;
+            border-collapse: collapse; 
+            overflow:hidden;
+        }
+        .tableShow .title-table{
+            text-align: center;
+            width: 60px;
+            height: 40px;
+            background: rgba(12, 12, 12, 0.712);
+            border: rgb(0, 0, 0) solid 2px;
         }
     </style>
 </head>
 <body>
-    
-    fdsfdsfsdf
+        <div class="Add-Sub">
+            <!-- <img src="/static/image/book1.png" alt="" style="margin-left: 42%; margin-top: 5px; opacity: 0.6;"> -->
+            <h2 > - Add Subject - </h2>
+            <form action="/AddSubjectHome" method="POST" name="Addsub">
+                <p> SUBJECT-NAME : <br><input type="text" name="Subname" id="" placeholder="Subject Name"></p>
+                <p> SUBJECT-ID : <br><input type="text" name="SubID" id="" placeholder="Subject ID"></p>
+            <button type="submit">ADD</button>
+            </form>
+        </div>
+
+        <table class="tableShow">
+            <tr>
+                <th class="title-table">NO.</th>
+                <th class="title-table">Sub Name</th>
+                <th class="title-table">Sub ID</th>
+            </tr>
+
+            {% for Sub in data.get().each() %}
+            <form action="/UpdateSubject" method="POST" name="Subject">
+                <tr>
+                    <td><input type="text" name="NOSUB" readonly id="" value="{% print(Sub.val()['NO'])%}"></td>
+                    <td><input type="text" name="Subname" id="" value="{% print(Sub.val()['SUBNAME'])%}"></td>
+                    <td><input type="text" name="SubID" id="" value="{% print(Sub.val()['SUBID'])%}"></td>
+                    <td><button type="submit" value="Edit" name="BTN">Edit</button></td>
+                    <td><button type="submit" value="Delete" name="BTN">Delete</button></td>
+                </tr>
+            </form>
+            {% endfor %}
+        </table>
+
 </body>
 </html>

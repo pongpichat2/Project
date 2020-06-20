@@ -19,7 +19,7 @@
 }
 
 .borderform{
-    margin: 3% 23%;
+    margin: 3% 20%;
     background-color: rgb(255, 255, 255,0.6);
     width:700px;
     height: 630px;
@@ -145,7 +145,7 @@ fieldset legend {
     }
     .Add-Sub{
         position: absolute;
-        margin-left: 70%;
+        margin-left: 66.5%;
         border: rgb(0, 0, 0) solid 2px;
         width: 300px;
         height: 200px;
@@ -213,7 +213,7 @@ fieldset legend {
             <form action="/AddSubject" method="POST" name="Addsub">
                 <p class="textinput">Subject Name : <br><input type="text" placeholder="Subject Name" name="Subname" id="Subname"></p>
                 <p class="textinput">Subject ID : <br><input type="text" placeholder="Subject ID" name="Subid" id="Subid"></p>
-                <button type="submit" class="BT-ADDSUB" onclick="return dataNull()">ADD</button> <a href="/AddSubject" style="margin-left: 120px;font-family: 'Odibee Sans', cursive;">Go to Page!</a>
+                <button type="submit" class="BT-ADDSUB" onclick="return dataNull()">ADD</button> <a href="/SubjectHome" style="margin-left: 120px;font-family: 'Odibee Sans', cursive;">Go to Page!</a>
                 
             </form> 
            
@@ -225,9 +225,9 @@ fieldset legend {
             
             <div class="AddQuiz">
                 <form action="{{ url_for('insertChoice') }}" method="POST" name="AddChoice" >
-                    <p>SUBJECT : <br> <select name="Sucject" class="Select">
+                    <p>SUBJECT : <br> <select name="Subject" class="Select">
                         {% for Sub in data.each() %}
-                        <option value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>
+                        <option value="{% print(Sub.val()['SUBNAME']) %}">{% print(Sub.val()['SUBNAME']) %}</option>
                         {% endfor %}
                     </select></p>
                     <p>Quiz ? : <br><input type="text" placeholder="โจทย์" name="Proposition" id="Proposition"></p>
