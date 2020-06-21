@@ -29,7 +29,7 @@ auth = firebase.auth()
 # Sub = db.child('Subject/').get()
 # for subject in Sub.each():
 #     print(subject.key())
-#     print(subject.val()['SubID'])
+
 
 
 
@@ -48,7 +48,7 @@ app = Flask(__name__,template_folder='template')
 
 @app.route("/Addchoice") #URL
 def hello():
-    Sub = db.child('Subject').get()
+    Sub = db.child('Subject/').get()
     return render_template('Addchoice.html', data = Sub)
 
 # Insert คำถามลงใน Database #
@@ -103,8 +103,7 @@ def AddSubject():
 
 @app.route("/SubjectHome")
 def SubjectHome():
-
-    to =  db.child("Subject")
+    to =  db.child("Subject/")
 
     return render_template('AddSubject.html',data = to)
 
@@ -134,7 +133,9 @@ def UpDatesub():
         subid = request.form['SubID']
         button = request.form['BTN']
 
-        if button == "Edit":
+        if no == "":
+            return redirect(url_for('SubjectHome'))
+        elif button == "Edit":
             db.child("Subject").child(no).update({"SUBNAME":subname,"SUBID":subid})
             return redirect(url_for('SubjectHome'))
         elif button == "Delete":
