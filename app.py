@@ -30,7 +30,8 @@ auth = firebase.auth()
 # for subject in Sub.each():
 #     print(subject.key())
 
-
+# LIKE 
+# query =  database.getReference().child("StoreAds").orderByChild("University").startAt("ps").endAt("\uf8ff");
 
 
 # email = input("E-mail : \n")

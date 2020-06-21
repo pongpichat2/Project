@@ -41,6 +41,7 @@
             margin-top: 5px;
             width: 380px;
             height: 30px;
+            font-size: 18px;
             background: rgb(255, 255, 255);
             border: rgb(0, 0, 0) solid 2px;
             border-radius: 10px;
@@ -48,6 +49,7 @@
             font-family: 'Odibee Sans', cursive;
         }
         .Add-Sub input[type=text]:focus{
+            font-size: 20px;
             height: 35px ;
             background: black;
             color: rgb(255, 255, 255);
@@ -100,12 +102,14 @@
         }
         .tableShow .cosdata input[type=text]:hover{
             border: rgb(255, 115, 0) solid 2px;
+            background: rgba(48, 47, 47, 0.445);
         }
         .tableShow .cosdata input[type=text]:focus{
             width: 160px;
             height: 45px;
-            border: rgb(255, 115, 0) solid 2px;
+            border:inset rgb(255, 115, 0) solid 2px;
             color: orangered;
+            background: rgba(48, 47, 47, 0.445);
         }
         .tableShow td button{
             width: 70px;  
@@ -136,16 +140,16 @@
         }
     </style>
     <script>
-        var subname = document.forms['Addsub']['Subname'].value
-        var subid = document.forms["Addsub"]['SubID'].value
+        
         function ConfirmADD(){
-            
-
+            var subname = document.forms['Addsub']['Subname'].value
+            var subid = document.forms["Addsub"]['SubID'].value
             return confirm("คุณต้องการเพิ่ม วิชา : "+ subname + "รหัสวิชา : " + subid + " ใช่ไหม ?")
-            
         }
 
         function checkdata(){
+            var subname = document.forms['Addsub']['Subname'].value
+            var subid = document.forms["Addsub"]['SubID'].value
             if (subname == "" || subname == null) {
                 alert("กรุณากรอกข้อมูลให้ครบด้วย !! ");
                 document.getElementById("Subname").focus();
