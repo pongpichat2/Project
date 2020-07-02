@@ -3,142 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ADD Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
+
+    <!-- ADD bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <script src="{{ url_for('static', filename='js/addMem2.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/AddSub.css') }}">
+
+    <!-- ADD jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" ></script>
     <title>ADD SUBJECT</title>
 
-    <style>
-        body{
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            margin: 0 0;
-            background-image: url("/static/image/AddSub.jpg");
-        }
-        .Add-Sub{
-            margin: 5% 12%;
-            background: rgba(44, 43, 43, 0.6);
-            width: 450px;
-            height: 280px;
-            border: black solid 2px;
-            box-shadow: 0 0 20px rgb(0, 0, 0);
-            border-radius: 15px ;
-            font-family: 'Odibee Sans', cursive;
-            position: absolute;
-        }
-        .Add-Sub h2{
-            text-align: center; 
-            margin-top: 10px; 
-            color: rgb(0, 0, 0);
-            font-size: 35px;
-        }
-        .Add-Sub p {
-            color: rgb(230, 77, 22);
-            margin-left: 30px;
-        }
-        .Add-Sub input[type=text]{
-            text-align: center;
-            margin-top: 5px;
-            width: 380px;
-            height: 30px;
-            font-size: 18px;
-            background: rgb(255, 255, 255);
-            border: rgb(0, 0, 0) solid 2px;
-            border-radius: 10px;
-            transition: 0.7s;
-            font-family: 'Odibee Sans', cursive;
-        }
-        .Add-Sub input[type=text]:focus{
-            font-size: 20px;
-            height: 35px ;
-            background: black;
-            color: rgb(255, 255, 255);
-            border: rgb(255, 255, 255) solid 2px;
-        }
-        .Add-Sub button{
-            margin-left: 40%;
-            text-align: center;
-            width: 90px;
-            height: 35px;
-            background: rgb(255, 255, 255);
-            border: black solid 2px;
-            font-size: 18px;
-            font-weight: bold;
-            font-family: 'Odibee Sans', cursive;
-            transition: 0.8s;
-        }
-        .Add-Sub button:hover{
-            background: rgb(44, 44, 44);
-            border: orangered solid 2px;
-            color: orangered;
-            border-radius: 25px;
-        }
-        .tableShow{
-            position: absolute;
-            margin-top: 5%;
-            margin-left: 45%;
-            border-collapse: collapse; 
-            overflow:hidden;
-            z-index: 2;
-        }
-        .tableShow .title-table{
-            text-align: center;
-            width: 60px;
-            height: 40px;
-            background: rgba(37, 31, 2, 0.644);
-            border: rgb(0, 0, 0) solid 3px;
-            font-family: 'Odibee Sans', cursive;
-            color: rgb(255, 115, 0);
-            font-size: 25px;
-        }
-        .tableShow .cosdata input[type=text]{
-            width: 150px;
-            height: 35px;
-            text-align: center;
-            font-family: 'Odibee Sans', cursive;
-            font-size: 20px;
-            transition: 0.5s;
-            border: black solid 1px;
-        }
-        .tableShow .cosdata input[type=text]:hover{
-            border: rgb(255, 115, 0) solid 2px;
-            background: rgba(48, 47, 47, 0.445);
-        }
-        .tableShow .cosdata input[type=text]:focus{
-            width: 160px;
-            height: 45px;
-            border:inset rgb(255, 115, 0) solid 2px;
-            color: orangered;
-            background: rgba(48, 47, 47, 0.445);
-        }
-        .tableShow td button{
-            width: 70px;  
-            height: 30px;
-            margin-left: 10px;
-            font-family: 'Odibee Sans', cursive;
-            border: black solid 2px;
-            border-radius: 5px ;
-        }
-        .tableShow .BTN-Edit{
-            color: rgb(255, 255, 255);
-            background: rgba(27, 27, 27, 0.692);
-            transition: 0.8s;
-        }
-        .tableShow .BTN-Edit:hover{
-            background: rgba(12, 12, 230, 0.658);
-            border: white solid 2px;
-        }
-        .tableShow .BTN-Delete{
-            background-color: rgba(196, 190, 190, 0.801);
-            transition: 0.8s;
-        }
-        .tableShow .BTN-Delete:hover{
-            background-color: rgba(255, 0, 0, 0.767);
-            border: white solid 2px;
-            color: white;
-
-        }
-    </style>
     <script>
         
         function ConfirmADD(){
@@ -167,7 +50,10 @@
         function confirmDelete(){
             return confirm("คุณต้องการลบข้อมูลใช่ไหม ?")
         }
+        
+
     </script>
+
 </head>
 <body>
         <div class="Add-Sub">
@@ -181,14 +67,17 @@
         </div>
 
         <table class="tableShow">
-            <tr>
-                <th class="title-table">NO.</th>
-                <th class="title-table">Sub Name</th>
-                <th class="title-table">Sub ID</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th class="title-table">NO.</th>
+                    <th class="title-table">Sub Name</th>
+                    <th class="title-table">Sub ID</th>
+                </tr>
+            </thead>
 
+            <tbody>
             {% for Sub in data.get().each() %}
-            <form action="/UpdateSubject" method="POST" name="Subject">
+            <form action="/UpdateSubject" method="POST" name="Subject" >
                 <tr>
                     <td class="cosdata"><input type="text" name="NOSUB" readonly id="" value="{% print(Sub.val()['NO'])%}"></td>
                     <td class="cosdata"><input type="text" name="Subname" id="" value="{% print(Sub.val()['SUBNAME'])%}"></td>
@@ -198,6 +87,7 @@
                 </tr>
             </form>
             {% endfor %}
+            </tbody>
         </table>
 
 </body>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .AddChoice{
+        position: fixed;
+        text-decoration: none;
+        display: inline-block;
+        width: 680px;
+        height: 500px;
+        margin: 130px 10%;
+        border-radius: 15px;
+        background-color: rgba(7, 1, 27, 0.719);
+        box-shadow: 0 0 20px black;
+        background-image: url("/static/image/more.png");
+        background-size: cover;
+        background-position: center;
+        transition: 0.8s;
+   }
+   .AddChoice:hover{
+        border: rgb(29, 28, 28) solid 4px;
+        width: 685px;
+        height: 505px;
+   }
+
+
+    .Add-Choice .Title{
+        width: 100%;
+        margin: 20% 38%;
+        color: rgb(168, 168, 168);
+        font-weight: bold;
+        font-size: 50px;
+        position: absolute;
+        font-family: 'Odibee Sans', cursive;
+    } 
+
+    .Add-Choice img{
+        position: absolute;
+        margin-top: 30%;
+        margin-left: 41%;
+    }
+
+    .AddSub{
+        margin-top: 130px;
+        margin-left: 56%;
+        text-decoration: none;
+        display: inline-block;
+        position: fixed;
+        width: 530px;
+        height: 220px;
+        border-radius: 15px;
+        background-color: rgba(7, 1, 27, 0.719);
+        background-image: url("/static/image/bookwal.png");
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 0 20px black;
+        transition: 0.8s;
+    }
+    .AddSub:hover{
+        border: rgb(29, 28, 28) solid 4px;
+        width: 535px;
+        height: 225px;
+    }
+    .AddSub .TitleSub{
+        width: 100%;
+        margin: 7% 38%;
+        color: rgb(168, 168, 168);
+        font-weight: bold;
+        font-size: 35px;
+        position: absolute;
+        font-family: 'Odibee Sans', cursive;
+    }
+    .AddSub img{
+        position: absolute;
+        margin-top: 18%;
+        margin-left: 42%;
+    }
+    .Quiz-a{
+        margin-top: 370px;
+        margin-left: 56%;
+        text-decoration: none;
+        display: inline-block;
+        position: fixed;
+        width: 530px;
+        height: 260px;
+        border-radius: 15px;
+        background-color: rgba(7, 1, 27, 0.719);
+        background-image: url("/static/image/Quizwal1.png");
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 0 20px black;
+        transition: 0.8s;
+    }
+    .Quiz-a:hover{
+        border: rgb(29, 28, 28) solid 4px;
+        width: 535px;
+        height: 265px;
+    }
+    .Quiz-a .TitleQ{
+        color: rgb(168, 168, 168);
+        margin: 7% 38%;
+        width: 100%;
+        font-weight: bold;
+        font-size: 40px;
+        position: absolute;
+        font-family: 'Odibee Sans', cursive;
+    }
+    .Quiz-a img{
+        position: absolute;
+        margin-top: 18%;
+        margin-left: 40%;
+    }
+
+
+</style>
+<body>
+
+        <a href="/Addchoice" class="AddChoice">
+            <div class="Add-Choice">
+                <img src="/static/image/wrong.png"  alt="">
+
+                <p class="Title">Add - Choice</p>
+            </div>
+        </a>
+
+        <a href="/SubjectHome" class="AddSub">
+            <div class="Add-Sub">
+                <img src="/static/image/books.png"  alt="">
+
+                <p class="TitleSub">SUBJECT</p>
+            </div>
+        </a>
+
+        <a href="/Update" class="Quiz-a">
+            <div class="Quiz">
+                <img src="/static/image/question2.png"  alt="">
+
+                <p class="TitleQ">Question ?</p>
+            </div>
+        </a>
+   
+</body>
+</html>

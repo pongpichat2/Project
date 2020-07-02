@@ -26,6 +26,8 @@ firebase = Firebase(config)
 db = firebase.database()
 auth = firebase.auth()
 
+
+
 # Sub = db.child('Subject/').get()
 # for subject in Sub.each():
 #     print(subject.key())
@@ -46,6 +48,11 @@ auth = firebase.auth()
 
 
 app = Flask(__name__,template_folder='template')
+
+
+@app.route("/Home")
+def Home():
+    return render_template('Home.html')
 
 @app.route("/Addchoice") #URL
 def hello():
@@ -125,29 +132,6 @@ def Subject():
             db.child("Subject").child(countDataSub).set({"SUBNAME":subname,"SUBID" : subid,"NO":countDataSub})
             return redirect(url_for('SubjectHome'))
         
-@app.route("/UpdateSubject", methods=['GET','POST'])
-def UpDatesub():
-    
-    if request.method == 'POST':
-        no = request.form['NOSUB']
-        subname = request.form['Subname']
-        subid = request.form['SubID']
-        button = request.form['BTN']
-
-        if no == "":
-            return redirect(url_for('SubjectHome'))
-        elif button == "Edit":
-            db.child("Subject").child(no).update({"SUBNAME":subname,"SUBID":subid})
-            return redirect(url_for('SubjectHome'))
-        elif button == "Delete":
-            db.child("Subject").child(no).remove()
-            return redirect(url_for('SubjectHome'))
-            
-    
-
-
-
-
 
 @app.route("/Register", methods=['GET','POST'])
 def Signup():
@@ -189,6 +173,27 @@ def Update():
     to =  db.child("items/")
     
     return render_template('Update.html', data = to)
+
+@app.route("/UpdateSubject", methods=['GET','POST'])
+def UpDatesub():
+    
+    if request.method == 'POST':
+        no = request.form['NOSUB']
+        subname = request.form['Subname']
+        subid = request.form['SubID']
+        button = request.form['BTN']
+
+        if no == "":
+            return redirect(url_for('SubjectHome'))
+        elif button == "Edit":
+            db.child("Subject").child(no).update({"SUBNAME":subname,"SUBID":subid})
+            return redirect(url_for('SubjectHome'))
+        elif button == "Delete":
+            db.child("Subject").child(no).remove()
+            return redirect(url_for('SubjectHome'))
+
+
+
 
 # all_users = db.child("ID/").get()
 # # # print(all_users['name'])

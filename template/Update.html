@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UpDate or Delete</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>   
 </head>
+
+
 <body>
     
-    <table border="2px">
-        <tr>
-            <td>NO.</td>
-            <td>Subject</td>
-            <td>Quiz ?</td>
-            <td>Choice1</td>
-            <td>Choice2</td>
-            <td>Choice3</td>
-            <td>Choice4</td>
-            <td>Answer</td>
-        </tr>
+    <table border="2px"  id="table_id" class="table table-striped table-bordered">
+        <thead style="text-align: center;">
+            <tr>
+                <td>NO.</td>
+                <td>Subject</td>
+                <td>Quiz ?</td>
+                <td>Choice 1</td>
+                <td>Choice 2</td>
+                <td>Choice 3</td>
+                <td>Choice 4</td>
+                <td>Answer</td>
+            </tr>   
+        </thead>
 
+        <tbody>
         {% for l in data.get().each() %}
              
         <form action="" method="GET">
@@ -39,8 +48,10 @@
         
         </form>
         {% endfor %}
-        
+        </tbody>
     </table>
+
+    
     
 
 </body>

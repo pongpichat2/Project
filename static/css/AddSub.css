@@ -1,0 +1,130 @@
+body{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0 0;
+    background-image: url("/static/image/AddSub.jpg");
+}
+.Add-Sub{
+    margin: 5% 12%;
+    background: rgba(44, 43, 43, 0.6);
+    width: 450px;
+    height: 280px;
+    border: black solid 2px;
+    box-shadow: 0 0 20px rgb(0, 0, 0);
+    border-radius: 15px ;
+    font-family: 'Odibee Sans', cursive;
+    position: absolute;
+}
+.Add-Sub h2{
+    text-align: center; 
+    margin-top: 10px; 
+    color: rgb(0, 0, 0);
+    font-size: 35px;
+}
+.Add-Sub p {
+    color: rgb(230, 77, 22);
+    margin-left: 30px;
+}
+.Add-Sub input[type=text]{
+    text-align: center;
+    margin-top: 5px;
+    width: 380px;
+    height: 30px;
+    font-size: 18px;
+    background: rgb(255, 255, 255);
+    border: rgb(0, 0, 0) solid 2px;
+    border-radius: 10px;
+    transition: 0.7s;
+    font-family: 'Odibee Sans', cursive;
+}
+.Add-Sub input[type=text]:focus{
+    font-size: 20px;
+    height: 35px ;
+    background: black;
+    color: rgb(255, 255, 255);
+    border: rgb(255, 255, 255) solid 2px;
+}
+.Add-Sub button{
+    margin-left: 40%;
+    text-align: center;
+    width: 90px;
+    height: 35px;
+    background: rgb(255, 255, 255);
+    border: black solid 2px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Odibee Sans', cursive;
+    transition: 0.8s;
+}
+.Add-Sub button:hover{
+    background: rgb(44, 44, 44);
+    border: orangered solid 2px;
+    color: orangered;
+    border-radius: 25px;
+}
+.tableShow{
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 45%;
+    border-collapse: collapse; 
+    overflow:hidden;
+    z-index: 2;
+}
+.tableShow .title-table{
+    text-align: center;
+    width: 60px;
+    height: 40px;
+    background: rgba(37, 31, 2, 0.644);
+    border: rgb(0, 0, 0) solid 3px;
+    font-family: 'Odibee Sans', cursive;
+    color: rgb(255, 115, 0);
+    font-size: 25px;
+}
+.tableShow .cosdata input[type=text]{
+    width: 150px;
+    height: 35px;
+    text-align: center;
+    font-family: 'Odibee Sans', cursive;
+    font-size: 20px;
+    transition: 0.5s;
+    border: black solid 1px;
+}
+.tableShow .cosdata input[type=text]:hover{
+    border: rgb(255, 115, 0) solid 2px;
+    background: rgba(48, 47, 47, 0.445);
+}
+.tableShow .cosdata input[type=text]:focus{
+    width: 160px;
+    height: 45px;
+    border:inset rgb(255, 115, 0) solid 2px;
+    color: orangered;
+    background: rgba(48, 47, 47, 0.445);
+}
+.tableShow td button{
+    width: 70px;  
+    height: 30px;
+    margin-left: 10px;
+    font-family: 'Odibee Sans', cursive;
+    border: black solid 2px;
+    border-radius: 5px ;
+}
+.tableShow .BTN-Edit{
+    color: rgb(255, 255, 255);
+    background: rgba(27, 27, 27, 0.692);
+    transition: 0.8s;
+}
+.tableShow .BTN-Edit:hover{
+    background: rgba(12, 12, 230, 0.658);
+    border: white solid 2px;
+}
+.tableShow .BTN-Delete{
+    background-color: rgba(196, 190, 190, 0.801);
+    transition: 0.8s;
+}
+.tableShow .BTN-Delete:hover{
+    background-color: rgba(255, 0, 0, 0.767);
+    border: white solid 2px;
+    color: white;
+
+}
