@@ -4,23 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <title>Document</title>
 </head>
 <style>
+
+
     body{
         background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
         background-size: cover;
         background-position: center;
-        height: 100vh;
-        margin: 0;
+        height: 100%;
     }
+    /* .navbar{
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 150px;
+        background-color: rgba(0, 0, 0, 0.788);
+        position: fixed;
+        overflow: hidden;
+    } */
+
     .AddChoice{
         position: fixed;
         text-decoration: none;
         display: inline-block;
         width: 680px;
         height: 500px;
-        margin: 130px 10%;
+        margin: 130px 100px;
         border-radius: 15px;
         background-color: rgba(7, 1, 27, 0.719);
         box-shadow: 0 0 20px black;
@@ -54,7 +66,7 @@
 
     .AddSub{
         margin-top: 130px;
-        margin-left: 56%;
+        margin-left: 800px;
         text-decoration: none;
         display: inline-block;
         position: fixed;
@@ -75,7 +87,7 @@
     }
     .AddSub .TitleSub{
         width: 100%;
-        margin: 7% 38%;
+        margin: 7% 33%;
         color: rgb(168, 168, 168);
         font-weight: bold;
         font-size: 35px;
@@ -89,7 +101,7 @@
     }
     .Quiz-a{
         margin-top: 370px;
-        margin-left: 56%;
+        margin-left: 800px;
         text-decoration: none;
         display: inline-block;
         position: fixed;
@@ -123,14 +135,126 @@
         margin-left: 40%;
     }
 
+    ul li{
+        list-style: none;
+        text-decoration: none;
+        box-sizing: border-box;
+    }
+    .wrapper{ 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        font-size: 30px;
+        font-family: 'Odibee Sans', cursive;
+    }
+    .wrapper .navbar{
+        background: rgb(0, 0, 0,0.6);
+        display: flex;
+        height: 80px;
+    }
+    .wrapper .navbar .right{
+        color: white;
+        right: 90px;
+        position: absolute;
+    }
+
+
+    .wrapper .navbar ul li a{
+        color: #9c9c9c;
+        list-style: none;
+        text-decoration: none;
+        transition: 0.8s;
+    }
+    .wrapper .navbar ul li a:hover{
+        color: #ff7b00;
+        
+    }
+    .wrapper .navbar .Left ul,
+    .wrapper .navbar .right ul li a{
+        display: flex;
+        align-items: center;
+
+    }
+    .wrapper .navbar .right ul li .dropdown{
+        position: absolute;
+        width: 180px;
+        height: 100px;
+        top: 63px;
+        right: -80px;
+        text-align: center;
+        background: rgba(49, 49, 49, 0.829);
+        border-radius: 5px;
+        display: none;
+    }
+    .wrapper .navbar .right .dropdown ul li{
+        margin-top: 20px;
+        list-style: none;
+        text-decoration: none;
+        display: block;
+    }
+    .wrapper .navbar .right ul li{
+        position:relative;
+
+    }
+    .wrapper .navbar .right ul li .dropdown:before{
+        content: "";
+        position: absolute;
+        top: -20px;
+        transform: translateX(-50%);
+        border: 10px solid;
+        border-color: transparent transparent rgba(49, 49, 49, 0.829) transparent;
+    }
+
+    .wrapper .navbar .right ul li.active .dropdown{
+        display: block;
+    }
+    .wrapper .navbar .right img{
+        position: absolute;
+        top: -20px;
+        right: 35px;
+    }
+
 
 </style>
 <body>
+    <div class="wrapper">
+        <div class="navbar" id="navbar">
+            <div class="navLeft">
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
+
+                </ul>
+
+            </div>
+
+            <div class="right">
+                <ul>
+                <li>
+                    <a href="#">
+                        <img src="/static/image/Profile.png" alt="Admin" width="60">
+                        <i class="fas fa-angle-down"></i>
+                    </a>
+
+                    <div class="dropdown" >
+                        <ul >
+                            <li><a href=""><i class="fas fa-user"></i>&nbsp; &nbsp;  Profile</a></li>
+                            <li style="margin-top: 5%;"><a href="/Login"><i class="fas fa-sign-out-alt"></i>&nbsp; &nbsp;  Log Out</a></li>
+                        </ul>
+                    </div>
+                </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
 
         <a href="/Addchoice" class="AddChoice">
             <div class="Add-Choice">
                 <img src="/static/image/wrong.png"  alt="">
-
                 <p class="Title">Add - Choice</p>
             </div>
         </a>
@@ -139,7 +263,7 @@
             <div class="Add-Sub">
                 <img src="/static/image/books.png"  alt="">
 
-                <p class="TitleSub">SUBJECT</p>
+                <p class="TitleSub">ADD - SUBJECT</p>
             </div>
         </a>
 
@@ -150,6 +274,14 @@
                 <p class="TitleQ">Question ?</p>
             </div>
         </a>
+
+        <script>
+            
+            document.querySelector(".right ul li").addEventListener("click", function(){
+                  this.classList.toggle("active");
+            });
+
+        </script>
    
 </body>
 </html>

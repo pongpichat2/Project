@@ -6,15 +6,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
     <title>AddChoice</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice6.css') }}">
-    <script src="{{ url_for('static', filename='js/addchioce2.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/addchioce2.js') }}"></script> -->
 
 </head>
 
+<script>    
+function checkdata(){
+    var Quiz = document.forms["AddChoice"]["Proposition"].value;
+    var C1 = document.forms["AddChoice"]["Ch1"].value;
+    var C2 = document.forms["AddChoice"]["Ch2"].value;
+    var C3 = document.forms["AddChoice"]["Ch3"].value;
+    var C4 = document.forms["AddChoice"]["Ch4"].value;
+    var Subject = document.forms["AddChoice"]["Subject"].value;
+    var Answer = document.forms["AddChoice"]["Answer"].value;
+
+    if (Quiz == "" || Quiz == null) {
+        alert("กรุณากรอกโจทย์ด้วยครับ!! ");
+        document.getElementById("Proposition").focus();
+        return false;
+    }
+    if (C1 == "" || C1 == null) {
+        alert("กรุณากรอก Choice1 ด้วยครับ!! ");
+        document.getElementById("Ch1").focus();
+        return false;
+    }
+    if (C2 == "" || C2 == null) {
+        alert("กรุณากรอก Choice2 ด้วยครับ!! ");
+        document.getElementById("Ch2").focus();
+        return false;
+    }
+    if (C3 == "" || C3 == null) {
+        alert("กรุณากรอก Choice1 ด้วยครับ!! ");
+        document.getElementById("Ch3").focus();
+        return false;
+    }
+    if (C4 == "" || C4 == null) {
+        alert("กรุณากรอก Choice4 ด้วยครับ!! ");
+        document.getElementById("Ch4").focus();
+        return false;
+    }
+    if (Subject == "" || Subject == null) {
+        alert("กรุณากรอกข้อมูล SUBJECT ด้วยครับ !! ");
+        return false;
+    }
+    if (Answer == "" || Answer == null) {
+        alert("กรุณากรอกข้อมูล ANSWER ด้วยครับ !! ");
+        return false;
+    }
+}
+
+
+</script>
 
 
 <body>
     <div class="container">
-             <div class="Add-Sub" >
+             <!-- <div class="Add-Sub" >
                  <p style="text-align: center; margin-top: 15px; font-weight: bold;" >- ADD SUBJECT -</p>
             <form action="/AddSubject" method="POST" name="Addsub">
                 <p class="textinput">Subject Name : <br><input type="text" placeholder="Subject Name" name="Subname" id="Subname"></p>
@@ -24,7 +71,8 @@
                 
             </form> 
            
-            </div> 
+            </div>  -->
+            
         <div class="borderform">
             <div class="title-web">
                 <h1 style="text-align: center; font-family: 'Odibee Sans', cursive; font-size: 45px; margin: 10px;"> Add Choice</h1>
@@ -33,9 +81,9 @@
             <div class="AddQuiz">
                 <form action="{{ url_for('insertChoice') }}" method="POST" name="AddChoice" >
                     <p>SUBJECT : <br> <select name="Subject" id="Subject" class="Select">
-                        {% for Sub in data.each() %}
-                        <option value="{% print(Sub.val()['SUBNAME']) %}">{% print(Sub.val()['SUBNAME']) %}</option>
-                        {% endfor %}
+                        <option value="AI">AI</option>
+                        <option value="Network">Network</option>
+                        
                     </select></p>
                     <p>Quiz ? : <br><input type="text" placeholder="โจทย์" name="Proposition" id="Proposition"></p>
                     <p>Choice 1 : <br><input type="text" placeholder="ตัวเลือกที่ 1" name="Ch1" id="Ch1" ></p>
@@ -48,10 +96,10 @@
                     
                         <div class="Answer-Choice">
                             <div class="radio-con">
-                            <input type="radio" id="radio1" name="Answer" value="Answer1"><label for="radio1">Choice 1</label>
-                            <input type="radio" id="radio2" name="Answer" value="Answer2"><label for="radio2">Choice 2</label>
-                            <input type="radio" id="radio3" name="Answer" value="Answer3"><label for="radio3">Choice 3</label> 
-                            <input type="radio" id="radio4" name="Answer" value="Answer4"><label for="radio4">Choice 4</label>
+                            <input type="radio" id="Answer1" name="Answer" value="Answer1"><label for="Answer1">Choice 1</label>
+                            <input type="radio" id="Answer2" name="Answer" value="Answer2"><label for="Answer2">Choice 2</label>
+                            <input type="radio" id="Answer3" name="Answer" value="Answer3"><label for="Answer3">Choice 3</label> 
+                            <input type="radio" id="Answer4" name="Answer" value="Answer4"><label for="Answer4">Choice 4</label>
                             </div>
                         </div>
                     </fieldset>

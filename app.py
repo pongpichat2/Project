@@ -27,10 +27,33 @@ db = firebase.database()
 auth = firebase.auth()
 
 
+# Login
+Sub = db.child('Admin/')
+nameInput = 'Waew'
+for subject in Sub.get().val():
+    if(subject == nameInput):
+        print("In data")
+        Key = db.child('Admin/').child('Waew').get()
+        if(Key.val()['Pass'] == "aaa"):
+            print("Password in database")
+        else:
+            print("Password not in  database")
 
-# Sub = db.child('Subject/').get()
-# for subject in Sub.each():
-#     print(subject.key())
+    elif(subject != nameInput):
+        print("not in data")
+    # print(subject)
+    # print(nameInput == subject)
+    
+
+    
+    # if(subject == 'aew'):
+    #     print('Waew in database')
+    #     Key = db.child('Admin/').child('Pongpichat').get()
+    #     if(Key.val()['Pass'] == "aaa"):
+    #         print("Password in database")
+    #     else:
+    #         print("Password not in  database")
+
 
 # LIKE 
 # query =  database.getReference().child("StoreAds").orderByChild("University").startAt("ps").endAt("\uf8ff");
@@ -83,13 +106,13 @@ def insertChoice():
         Avgtime = Cal.Calchoice(Answer)
 
         
-        checkdata = db.child("items-Hunter").get().val()
+        checkdata = db.child("Subject").child(subject).child("Quiz").get().val()
         
         if checkdata == None:
-            db.child("items-Hunter").child("1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
+            db.child("Subject").child(subject).child("Quiz").child("1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
         else:
-            countDataQuiz = str(len(db.child("items-Hunter").get().val()))
-            db.child("items-Hunter").child(countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
+            countDataQuiz = str(len(db.child("Subject").child(subject).child("Quiz").get().val()))
+            db.child("Subject").child(subject).child("Quiz").child(countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
         return redirect(url_for('hello'))
 
 
@@ -133,38 +156,37 @@ def Subject():
             return redirect(url_for('SubjectHome'))
         
 
-@app.route("/Register", methods=['GET','POST'])
-def Signup():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['email']
-        try:
-            user = auth.create_user_with_email_and_password(email,password)
-            auth.send_email_verification(user['idToken'])
-            return "Seccess"
+# @app.route("/Register", methods=['GET','POST'])
+# def Signup():
+#     if request.method == 'POST':
+#         email = request.form['email']
+#         password = request.form['email']
+#         try:
+#             user = auth.create_user_with_email_and_password(email,password)
+#             auth.send_email_verification(user['idToken'])
+#             return "Seccess"
 
-        except:
-            return "Fail"
-    return render_template('signup.html')
+#         except:
+#             return "Fail"
+#     return render_template('signup.html')
 
 @app.route("/Login")
 def Login():
     return render_template('Login.html')
 
-@app.route("/CheckLogin", methods=['GET','POST'])
-def CheckLogin():
-    unlogin = 'Check E-mail and Password'
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        try:
-            auth.sign_in_with_email_and_password(email,password)
-            # auth.get_account_info(user['idToken'])
+# @app.route("/CheckLogin", methods=['GET','POST'])
+# def CheckLogin():
+#     unlogin = 'Check E-mail and Password'
+#     if request.method == 'POST':
+#         email = request.form['email']
+#         password = request.form['password']
+#         try:
+#             auth.sign_in_with_email_and_password(email,password)
+#             # auth.get_account_info(user['idToken'])
 
-            return render_template('Addchoice.html')
-        except:
-            return render_template('Login.html', us=unlogin)
-
+#             return render_template('Addchoice.html')
+#         except:
+#             return render_template('Login.html', us=unlogin)
 
 
 
