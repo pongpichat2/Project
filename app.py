@@ -28,21 +28,20 @@ auth = firebase.auth()
 
 
 # Login
-Sub = db.child('Admin/')
-nameInput = 'Waew'
-for subject in Sub.get().val():
-    if(subject == nameInput):
-        print("In data")
-        Key = db.child('Admin/').child('Waew').get()
-        if(Key.val()['Pass'] == "aaa"):
-            print("Password in database")
-        else:
-            print("Password not in  database")
+# Sub = db.child('Admin/')
+# nameInput = 'Waew'
+# for subject in Sub.get().val():
+#     if(subject == nameInput):
+#         print("In data")
+#         Key = db.child('Admin/').child('Waew').get()
+#         if(Key.val()['Pass'] == "aaa"):
+#             print("Password in database")
+#         else:
+#             print("Password not in  database")
 
-    elif(subject != nameInput):
-        print("not in data")
-    # print(subject)
-    # print(nameInput == subject)
+#     elif(subject != nameInput):
+#         print("not in data")
+
     
 
     
