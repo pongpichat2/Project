@@ -60,6 +60,7 @@ function checkdata(){
 
 
 <body>
+    <a href="/Home">Homepage</a>
     <div class="container">
              <!-- <div class="Add-Sub" >
                  <p style="text-align: center; margin-top: 15px; font-weight: bold;" >- ADD SUBJECT -</p>
@@ -81,8 +82,11 @@ function checkdata(){
             <div class="AddQuiz">
                 <form action="{{ url_for('insertChoice') }}" method="POST" name="AddChoice" >
                     <p>SUBJECT : <br> <select name="Subject" id="Subject" class="Select">
-                        <option value="AI">AI</option>
-                        <option value="Network">Network</option>
+                        {% for Sub in data.each() %}
+                        <option value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>
+
+                        {% endfor %}
+                        
                         
                     </select></p>
                     <p>Quiz ? : <br><input type="text" placeholder="โจทย์" name="Proposition" id="Proposition"></p>

@@ -18,8 +18,9 @@
 
 
 <body>
+    <div>
     <table id="table"  style="width:700px ; border: none;">
-        <thead >
+        <thead>
             <tr>
                 <th>#</th>
                 <th >Quiz ?</th>
@@ -33,11 +34,11 @@
             </tr>   
         </thead>
         <tbody>
-            <tr>
+            
             {% for l in data.get().each() %}
-
+            <tr>
             <form action="" method="GET">
-                <td ><input type="text" name="" id="" value="{% print(l.val()['ID']) %}"  style="width: 50px; text-align: center;"></td>
+                <td ><input type="text" name="" id="" value="{% print(l.val()['ID']) %}" readonly  style="width: 50px; text-align: center;"></td>
                 <td><input type="text" value="{% print(l.val()['Qu']) %}"  ></td>
                 <td><input type="text" value="{% print(l.val()['C1']) %}" ></td>
                 <td><input type="text" value="{% print(l.val()['C2']) %}" ></td>
@@ -51,12 +52,29 @@
             </tr>
             {% endfor %}
         </tbody>
+        <tfoot>
+            <tr>
+                <th>#</th>
+                <th >Quiz ?</th>
+                <th>Choice 1</th>
+                <th >Choice 2</th>
+                <th >Choice 3</th>
+                <th class="text-center">Choice 4</th>
+                <th class="text-center">Answer</th>
+                <th class="text-center" style="display: none; " >Edit</th>
+                <th class="text-center" style="display: none;">Delete</th>
+            </tr>   
+        </tfoot>
     </table>
+    </div>
     
       <script>
          
-  $(document).ready(function() {
-    $('#table').DataTable();
+         $(document).ready(function() {
+            $('#table').DataTable( {
+                "processing": true,
+
+            } );
 } );
  
       </script>
