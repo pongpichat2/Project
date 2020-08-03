@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Chartlist -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+
+    <style>
+        .ShowStatus{
+            margin: 5% 33%;
+            width: 400px;
+            height: 500px;
+            background: rgba(37, 37, 37, 0.527);
+        }
+    </style>
+</head>
+<body>
+    <h1>Show Development</h1>
+    <div class="ShowStatus">
+        <h2>{{SubName}}</h2>
+        <p>Student Code : {{StuCode}} <br> Name : {{NAME}} </p>
+        <button type="submit">G1</button> <button type="submit">G2</button> <button type="submit">G3</button>
+
+
+        <div class="ct-chart"></div>
+
+        <script>
+            var data = {
+ 
+                labels: ['1', '2', '3', '4', '5'],
+                series: [[15, 20, 10, 7, 35],
+                [10, 22, 15, 15, 25],
+                [25, 22, 32, 25, 29],
+                [12, 16, 17, 27, 30]
+                ]
+                };
+                
+
+
+                new Chartist.Line('.ct-chart', data);
+        </script>
+
+    </div>
+</body>
+</html>

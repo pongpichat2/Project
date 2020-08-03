@@ -266,7 +266,10 @@ def Evopage():
 
     if request.method == 'POST':
         Sub = request.form['Sub_name']
+
         SubMem = db.child('Subject').child(Sub).child('Member').get()
+
+        session['SubjectRef'] = Sub
 
         if SubMem.val() == None:
             ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
@@ -274,7 +277,23 @@ def Evopage():
         else:
             return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem ) 
 
-    return render_template('evo.html', Subject = ShowSubject, test = user)
+    return render_template('evo.html', Subject = ShowSubject)
+
+
+@app.route("/ShowEvo", methods=['GET','POST'])
+def ShowEvo():
+    SubRef = session['SubjectRef']
+    if request.method == 'POST':
+        User = request.form['Username']
+
+        DataUser = db.child('Subject').child(SubRef).child('Member').child(User).get()
+
+        Name = DataUser.val()['Name']
+        Stu_Code = DataUser.val()['Stu_Code']
+        return render_template('ShowEvo.html', SubName = SubRef , NAME = Name , StuCode = Stu_Code )
+
+    return render_template('ShowEvo.html')
+
 
 @app.route("/Logout")
 def Logout():
