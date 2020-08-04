@@ -16,7 +16,7 @@
     <style>
         .ShowStatus{
             margin: 5% 33%;
-            width: 400px;
+            width: 700px;
             height: 500px;
             background: rgba(37, 37, 37, 0.527);
         }
@@ -27,25 +27,32 @@
     <div class="ShowStatus">
         <h2>{{SubName}}</h2>
         <p>Student Code : {{StuCode}} <br> Name : {{NAME}} </p>
-        <button type="submit">G1</button> <button type="submit">G2</button> <button type="submit">G3</button>
+        <button type="submit">G1</button> 
+        <button type="submit">G2</button> 
+        <button type="submit">G3</button>
 
 
         <div class="ct-chart"></div>
 
         <script>
+
             var data = {
  
                 labels: ['1', '2', '3', '4', '5'],
-                series: [[15, 20, 10, 7, 35],
-                [10, 22, 15, 15, 25],
-                [25, 22, 32, 25, 29],
-                [12, 16, 17, 27, 30]
+                series: [
+                    [15, 20, 10, 7, 35],
+
                 ]
+                };
+
+                var options = {
+                    width: 650,
+                    height: 300
+
                 };
                 
 
-
-                new Chartist.Line('.ct-chart', data);
+                new Chartist.Line('.ct-chart', data, options);
         </script>
 
     </div>

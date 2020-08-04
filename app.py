@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, session
+from flask import Flask, render_template, request, url_for, redirect, session, jsonify
 
 # import pyrebase
 from firebase import Firebase
@@ -93,9 +93,9 @@ def CheckLogin():
 
                 # เก็บ session 
                 if ref.val()['Password'] == Password :
-                    session['User'] = Username
-                    print(session['User'])
-                    print('Go to Page Home')
+                    session['Admin'] = Username
+                    # print(session['User'])
+                    # print('Go to Page Home')
                     return redirect(url_for("Home"))
     
     # return redirect(url_for('Login'))
@@ -132,21 +132,20 @@ def Register():
 
 @app.route("/Home")
 def Home():
-    user = session['User']
+    user = session['Admin']
 
     return render_template('Home.html',name = user)
 
 @app.route("/Addchoice") #URL
 def hello():
-
-    IDuser = session['User']
-    Sub = db.child('Admin').child(IDuser).child('Subject_pro').get()
+    IDAdmin = session['Admin']
+    Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
     return render_template('Addchoice.html', data = Sub)
 
 # Insert คำถามลงใน Database #
 @app.route("/insertChoice", methods=['GET','POST'])
 def insertChoice():
-    user = session['User']
+    user = session['Admin']
 
     if request.method == "POST":
         subject = request.form['Subject']
@@ -244,7 +243,7 @@ def UpDatesub():
 
 @app.route("/Subject", methods=['GET','POST'])
 def Subject():
-    user = session['User']
+    user = session['Admin']
     Detil = db.child('Admin').child(user).child('Subject_pro').get()
 
     if request.method == 'POST':
@@ -261,52 +260,94 @@ def Subject():
 
 @app.route("/Evopage", methods=['GET','POST'])
 def Evopage():
-    user = session['User']
+    user = session['Admin']
     ShowSubject = db.child('Admin').child(user).child('Subject_pro').get()
 
     if request.method == 'POST':
         Sub = request.form['Sub_name']
-
         SubMem = db.child('Subject').child(Sub).child('Member').get()
 
         session['SubjectRef'] = Sub
-
         if SubMem.val() == None:
             ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
             return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText )
         else:
+            
             return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem ) 
 
     return render_template('evo.html', Subject = ShowSubject)
 
 
+
 @app.route("/ShowEvo", methods=['GET','POST'])
 def ShowEvo():
     SubRef = session['SubjectRef']
-    if request.method == 'POST':
-        User = request.form['Username']
 
-        DataUser = db.child('Subject').child(SubRef).child('Member').child(User).get()
+    if request.method == 'POST':
+        Member = request.form['Username']
+
+        session['Member'] = Member
+
+        DataUser = db.child('Subject').child(SubRef).child('Member').child(session['Member']).get()
 
         Name = DataUser.val()['Name']
         Stu_Code = DataUser.val()['Stu_Code']
-        return render_template('ShowEvo.html', SubName = SubRef , NAME = Name , StuCode = Stu_Code )
 
-    return render_template('ShowEvo.html')
+        session['NameMember'] = Name
+        session['StuCode'] = Stu_Code
+
+        return render_template('ShowEvo.html', SubName = SubRef , NAME = session['NameMember'] , StuCode = session['StuCode']) 
+
+    return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'] )
 
 
 @app.route("/Logout")
 def Logout():
     session.pop('User', None)
+
     return redirect(url_for('Login'))
 
 
-# SubMem = db.child('Subject').child('Anatome').child('Member').get()
-# for a in SubMem.each():
-#     print(a.key())
+# print(DataRef.val()['Score_'+str(1)])
+# print(DataRef)
+@app.route("/testPage")
+def testPage():
+    return render_template('test.html')
+
+
+@app.route("/data")
+def test():
+    DataRef = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game1').get()
+    Datachart = []
+    lengthData = []
+    Count = 1
+    for a in DataRef.each():
+        Datachart.append(a.val())
+        lengthData.append(Count)
+        Count += 1
+
+    return jsonify({'ChartData':Datachart,'LengthData':lengthData})
+
+# DataRef = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game1').get()
+# Datachart = []
+# lengthData = []
+# Count = 1
+# for a in DataRef.each():
+#     Datachart.append(a.val())
+#     lengthData.append(Count)
+#     Count += 1
 
 
 
+
+
+
+
+
+
+
+
+    
 
 
 if __name__ == "__main__":
