@@ -10,16 +10,16 @@
     <title>test</title>
 </head>
 <body>
-    <h1>Test Daata</h1>
+    <h1>Test Data</h1>
 
 
     <div class="ct-chart"></div>
 
     <script>
 
-        var GetData = $.get('/data');
+        var ShowData = $.get('/dataChart');
         
-        GetData.done(function(result){
+        ShowData.done(function(result){
 
             var data = {
  
@@ -35,13 +35,12 @@
                     height: 300,
                     high: 50,
                     low: 0,
-
                     showArea: true,
                 };
-                new Chartist.Line('.ct-chart', data, options);
-            
+                new Chartist.Line('.ct-chart', data, options);}
+                );
 
-        });
+    
     </script>
     
 </body>

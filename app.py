@@ -27,32 +27,7 @@ db = firebase.database()
 auth = firebase.auth()
 
 
-# Login
-# Sub = db.child('Admin/')
 
-# nameInput = 'Waew'
-# for subject in Sub.get().val():
-#     if(subject == nameInput):
-#         print("In data")
-#         Key = db.child('Admin/').child('Waew').get()
-#         if(Key.val()['Pass'] == "aaa"):
-#             print("Password in database")
-#         else:
-#             print("Password not in  database")
-
-#     elif(subject != nameInput):
-#         print("not in data")
-
-    
-
-    
-    # if(subject == 'aew'):
-    #     print('Waew in database')
-    #     Key = db.child('Admin/').child('Pongpichat').get()
-    #     if(Key.val()['Pass'] == "aaa"):
-    #         print("Password in database")
-    #     else:
-    #         print("Password not in  database")
 
 
 # LIKE 
@@ -178,44 +153,6 @@ def insertChoice():
             db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
         return redirect(url_for('hello'))
 
-# @app.route("/AddSubject", methods=['GET','POST'])
-# def AddSubject():
-#     if request.method == 'POST':
-#         subname = request.form['Subname']
-#         subid = request.form['Subid']
-#         checkdata = db.child("Subject").get().val()
-
-#         if checkdata == None:
-#             db.child("Subject").child("1").set({"SUBNAME":subname,"SUBID" : subid})
-#         else:
-#             countDataSub = str(len(db.child("Subject").get().val()))
-#             db.child("Subject").child(countDataSub).set({"SUBNAME":subname,"SUBID" : subid,"NO":countDataSub})
-        
-#     return redirect(url_for('hello'))
-
-# @app.route("/SubjectHome")
-# def SubjectHome():
-#     to =  db.child("Subject/")
-
-#     return render_template('AddSubject.html',data = to)
-
-# @app.route("/AddSubjectHome", methods=['GET','POST'])
-# def Subject():
-    
-#     if request.method == 'POST':
-#         subname = request.form['Subname']
-#         subid = request.form['SubID']
-
-#         checkdata = db.child("Subject").get().val()
-#         if checkdata == None:
-#             db.child("Subject").child("1").set({"SUBNAME":subname,"SUBID" : subid,"NO":"1"})
-#             return redirect(url_for('SubjectHome'))
-
-#         else:
-#             countDataSub = str(len(db.child("Subject").get().val()))
-#             db.child("Subject").child(countDataSub).set({"SUBNAME":subname,"SUBID" : subid,"NO":countDataSub})
-#             return redirect(url_for('SubjectHome'))
-        
 
 @app.route("/Update")
 def Update():
@@ -310,14 +247,20 @@ def Logout():
 
 # print(DataRef.val()['Score_'+str(1)])
 # print(DataRef)
-@app.route("/testPage")
+@app.route("/testPage", methods=['GET','POST'])
 def testPage():
-    return render_template('test.html')
+    if request.method == 'POST':
+        session['GameName'] = request.form['Name_Game']
+        return redirect(url_for('ShowEvo'))
+    
 
 
-@app.route("/data")
-def test():
-    DataRef = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game1').get()
+@app.route("/dataChart")
+def DataChart():
+
+
+    # DataRef = db.child('Subject').child(SubRef).child('Member').child(IDMember).child('TypeGame').child(session['GameName']).get()
+    DataRef = db.child('Subject').child(session['SubjectRef']).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
     Datachart = []
     lengthData = []
     Count = 1
@@ -327,6 +270,9 @@ def test():
         Count += 1
 
     return jsonify({'ChartData':Datachart,'LengthData':lengthData})
+
+    # return redirect(url_for('testPage'))
+       
 
 # DataRef = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game1').get()
 # Datachart = []

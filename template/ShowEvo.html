@@ -24,35 +24,44 @@
 </head>
 <body>
     <h1>Show Development</h1>
+
+    <form action="/testPage" method="POST">
+
     <div class="ShowStatus">
         <h2>{{SubName}}</h2>
         <p>Student Code : {{StuCode}} <br> Name : {{NAME}} </p>
-        <button type="submit">G1</button> 
-        <button type="submit">G2</button> 
-        <button type="submit">G3</button>
+        <button type="Submit" name="Name_Game" value="Game1">G1</button> 
+        <button type="Submit" name="Name_Game" value="Game2">G2</button> 
+        <button type="Submit" name="Name_Game" value="Game3">G3</button>
 
+    </form>
 
         <div class="ct-chart"></div>
 
         <script>
 
+        var ShowData = $.get('/dataChart');
+        
+        ShowData.done(function(result){
+
             var data = {
  
-                labels: ['1', '2', '3', '4', '5'],
+                labels: result.LengthData,
                 series: [
-                    [15, 20, 10, 7, 35],
+                    result.ChartData
 
                 ]
                 };
 
                 var options = {
                     width: 650,
-                    height: 300
-
+                    height: 300,
+                    high: 80,
+                    low: 0,
+                    showArea: true,
                 };
-                
-
-                new Chartist.Line('.ct-chart', data, options);
+                new Chartist.Line('.ct-chart', data, options);}
+                );
         </script>
 
     </div>
