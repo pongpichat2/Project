@@ -73,7 +73,7 @@ def CheckLogin():
                     # print('Go to Page Home')
                     return redirect(url_for("Home"))
     
-    # return redirect(url_for('Login'))
+    return redirect(url_for('Login'))
 
 
 
@@ -101,21 +101,26 @@ def Register():
                 else:
                     for i in range(len(Sub)) :
                         db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
-
+                    session['Admin'] = Username
                     return redirect(url_for('Home'))
 
 
 @app.route("/Home")
 def Home():
-    user = session['Admin']
-
-    return render_template('Home.html',name = user)
-
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        return render_template('Home.html',name = IDAdmin)
+        
 @app.route("/Addchoice") #URL
 def hello():
-    IDAdmin = session['Admin']
-    Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-    return render_template('Addchoice.html', data = Sub)
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
+        return render_template('Addchoice.html', data = Sub)
 
 # Insert คำถามลงใน Database #
 @app.route("/insertChoice", methods=['GET','POST'])
@@ -154,93 +159,103 @@ def insertChoice():
         return redirect(url_for('hello'))
 
 
-@app.route("/Update")
-def Update():
-    to =  db.child("items/")
-    return render_template('Update.html', data = to)
-
-@app.route("/UpdateSubject", methods=['GET','POST'])
-def UpDatesub():
-    
-    if request.method == 'POST':
-        no = request.form['NOSUB']
-        subname = request.form['Subname']
-        subid = request.form['SubID']
-        button = request.form['BTN']
-
-        if no == "":
-            return redirect(url_for('SubjectHome'))
-        elif button == "Edit":
-            db.child("Subject").child(no).update({"SUBNAME":subname,"SUBID":subid})
-            return redirect(url_for('SubjectHome'))
-        elif button == "Delete":
-            db.child("Subject").child(no).remove()
-            return redirect(url_for('SubjectHome'))
-
-
 @app.route("/Subject", methods=['GET','POST'])
 def Subject():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        user = session['Admin']
+        Detil = db.child('Admin').child(user).child('Subject_pro').get()
+
+        if request.method == 'POST':
+            Sub_name = request.form['Subname']
+            session['Subname_Update'] = Sub_name
+
+            ShowSub = db.child('Subject').child(Sub_name).child('Quiz').get()
+            return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name)
+
+
+        return render_template('Subject.html',data = Detil)
+
+@app.route("/Sub_Update", methods=['GET','POST'])
+def Sub_Update():
     user = session['Admin']
-    Detil = db.child('Admin').child(user).child('Subject_pro').get()
-
+    Subname = session['Subname_Update']
     if request.method == 'POST':
-        Sub_name = request.form['Subname']
+        NO_Sub = request.form['NO_Sub']
+        Quiz = request.form['Quiz']
+        C1 = request.form['C1']
+        C2 = request.form['C2']
+        C3 = request.form['C3']
+        C4 = request.form['C4']
+        Answer = request.form['Answer']
+        TypeUp = request.form['Type_Up']
 
-        # ref = db.child('Admin').child(user).child('Subject_pro').get()
-        # print(Sub_name)
+        if TypeUp == 'Edit':
+            AvgUpdate = Cal.Calchoice(Answer)
+            db.child('Subject').child(Subname).child('Quiz').child('NO_'+NO_Sub).update({"Qu":Quiz,"C1":C1,"C2":C2,"C3":C3,"C4":C4,"ans":Answer,"Time":AvgUpdate})
+        elif TypeUp == 'Delete':
 
-        ShowSub = db.child('Subject').child(Sub_name).child('Quiz').get()
-        return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name)
+            db.child('Subject').child(Subname).child('Quiz').child('NO_'+NO_Sub).remove()
+            countDataQuiz = str(len(db.child("Subject").child(Subname).child("Quiz").get().val()))
+            db.child('Admin').child(user).child('Subject_pro').child(Subname).update({"DataNum":countDataQuiz})
 
 
-    return render_template('Subject.html',data = Detil)
+
+    return redirect(url_for('Subject'))
 
 @app.route("/Evopage", methods=['GET','POST'])
 def Evopage():
-    user = session['Admin']
-    ShowSubject = db.child('Admin').child(user).child('Subject_pro').get()
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        user = session['Admin']
+        ShowSubject = db.child('Admin').child(user).child('Subject_pro').get()
 
-    if request.method == 'POST':
-        Sub = request.form['Sub_name']
-        SubMem = db.child('Subject').child(Sub).child('Member').get()
+        if request.method == 'POST':
+            Sub = request.form['Sub_name']
+            SubMem = db.child('Subject').child(Sub).child('Member').get()
 
-        session['SubjectRef'] = Sub
-        if SubMem.val() == None:
-            ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
-            return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText )
-        else:
-            
-            return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem ) 
+            session['SubjectRef'] = Sub
+            if SubMem.val() == None:
+                ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
+                return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText )
+            else:
+                
+                return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem ) 
 
-    return render_template('evo.html', Subject = ShowSubject)
+        return render_template('evo.html', Subject = ShowSubject)
 
 
 
 @app.route("/ShowEvo", methods=['GET','POST'])
 def ShowEvo():
-    SubRef = session['SubjectRef']
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        SubRef = session['SubjectRef']
 
-    if request.method == 'POST':
-        Member = request.form['Username']
+        if request.method == 'POST':
+            Member = request.form['Username']
 
-        session['Member'] = Member
+            session['Member'] = Member
 
-        DataUser = db.child('Subject').child(SubRef).child('Member').child(session['Member']).get()
+            DataUser = db.child('Subject').child(SubRef).child('Member').child(session['Member']).get()
 
-        Name = DataUser.val()['Name']
-        Stu_Code = DataUser.val()['Stu_Code']
+            Name = DataUser.val()['Name']
+            Stu_Code = DataUser.val()['Stu_Code']
 
-        session['NameMember'] = Name
-        session['StuCode'] = Stu_Code
+            session['NameMember'] = Name
+            session['StuCode'] = Stu_Code
 
-        return render_template('ShowEvo.html', SubName = SubRef , NAME = session['NameMember'] , StuCode = session['StuCode']) 
+            return render_template('ShowEvo.html', SubName = SubRef , NAME = session['NameMember'] , StuCode = session['StuCode']) 
 
-    return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'] )
+        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'] )
 
 
 @app.route("/Logout")
 def Logout():
-    session.pop('User', None)
+    session.pop('Admin', None)
 
     return redirect(url_for('Login'))
 
@@ -258,8 +273,6 @@ def testPage():
 @app.route("/dataChart")
 def DataChart():
 
-
-    # DataRef = db.child('Subject').child(SubRef).child('Member').child(IDMember).child('TypeGame').child(session['GameName']).get()
     DataRef = db.child('Subject').child(session['SubjectRef']).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
     Datachart = []
     lengthData = []
@@ -271,30 +284,10 @@ def DataChart():
 
     return jsonify({'ChartData':Datachart,'LengthData':lengthData})
 
-    # return redirect(url_for('testPage'))
-       
 
-# DataRef = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game1').get()
-# Datachart = []
-# lengthData = []
-# Count = 1
-# for a in DataRef.each():
-#     Datachart.append(a.val())
-#     lengthData.append(Count)
-#     Count += 1
-
-
-
-
-
-
-
-
-
-
-
-    
-
+@app.route("/test")
+def test():
+    return render_template('test.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

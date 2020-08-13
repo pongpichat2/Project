@@ -35,7 +35,7 @@
     <table border="2px">
         <thead>
             <tr>
-                <th>#</th>
+
                 <th >ชื่อวิชา</th>
                 <th>จำนวน</th>
             </tr>
@@ -44,10 +44,9 @@
             {% for k in data.each() %}
             <form action="/Subject" method="POST">
             <tr>
-                <td> 1 </td>
                 <td> <input type="text" value="{%print(k.key())%}" name="Subname"></td>
                 <td> {% print(k.val()['DataNum']) %}</td>
-                <td> <button type="Submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">View</button></td>
+                <td> <button type="Submit" class="btn btn-primary" >View</button></td>
             </tr>
             </form>
             {% endfor %}
@@ -69,24 +68,24 @@
                 <th >Choice 3</th>
                 <th class="text-center">Choice 4</th>
                 <th class="text-center">Answer</th>
-                <th class="text-center" style="display: none; " >Edit</th>
+                <th class="text-center" style="display: none;" >Edit</th>
                 <th class="text-center" style="display: none;">Delete</th>
             </tr>
         </thead>
         <tbody>
             {% for k in Show.each() %}
 
-            <form action="" method="post">
+            <form action="/Sub_Update" method="POST">
                 <tr>
-                    <td>{% print(k.val()['ID']) %}</td>
-                    <td>{% print(k.val()['Qu']) %}</td>
-                    <td>{% print(k.val()['C1']) %}</td>
-                    <td>{% print(k.val()['C2']) %}</td>
-                    <td>{% print(k.val()['C3']) %}</td>
-                    <td>{% print(k.val()['C4']) %}</td>
-                    <td>{% print(k.val()['ans']) %}</td>
-                    <td><button type="Submit">Edit</button></td>
-                    <td><button type="Submit">Delete</button></td>
+                    <td><input type="text" value="{%print(k.val()['ID'])%}" readonly name="NO_Sub"></td>
+                    <td><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
+                    <td><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
+                    <td><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
+                    <td><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
+                    <td><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
+                    <td><input type="text" value="{%print(k.val()['ans'])%}" name="Answer"></td>
+                    <td><button type="Submit" value="Edit" name="Type_Up">Edit</button></td>
+                    <td><button type="Submit" value="Delete" name="Type_Up">Delete</button></td>
                 </tr>
             </form>
 
@@ -96,7 +95,7 @@
         </tbody>
         
     </table>
-        
+
     {% else %}
         <h1>Not Show Data</h1>
     {% endif %}
