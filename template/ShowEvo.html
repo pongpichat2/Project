@@ -19,11 +19,41 @@
             width: 700px;
             height: 500px;
             background: rgba(37, 37, 37, 0.527);
+            position: absolute;
         }
     </style>
 </head>
 <body>
     <h1>Show Development</h1>
+
+    <!-- รายชื่อ Member ที่อยู่ในรายวิชา -->
+    <div class="ShowName-Mem">
+        <table border="2px">
+            <thead>
+                <tr>
+                    <td> Stu_Code </td>
+                    <td> Username </td>
+                    <td> Name </td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Member in ShowData.each() %}
+                <form action="/ShowEvo" method="POST">
+
+                    <tr>
+                        <td><input type="text" value="{% print(Member.val()['Stu_Code'])%}" name="Stu_Code" readonly></td>
+                        <td><input type="text" name="Username" id="" value="{%print(Member.key())%}" readonly></td>
+                        <td><input type="text" value="{%print(Member.val()['Name'])%}" name="Name" readonly></td>
+                        <td><button type="submit" value="View" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">View</button></td>
+                    </tr>
+                    </form>
+
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
 
     <form action="/testPage" method="POST">
 
@@ -36,9 +66,12 @@
 
     </form>
 
+    <!-- show chart -->
+
     <div class="chart-container" style="position: relative; height:25vh; width:45vw">
         <canvas id="myChart"></canvas>
     </div>
+
 
     <script>
 

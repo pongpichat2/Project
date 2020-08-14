@@ -234,7 +234,7 @@ def ShowEvo():
         return redirect(url_for('Login'))
     else:
         SubRef = session['SubjectRef']
-
+        ShowMem = db.child('Subject').child(SubRef).child('Member').get()
         if request.method == 'POST':
             Member = request.form['Username']
 
@@ -248,16 +248,13 @@ def ShowEvo():
             session['NameMember'] = Name
             session['StuCode'] = Stu_Code
 
-            return render_template('ShowEvo.html', SubName = SubRef , NAME = session['NameMember'] , StuCode = session['StuCode']) 
 
-        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'] )
+            return render_template('ShowEvo.html', SubName = SubRef , NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem ) 
+
+        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'] ,ShowData = ShowMem)
 
 
-@app.route("/Logout")
-def Logout():
-    session.pop('Admin', None)
 
-    return redirect(url_for('Login'))
 
 
 # print(DataRef.val()['Score_'+str(1)])
@@ -267,23 +264,32 @@ def testPage():
     if request.method == 'POST':
         session['GameName'] = request.form['Name_Game']
         return redirect(url_for('ShowEvo'))
-    
+
 
 
 @app.route("/dataChart")
 def DataChart():
 
     DataRef = db.child('Subject').child(session['SubjectRef']).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
-    Datachart = []
-    lengthData = []
-    Count = 1
-    for a in DataRef.each():
-        Datachart.append(a.val())
-        lengthData.append(Count)
-        Count += 1
+    if DataRef.val() == None:
+        ShowMem = db.child('Subject').child(session['SubjectRef']).child('Member').get()
+ 
+        return render_template('ShowEvo.html', SubName = session['SubjectRef'], NAME = session['NameMember'] , StuCode = session['StuCode'] ,ShowData = ShowMem )
+    else:
+        Datachart = []
+        lengthData = []
+        Count = 1
+        for a in DataRef.each():
+            Datachart.append(a.val())
+            lengthData.append(Count)
+            Count += 1
 
-    return jsonify({'ChartData':Datachart,'LengthData':lengthData})
+        return jsonify({'ChartData':Datachart,'LengthData':lengthData})
 
+@app.route("/Logout")
+def Logout():
+    session.pop('Admin', None)
+    return redirect(url_for('Login'))
 
 @app.route("/test")
 def test():
