@@ -56,7 +56,7 @@
     </div>
 
     <form action="/testPage" method="POST">
-
+        
     <div class="ShowStatus">
         <h2>{{SubName}}</h2>
         <p>Student Code : {{StuCode}} <br> Name : {{NAME}} </p>
@@ -67,10 +67,17 @@
     </form>
 
     <!-- show chart -->
+    
+    
+    {% if Text %}
+        <h1>{{Text}}</h1>
 
-    <div class="chart-container" style="position: relative; height:25vh; width:45vw">
-        <canvas id="myChart"></canvas>
-    </div>
+    {% else %}
+        <h2>{{NameGmae}}</h2>
+        <div class="chart-container" style="position: relative; height:10vh; width:30vw">
+            <canvas id="myChart"></canvas>
+        </div>
+    {% endif %}
 
 
     <script>

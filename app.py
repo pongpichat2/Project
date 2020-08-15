@@ -48,7 +48,7 @@ auth = firebase.auth()
 app = Flask(__name__,template_folder='template')
 app.secret_key = "hello"
 
-@app.route("/Login")
+@app.route("/")
 def Login():
 
     return render_template('Login.html')
@@ -236,8 +236,8 @@ def ShowEvo():
         SubRef = session['SubjectRef']
         ShowMem = db.child('Subject').child(SubRef).child('Member').get()
         if request.method == 'POST':
+            
             Member = request.form['Username']
-
             session['Member'] = Member
 
             DataUser = db.child('Subject').child(SubRef).child('Member').child(session['Member']).get()
@@ -248,34 +248,36 @@ def ShowEvo():
             session['NameMember'] = Name
             session['StuCode'] = Stu_Code
 
+            return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem )
 
-            return render_template('ShowEvo.html', SubName = SubRef , NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem ) 
-
-        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'] ,ShowData = ShowMem)
-
+        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem )
 
 
-
-
-# print(DataRef.val()['Score_'+str(1)])
-# print(DataRef)
 @app.route("/testPage", methods=['GET','POST'])
 def testPage():
+    SubRef = session['SubjectRef']
+    ShowMem = db.child('Subject').child(SubRef).child('Member').get()
     if request.method == 'POST':
+        ShowMem = db.child('Subject').child(SubRef).child('Member').get()
         session['GameName'] = request.form['Name_Game']
-        return redirect(url_for('ShowEvo'))
+
+    return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem , NameGame = session['GameName'])
 
 
 
 @app.route("/dataChart")
 def DataChart():
-
-    DataRef = db.child('Subject').child(session['SubjectRef']).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
+    
+    SubjectRef = session['SubjectRef']
+    DataRef = db.child('Subject').child(SubjectRef).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
+    
     if DataRef.val() == None:
-        ShowMem = db.child('Subject').child(session['SubjectRef']).child('Member').get()
- 
-        return render_template('ShowEvo.html', SubName = session['SubjectRef'], NAME = session['NameMember'] , StuCode = session['StuCode'] ,ShowData = ShowMem )
+        print("อยู่ใน if")
+        textError = "ผู้เล่นยังไม่ได้เล่นเกมนี้ค่ะ"
+        ShowMem = db.child('Subject').child(SubjectRef).child('Member').get()
+        return render_template('ShowEvo.html', SubName = SubjectRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem ,Text = textError)
     else:
+        print("อยู่ใน else")
         Datachart = []
         lengthData = []
         Count = 1
@@ -288,12 +290,13 @@ def DataChart():
 
 @app.route("/Logout")
 def Logout():
-    session.pop('Admin', None)
+    session.clear()
     return redirect(url_for('Login'))
 
 @app.route("/test")
 def test():
     return render_template('test.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
