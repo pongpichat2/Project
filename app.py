@@ -87,7 +87,6 @@ def Register():
         Email = request.form['Email']
         Sub = request.form.getlist('Sub[]')
 
-
         for C in db.child('Admin').get().val():
             # การเช็คว่า มี Username ซ้ำ
             if C == Username :
@@ -111,7 +110,8 @@ def Home():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
-        return render_template('Home.html',name = IDAdmin)
+        Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
+        return render_template('Home.html',name = IDAdmin ,DataSubject = Admin_Subject)
         
 @app.route("/Addchoice") #URL
 def hello():
@@ -120,7 +120,8 @@ def hello():
     else:
         IDAdmin = session['Admin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-        return render_template('Addchoice.html', data = Sub)
+        Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
+        return render_template('Addchoice.html', data = Sub,DataSubject = Admin_Subject)
 
 # Insert คำถามลงใน Database #
 @app.route("/insertChoice", methods=['GET','POST'])
@@ -166,16 +167,20 @@ def Subject():
     else:
         user = session['Admin']
         Detil = db.child('Admin').child(user).child('Subject_pro').get()
-
+        Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
         if request.method == 'POST':
             Sub_name = request.form['Subname']
             session['Subname_Update'] = Sub_name
 
             ShowSub = db.child('Subject').child(Sub_name).child('Quiz').get()
-            return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name)
+            if ShowSub.val() == None :
+                textError = "None"
+                return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , NoneData = textError)
+            else:
+                textHave = "haveData"
+                return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , haveData = textHave)
 
-
-        return render_template('Subject.html',data = Detil)
+        return render_template('Subject.html',data = Detil,DataSubject = Admin_Subject)
 
 @app.route("/Sub_Update", methods=['GET','POST'])
 def Sub_Update():
@@ -200,8 +205,6 @@ def Sub_Update():
             countDataQuiz = str(len(db.child("Subject").child(Subname).child("Quiz").get().val()))
             db.child('Admin').child(user).child('Subject_pro').child(Subname).update({"DataNum":countDataQuiz})
 
-
-
     return redirect(url_for('Subject'))
 
 @app.route("/Evopage", methods=['GET','POST'])
@@ -211,6 +214,7 @@ def Evopage():
     else:
         user = session['Admin']
         ShowSubject = db.child('Admin').child(user).child('Subject_pro').get()
+        Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
 
         if request.method == 'POST':
             Sub = request.form['Sub_name']
@@ -219,12 +223,12 @@ def Evopage():
             session['SubjectRef'] = Sub
             if SubMem.val() == None:
                 ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
-                return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText )
+                return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText ,DataSubject = Admin_Subject)
             else:
                 
-                return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem ) 
+                return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ) 
 
-        return render_template('evo.html', Subject = ShowSubject)
+        return render_template('evo.html', Subject = ShowSubject,DataSubject = Admin_Subject)
 
 
 
@@ -235,6 +239,7 @@ def ShowEvo():
     else:
         SubRef = session['SubjectRef']
         ShowMem = db.child('Subject').child(SubRef).child('Member').get()
+        Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         if request.method == 'POST':
             
             Member = request.form['Username']
@@ -247,35 +252,42 @@ def ShowEvo():
 
             session['NameMember'] = Name
             session['StuCode'] = Stu_Code
-
-            return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem )
-
-        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem )
+        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 
-@app.route("/testPage", methods=['GET','POST'])
-def testPage():
-    SubRef = session['SubjectRef']
-    ShowMem = db.child('Subject').child(SubRef).child('Member').get()
-    if request.method == 'POST':
+@app.route("/Development", methods=['GET','POST'])
+def Development():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        SubRef = session['SubjectRef']
         ShowMem = db.child('Subject').child(SubRef).child('Member').get()
-        session['GameName'] = request.form['Name_Game']
+        Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
+        if request.method == 'POST':
+            session['GameName'] = request.form['Name_Game']
+            DataRef = db.child('Subject').child(SubRef).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
+            if DataRef.val() != None:
+                haveData = "มีข้อมูล"
+                return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem , NameGame = session['GameName'],HaveData = haveData,DataSubject = Admin_Subject)
+            else:
+                nothaveData = "ไม่มีข้อมูล"
+                return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem , NameGame = session['GameName'], DonHavedata = nothaveData,DataSubject = Admin_Subject)
 
-    return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem , NameGame = session['GameName'])
+        return redirect(url_for('ShowEvo'))
 
 
 
 @app.route("/dataChart")
 def DataChart():
-    
+
     SubjectRef = session['SubjectRef']
     DataRef = db.child('Subject').child(SubjectRef).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
     
     if DataRef.val() == None:
-        print("อยู่ใน if")
-        textError = "ผู้เล่นยังไม่ได้เล่นเกมนี้ค่ะ"
+        print("อยู่ใน if Data = None")
+
         ShowMem = db.child('Subject').child(SubjectRef).child('Member').get()
-        return render_template('ShowEvo.html', SubName = SubjectRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem ,Text = textError)
+        return render_template('ShowEvo.html', SubName = SubjectRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem)
     else:
         print("อยู่ใน else")
         Datachart = []
@@ -288,6 +300,55 @@ def DataChart():
 
         return jsonify({'ChartData':Datachart,'LengthData':lengthData})
 
+@app.route("/DeleteSub_allPage", methods=['GET','POST'])
+def DeleteSub_allPage():
+    Admin = session['Admin']
+    if request.method == 'POST':
+        Sub_Before = request.form['Subject_Befor']
+
+
+        db.child('Admin').child(Admin).child('Subject_pro').child(Sub_Before).remove()
+        db.child('Subject').child(Sub_Before).remove()
+
+    return redirect(url_for('Home'))
+
+@app.route("/AddSub_allPage", methods=['GET','POST'])
+def AddSub_allPage():
+    Admin = session['Admin']
+
+    if request.method == 'POST':
+        AddSub = request.form.getlist('Sub[]')
+    
+        for i in range(len(AddSub)) :
+            db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0"})
+
+    return redirect(url_for('Home'))
+
+@app.route("/ChangePass_allPage", methods=['GET','POST'])
+def ChangePass_allPage():
+    Admin = session['Admin']
+    Admin_Subject = db.child('Admin').child(Admin).child('Subject_pro').get()
+    if request.method == 'POST':
+        Pass_Be = request.form['Pass_Before']
+        Pass_Af = request.form['Pass_After'] 
+        Pass_co = request.form['CoPass_After']
+        Data = db.child('Admin').child(Admin).get()
+        if Data.val()['Password'] == Pass_Be:
+            db.child('Admin').child(Admin).update({"Password":Pass_Af,"Co_Pass":Pass_co})
+            return redirect(url_for('Home'))
+        else:
+            ChangeError = "รหัสผ่านผิด"
+
+            return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, Error = ChangeError)
+
+    return redirect(url_for('Home'))
+
+
+    
+
+
+
+
 @app.route("/Logout")
 def Logout():
     session.clear()
@@ -296,6 +357,8 @@ def Logout():
 @app.route("/test")
 def test():
     return render_template('test.html')
+
+
 
 
 if __name__ == "__main__":

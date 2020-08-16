@@ -27,11 +27,139 @@
             background-image: url("/static/image/AddSub.jpg");
         }
     </style>
+    <script>
+    var i=1;
+    function add(){
+    i++;
+    var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]' ><button type='button'onclick='remove();' id='Subbut_"+i+"'>x</button><br id = 'br_"+i+"'>";
+    $('#new_chq').append(new_input);
+    $('#total_chq').val(i)
+  }
+  function remove(){
+    var last_chq_no = $('#total_chq').val();
+    if(last_chq_no>0){
+      $('#Sub_'+last_chq_no).remove();
+      $('#Subbut_'+last_chq_no).remove();
+      $('#br_'+last_chq_no).remove();
+      $('#total_chq').val(last_chq_no-1);
+    }
+  }
+  function Co_Delete(){
+
+    return confirm("คุณต้องการลบวิชาใช่หรือไม่ ?");
+  }
+  function Co_Pass(){
+      var Pass_Af = document.getElementById('Pass_After').value;
+      var Pass_Co = document.getElementById('CoPass_After').value;
+        if(Pass_Af != Pass_Co){
+            alert("โปรดเช็ครหัสผ่านใหม่ไม่เข้ากันโปรดเช็ค !!")
+            return false;
+        }
+
+  }
+
+    </script>
     
 
 </head>
 <body>
-    <a href="/Home">Homepage</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item dropdown">
+
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
+                <a class="dropdown-item" href="/Logout">Log Out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- popup Edit - Subject -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">Add Subject</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            {% for ShowSub in DataSubject.each() %}
+              <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
+                  <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" onclick="return Co_Delete()">Delete</button><br>
+                  
+
+              </form>
+            {% endfor %}
+
+            <form action="AddSub_allPage" method="post">
+            <p>Add-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
+                <div id="new_chq"></div>
+                  <input type="hidden" value="1" id="total_chq">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End popup Edit - Subject -->
+
+      <!-- popup Change Password -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="ChangePass_allPage" method="POST">
+                  <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
+                  <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
+                  <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" onclick="Co_Pass()">Save changes</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
+      <!-- end  popup Change Password -->
+
+      {% if Error %}
+      <div class="alert alert-danger" role="alert">
+        รหัสผ่านไม่ผู้ต้องกรุณาทำรายการใหม่
+      </div>
+      {% endif %}
+
     <table border="2px">
         <thead>
             <tr>
@@ -54,9 +182,10 @@
     </table>
     <!-- โชว์ข้อมูล คำถามในแต่ละรายวิชา -->
     
-    {% if  Show %}
-
-        
+    {% if  NoneData %}
+        <h1>ยังไม่มีคำถามในรายวิชานี้</h1>
+    
+    {% elif haveData %}
         <h1>{{Headtext}}</h1>
         <table border="2px">
             <thead>
