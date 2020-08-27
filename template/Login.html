@@ -36,11 +36,11 @@
             font-size: 20px;
         }
         .form-login input[type=text],input[type=password]{
-            background-color: rgba(255, 255, 255, 0.2);
+            /* background-color: rgba(255, 255, 255, 0.2); */
             width: 270px;
             height: 50px;
             text-align: center;
-            color: rgb(255, 255, 255);
+            /* color: rgb(255, 255, 255); */
             border: none;
             border-radius: 25px;
             font-size: 20px;
@@ -49,8 +49,8 @@
         }
         .form-login input[type=text]:focus ,input[type=password]:focus{
             width: 300px;
-            background: rgb(255, 255, 255,0.8);
-            color: rgb(255, 115, 0);
+            /* background: rgb(255, 255, 255,0.8);
+            color: rgb(255, 115, 0); */
             box-shadow: 0 0 15px rgb(255, 30, 0);
 
         }
@@ -116,10 +116,28 @@
     </script>
 </head>
 <body>
-        <h1>{% if us %} {{us}} {% endif %}</h1>
+
+    {% if ErrorPass %}
+    <div class="alert alert-danger alert-dismissible fade show" style="top: 0; width: 100%; position: absolute;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Password Error ! </strong> {{ErrorPass}}
+    </div>
+    {% elif ErrorUser %}
+    <div class="alert alert-danger alert-dismissible fade show" style="top: 0; width: 100%; position: absolute;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Username Error ! </strong> {{ErrorUser}}
+    </div>
+    {% elif Usernamerepea %}
+    <div class="alert alert-danger alert-dismissible fade show" style="top: 0; width: 100%; position: absolute;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Register Username Error ! </strong> {{Usernamerepea}}
+  </div>
+    {% endif %}
+
         <div class="Logo">
              <img src="{{ url_for('static', filename='image/Logo2.png') }}" alt="">
         </div>
+
         <form action="/CheckLogin" method="POST"  name="Login">
             <div class="form-login">
                 <p class="title" >Sign in</p>
@@ -129,8 +147,9 @@
                 <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Register</button>
                     <button type="submit" class="buttonSub" onclick="return CheckLogin()">Log in</button> 
         </form>
+        
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog" role="document" >
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">REGISTER</h5>
@@ -138,16 +157,16 @@
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" style="background: black;">
                           <form action="/Register" method="POST">
                             
                               <p>Username : <br><input type="text" class="form-control" id="recipient-name" name="Username"></p>
-                              <p>Password : <br><input type="text" class="form-control" id="recipient-name" name="Password"></p>
-                              <p>Co-Password : <br><input type="text" class="form-control" id="recipient-name" name="Con_Pass"></p>
+                              <p>Password : <br><input type="password" class="form-control" id="recipient-name" name="Password"></p>
+                              <p>Co-Password : <br><input type="password" class="form-control" id="recipient-name" name="Con_Pass"></p>
                               <p>E-mail : <br><input type="text" class="form-control" id="recipient-name" name="Email" ></p>
 
                               <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
-                              <div id="new_chq"></div>
+                              <div id="new_chq"> </div>
                               <input type="hidden" value="1" id="total_chq">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>

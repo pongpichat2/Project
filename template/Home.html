@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
@@ -152,16 +153,26 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
+              <a class="nav-link" href="/Addchoice">Add-Choice</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link" href="/Subject">Subject</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Evopage">Evolution</a>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">{{name}}</a>
+              </li>
+            
+            <!-- dropdow -->
+            
+             
             <li class="nav-item dropdown">
-
+              
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -170,6 +181,7 @@
                 <a class="dropdown-item" href="/Logout">Log Out</a>
               </div>
             </li>
+          
           </ul>
         </div>
       </nav>
@@ -199,7 +211,7 @@
                   <input type="hidden" value="1" id="total_chq">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">ADD</button>
                 </div>
             </form>
             </div>
@@ -239,6 +251,17 @@
       <div class="alert alert-danger" role="alert">
         รหัสผ่านไม่ผู้ต้องกรุณาทำรายการใหม่
       </div>
+      {% elif SuccessPass %}
+      <div class="alert alert-success alert-dismissible fade show"  style="width: 100%; position: absolute;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success!</strong> Change Password Success
+      </div>
+      {% elif ErrorSub %}
+      <div class="alert alert-danger alert-dismissible fade show" style="width: 100%; position: absolute;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Add Subject Error ! </strong> {{ErrorSub}}
+      </div>
+
       {% endif %}
 
     <div style="position: absolute;">
@@ -261,7 +284,7 @@
             <div class="Quiz">
                 <img src="/static/image/question2.png"  alt="">
 
-                <p class="TitleQ">Development</p>
+                <p class="TitleQ">Evolution</p>
             </div>
         </a>
     </div>

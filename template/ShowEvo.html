@@ -21,7 +21,7 @@
             margin: 5% 33%;
             width: 700px;
             height: 600px;
-            background: rgba(37, 37, 37, 0.527);
+            background: rgba(160, 75, 75, 0.527);
             position: absolute;
         }
     </style>
@@ -34,14 +34,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
+            <li class="nav-item ">
+              <a class="nav-link" href="/Home">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Addchoice">Add-Choice</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Subject">Subject</a>
+            </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link" href="/Evopage">Evolution</a>
             </li>
             <li class="nav-item dropdown">
 
@@ -159,7 +162,7 @@
     <div class="ShowStatus">
         <h2>{{SubName}}</h2>
         <p>Student Code : {{StuCode}} <br> Name : {{NAME}} </p>
-        <button type="Submit" name="Name_Game" value="Game1">G1</button> 
+        <button type="Submit" name="Name_Game" value="Game1" >G1</button> 
         <button type="Submit" name="Name_Game" value="Game2">G2</button> 
         <button type="Submit" name="Name_Game" value="Game3">G3</button>
 
@@ -171,14 +174,12 @@
     <h2>{{NameGame}}</h2>
 
     {% if HaveData %}
-        <div class="chart-container" style="position: relative; height:25vh; width:40vw">
+        <div class="chart-container" style="position: relative; height:25vh; width:45vw">
         <canvas id="myChart"></canvas>
         </div>
     {% elif DonHavedata %}
         <h1>ผู้เล่นยังไม่มีการเล่นเกมส์นี้ค๊าบบ</h1>
-        <div class="chart-container" style="position: relative; height:25vh; width:40vw">
-            <canvas id="myChart"></canvas>
-        </div>
+
 
     {% else %}
         <h2>กรุณาเลือกเกมที่ต้องการเลยค๊าบบบ</h2>
@@ -195,14 +196,15 @@
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: result.LengthData,
+                    labels: ['0','1','2','3','4','5','6','7','8','9','10'],
                     datasets: [{
+                      label: result.NameMem,
                         data :result.ChartData,
                         backgroundColor:[
-                            'rgb(255, 165, 0)'
+                            'rgba(0, 0, 0, 0.5)'
                         ],
-                        borderWidth:3,
-                        borderColor:'#777',
+                        borderWidth:5,
+                        borderColor:'#ee0c30',
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'}
                         
@@ -212,7 +214,7 @@
                     scales: {
                         yAxes: [{
                             ticks: {
-                                max: 60,
+                                max: 80,
                                 min: 0,
                                 stepSize: 10
                             }

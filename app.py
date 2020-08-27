@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, session, j
 # import pyrebase
 from firebase import Firebase
 import Calculat as Cal
+import numpy as np
 
 # import firebase_admin
 # from firebase_admin import credentials
@@ -28,23 +29,6 @@ auth = firebase.auth()
 
 
 
-
-
-# LIKE 
-# query =  database.getReference().child("StoreAds").orderByChild("University").startAt("ps").endAt("\uf8ff");
-
-
-# email = input("E-mail : \n")
-# password = input("Password : \n")
-
-# user = auth.create_user_with_email_and_password(email,password)
-# user = auth.sign_in_with_email_and_password(email,password)
-
-# auth.send_password_reset_email(email)
-# auth.send_email_verification(user['idToken'])
-# print(auth.get_account_info(user['idToken']))
-
-
 app = Flask(__name__,template_folder='template')
 app.secret_key = "hello"
 
@@ -58,21 +42,23 @@ def CheckLogin():
     if request.method == 'POST':
         Username = request.form['Username']
         Password = request.form['password']
-
         root = db.child('Admin')
 
-        for check in root.get().val():
-            if check == Username:
-
-                ref = db.child('Admin').child(Username).get()
-
+        if Username in root.get().val():
+            
+            ref = db.child('Admin').child(Username).get()
                 # เก็บ session 
-                if ref.val()['Password'] == Password :
-                    session['Admin'] = Username
+            if ref.val()['Password'] == Password :
+                session['Admin'] = Username
                     # print(session['User'])
                     # print('Go to Page Home')
-                    return redirect(url_for("Home"))
-    
+                return redirect(url_for("Home"))
+            else:
+                ErrorPass = "Password Error check password please !"
+                return render_template('Login.html' , ErrorPass = ErrorPass)
+        else:
+            ErrorUsername = "Username Error check Username please !"
+            return render_template('Login.html' , ErrorUser = ErrorUsername)
     return redirect(url_for('Login'))
 
 
@@ -87,21 +73,23 @@ def Register():
         Email = request.form['Email']
         Sub = request.form.getlist('Sub[]')
 
-        for C in db.child('Admin').get().val():
+        CheckMember = db.child('Admin').get().val()
+
             # การเช็คว่า มี Username ซ้ำ
-            if C == Username :
-                print("Username มีผู้ใช้แล้ว")
-            else:
-                db.child("Admin").child(Username).set({"Username":Username,"Password":Pass,"Co_Pass": Co_pass,"Email":Email})
+        if Username in CheckMember :
+            Usernamerepea = "Already have a user account"
+            return render_template('Login.html' , Usernamerepea = Usernamerepea)
+        else:
+            db.child("Admin").child(Username).set({"Username":Username,"Password":Pass,"Co_Pass": Co_pass,"Email":Email})
 
                 # การบันทึก Subject หลายๆค่า หรือค่าเดียว
-                if (len(Sub) == 1 ):
-                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
-                else:
-                    for i in range(len(Sub)) :
-                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
-                    session['Admin'] = Username
-                    return redirect(url_for('Home'))
+            if (len(Sub) == 1 ):
+                db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
+            else:
+                for i in range(len(Sub)) :
+                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
+                session['Admin'] = Username
+                return redirect(url_for('Home'))
 
 
 @app.route("/Home")
@@ -159,7 +147,6 @@ def insertChoice():
             db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
         return redirect(url_for('hello'))
 
-
 @app.route("/Subject", methods=['GET','POST'])
 def Subject():
     if session.get('Admin') == None:
@@ -194,6 +181,16 @@ def Sub_Update():
         C3 = request.form['C3']
         C4 = request.form['C4']
         Answer = request.form['Answer']
+        if(Answer == '1'):
+            Answer = C1
+        elif(Answer == '2'):
+            Answer = C2
+        elif(Answer == '3'):
+            Answer = C3
+        elif(Answer == '4'):
+            Answer = C4
+
+        
         TypeUp = request.form['Type_Up']
 
         if TypeUp == 'Edit':
@@ -290,23 +287,23 @@ def DataChart():
         return render_template('ShowEvo.html', SubName = SubjectRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem)
     else:
         print("อยู่ใน else")
-        Datachart = []
+        Datachart = ['0',]
         lengthData = []
         Count = 1
+        Sub_NameMem = db.child('Subject').child(SubjectRef).child('Member').child(session['Member']).get()
+        NameMember = Sub_NameMem.val()['Name']
         for a in DataRef.each():
             Datachart.append(a.val())
             lengthData.append(Count)
             Count += 1
 
-        return jsonify({'ChartData':Datachart,'LengthData':lengthData})
+        return jsonify({'ChartData':Datachart,'LengthData':lengthData,'NameMem':NameMember})
 
 @app.route("/DeleteSub_allPage", methods=['GET','POST'])
 def DeleteSub_allPage():
     Admin = session['Admin']
     if request.method == 'POST':
         Sub_Before = request.form['Subject_Befor']
-
-
         db.child('Admin').child(Admin).child('Subject_pro').child(Sub_Before).remove()
         db.child('Subject').child(Sub_Before).remove()
 
@@ -315,12 +312,19 @@ def DeleteSub_allPage():
 @app.route("/AddSub_allPage", methods=['GET','POST'])
 def AddSub_allPage():
     Admin = session['Admin']
-
+    Admin_Subject = db.child('Admin').child(Admin).child('Subject_pro').get()
     if request.method == 'POST':
         AddSub = request.form.getlist('Sub[]')
-    
+        Subindata = "มีอยู่แล้วในฐานข้อมูล"
         for i in range(len(AddSub)) :
-            db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0"})
+            CheckSubject = db.child('Admin').child(Admin).child("Subject_pro").get()
+            if AddSub[i] in CheckSubject.val():
+                SubError = "วิชา : "+AddSub[i]+" "+Subindata
+                print(SubError)
+                return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, ErrorSub = SubError)
+            else:
+
+                db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0"})
 
     return redirect(url_for('Home'))
 
@@ -335,18 +339,14 @@ def ChangePass_allPage():
         Data = db.child('Admin').child(Admin).get()
         if Data.val()['Password'] == Pass_Be:
             db.child('Admin').child(Admin).update({"Password":Pass_Af,"Co_Pass":Pass_co})
-            return redirect(url_for('Home'))
+            SuccessPass = "Success"
+            return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, SuccessPass = SuccessPass)
         else:
             ChangeError = "รหัสผ่านผิด"
 
             return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, Error = ChangeError)
 
     return redirect(url_for('Home'))
-
-
-    
-
-
 
 
 @app.route("/Logout")
@@ -357,6 +357,52 @@ def Logout():
 @app.route("/test")
 def test():
     return render_template('test.html')
+
+
+
+
+# CountScore = 1
+# np_arr1 = np.array([])
+# print(np_arr1)
+arrayTest = []
+
+KeyMemname = db.child('Subject').child('Anatome').child('Member').child('sanook33').child('TypeGame').child('Game1').get()
+
+for Name_Score in KeyMemname.val():
+    nook = Name_Score
+    arrayTest.append(nook)
+
+datatest = db.child('Subject').child('Anatome').child('Member')
+for NameMem in datatest.get().val():
+    
+    # arrayTest.append(NameMem)
+    # print(NameMem)
+    dataScore = db.child('Subject').child('Anatome').child('Member').child(NameMem).child('TypeGame').child('Game1').get()
+    
+
+    for Score_test in KeyMemname.val():
+        # print(dataScore.val()[Score_test])
+        arrayTest.append(dataScore.val()[Score_test])
+
+
+#         if Score_test == 'Score_1':
+#             array1.append(dataScore.val()[Score_test])
+#         elif Score_test == 'Score_2':
+#             array2.append(dataScore.val()[Score_test])
+#         elif Score_test == 'Score_3':
+#             array3.append(dataScore.val()[Score_test])
+#         elif Score_test == 'Score_4':
+#             array4.append(dataScore.val()[Score_test])
+#         else:
+#             arrayTest.append(dataScore.val()[Score_test])
+# print(sum(array1)/len(array1))
+# print(sum(array2)/len(array2))
+# print(sum(array3)/len(array3))
+# print(sum(array4)/len(array4))
+
+
+print(arrayTest)
+
 
 
 

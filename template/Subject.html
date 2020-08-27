@@ -70,14 +70,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
+              <a class="nav-link" href="/Addchoice">Add-Choice</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/Subject">Subject</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link" href="/Evopage">Evolution</a>
             </li>
             <li class="nav-item dropdown">
 
@@ -160,11 +163,11 @@
       </div>
       {% endif %}
 
+    <div style="margin-top:10%;">
     <table border="2px">
         <thead>
             <tr>
-
-                <th >ชื่อวิชา</th>
+                <th>ชื่อวิชา</th>
                 <th>จำนวน</th>
             </tr>
         </thead>
@@ -172,7 +175,7 @@
             {% for k in data.each() %}
             <form action="/Subject" method="POST">
             <tr>
-                <td> <input type="text" value="{%print(k.key())%}" name="Subname"></td>
+                <td> <input type="text" value="{%print(k.key())%}" name="Subname" readonly></td>
                 <td> {% print(k.val()['DataNum']) %}</td>
                 <td> <button type="Submit" class="btn btn-primary" >View</button></td>
             </tr>
@@ -212,7 +215,8 @@
                     <td><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
                     <td><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
                     <td><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
-                    <td><input type="text" value="{%print(k.val()['ans'])%}" name="Answer"></td>
+                    <td><input type="radio" name="Answer" value="1">Choice1 <input type="radio" name="Answer" value="2">
+                      Choice2<input type="radio" name="Answer" value="3">Choice3<input type="radio" name="Answer" value="4">Choice4</td>
                     <td><button type="Submit" value="Edit" name="Type_Up">Edit</button></td>
                     <td><button type="Submit" value="Delete" name="Type_Up">Delete</button></td>
                 </tr>
@@ -226,9 +230,9 @@
     </table>
 
     {% else %}
-        <h1>Not Show Data</h1>
+        <h1>โปรดเลือกวิชาที่ต้องการแสดงคำถาม</h1>
     {% endif %}
-        
+    </div>
         
         
 
