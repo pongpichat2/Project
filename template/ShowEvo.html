@@ -18,9 +18,9 @@
 
     <style>
         .ShowStatus{
-            margin: 5% 33%;
-            width: 700px;
-            height: 600px;
+            margin: 5% 5%;
+            width: 1000px;
+            height: 800px;
             background: rgba(160, 75, 75, 0.527);
             position: absolute;
         }
@@ -134,7 +134,7 @@
             <thead>
                 <tr>
                     <td> Stu_Code </td>
-                    <td> Username </td>
+                    
                     <td> Name </td>
                 </tr>
             </thead>
@@ -144,9 +144,9 @@
 
                     <tr>
                         <td><input type="text" value="{% print(Member.val()['Stu_Code'])%}" name="Stu_Code" readonly></td>
-                        <td><input type="text" name="Username" id="" value="{%print(Member.key())%}" readonly></td>
+
                         <td><input type="text" value="{%print(Member.val()['Name'])%}" name="Name" readonly></td>
-                        <td><button type="submit" value="View" class="btn btn-primary">View</button></td>
+                        <td><button type="submit" value="{%print(Member.key())%}" name="Username" class="btn btn-primary">View</button></td>
                     </tr>
                     </form>
 
@@ -162,51 +162,101 @@
     <div class="ShowStatus">
         <h2>{{SubName}}</h2>
         <p>Student Code : {{StuCode}} <br> Name : {{NAME}} </p>
-        <button type="Submit" name="Name_Game" value="Game1" >G1</button> 
+        <!-- <button type="Submit" name="Name_Game" value="Game1" >G1</button> 
         <button type="Submit" name="Name_Game" value="Game2">G2</button> 
-        <button type="Submit" name="Name_Game" value="Game3">G3</button>
+        <button type="Submit" name="Name_Game" value="Game3">G3</button> -->
 
     </form>
 
     <!-- show chart -->
     
     <div class="Show-chart" style="width: 100%;">
-    <h2>{{NameGame}}</h2>
-
-    {% if HaveData %}
-        <div class="chart-container" style="position: relative; height:25vh; width:45vw">
-        <canvas id="myChart"></canvas>
-        </div>
-    {% elif DonHavedata %}
-        <h1>ผู้เล่นยังไม่มีการเล่นเกมส์นี้ค๊าบบ</h1>
-
-
-    {% else %}
-        <h2>กรุณาเลือกเกมที่ต้องการเลยค๊าบบบ</h2>
-    {% endif %}
+        <div style="width: 90%; height: 500px; ">
+          <div class="chart-container" style="position: relative; height:10vh; width:30vw;left: 0px;margin: 10%px;">
+              <canvas id="myChart1"></canvas>
+          </div>
+          <div class="chart-container" style="position: relative; height:10vh; width:30vw;top: 0%; margin: 0px 500px;">
+              <canvas id="myChart2"></canvas>
+          </div>
+          <div class="chart-container" style="position: relative; height:10vh; width:30vw; margin-top: 10%;">
+              <canvas id="myChart3"></canvas>
+          </div>
+      </div>
     </div>
 
     <script>
 
-        var ctx = document.getElementById('myChart').getContext('2d');
-        console.log(ctx);
+        var Game1 = document.getElementById('myChart1').getContext('2d');
+        var Game2 = document.getElementById('myChart2').getContext('2d');
+        var Game3 = document.getElementById('myChart3').getContext('2d');
+
         var ShowData = $.get('/dataChart');
         
         ShowData.done(function(result){
-            new Chart(ctx, {
+            new Chart(Game1, {
                 type: 'line',
                 data: {
-                    labels: ['0','1','2','3','4','5','6','7','8','9','10'],
+                    labels: ['0','1','2','3','4','5','6','7'],
                     datasets: [{
-                      label: result.NameMem,
-                        data :result.ChartData,
+                        label: 'Game1',
+                        data :result.ChartDataGame1,
                         backgroundColor:[
-                            'rgba(0, 0, 0, 0.5)'
+                            'rgba(255, 99, 132, 0.6)'
                         ],
-                        borderWidth:5,
-                        borderColor:'#ee0c30',
+                        borderWidth:3,
+                        borderColor:'#777',
                         hoverBorderWidth:10,
-                        hoverBorderColor:'#000'}
+                        hoverBorderColor:'#000'},
+                        {
+                        label: 'AVG Game1',
+                        data :result.AVGGame1,
+                        backgroundColor:[
+                            'rgb(255, 165, 0, 0.6)'
+                        ],
+                        borderColor:'#777',
+                        borderWidth:3,
+                        hoverBorderWidth:10,
+                        },
+
+
+                        ]},
+                        
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                max: 60,
+                                min: 0,
+                                stepSize: 10
+                            }
+                        }]
+                    }
+                }
+            });
+            new Chart(Game2, {
+                type: 'line',
+                data: {
+                    labels: ['0','1','2','3','4','5','6','7'],
+                    datasets: [{
+                        label: 'Game2',
+                        data :result.ChartDataGame2,
+                        backgroundColor:[
+                            'rgba(234, 43, 255, 0.73)'
+                        ],
+                        borderWidth:3,
+                        borderColor:'#777',
+                        hoverBorderWidth:10,
+                        hoverBorderColor:'#000'},
+                        {
+                        label: 'AVG Game2',
+                        data :result.AVGGame2,
+                        backgroundColor:[
+                            'rgb(255, 165, 0, 0.6)'
+                        ],
+                        borderColor:'#777',
+                        borderWidth:3,
+                        hoverBorderWidth:10,
+                        },
                         
                         ]},
                         
@@ -214,7 +264,46 @@
                     scales: {
                         yAxes: [{
                             ticks: {
-                                max: 80,
+                                max: 60,
+                                min: 0,
+                                stepSize: 10
+                            }
+                        }]
+                    }
+                }
+            });
+            new Chart(Game3, {
+                type: 'line',
+                data: {
+                    labels: ['0','1','2','3','4','5','6','7'],
+                    datasets: [{
+                        label: 'Game3',
+                        data :result.ChartDataGame3,
+                        backgroundColor:[
+                            'rgba(163, 245, 54, 0.68)'
+                        ],
+                        borderWidth:3,
+                        borderColor:'#777',
+                        hoverBorderWidth:10,
+                        hoverBorderColor:'#000'},
+                        {
+                        label: 'AVG Game3',
+                        data :result.AVGGame3,
+                        backgroundColor:[
+                            'rgb(255, 165, 0, 0.8)'
+                        ],
+                        borderColor:'#777',
+                        borderWidth:3,
+                        hoverBorderWidth:10,
+                        },
+                        
+                        ]},
+                        
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                max: 60,
                                 min: 0,
                                 stepSize: 10
                             }

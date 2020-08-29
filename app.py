@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, session, j
 # import pyrebase
 from firebase import Firebase
 import Calculat as Cal
-import numpy as np
+from array import *
 
 # import firebase_admin
 # from firebase_admin import credentials
@@ -26,6 +26,54 @@ firebase = Firebase(config)
 
 db = firebase.database()
 auth = firebase.auth()
+
+
+# arrayTest = []
+# AVG_Array = []
+# # คนที่ส่งเข้ามา
+# KeyMemname = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game1').get()
+# for len_Score in KeyMemname.val():
+
+#     lenScore = [len_Score]
+#     arrayTest.append(lenScore)
+
+# # คนที่เล่นเกมนั้นทั้งหมด
+# datatest = db.child('Subject').child('Anatome').child('Member')
+# for NameMem in datatest.get().val():
+
+#     dataScore = db.child('Subject').child('Anatome').child('Member').child(NameMem).child('TypeGame').child('Game1').get()
+
+#     for Score_test in KeyMemname.val():
+
+#         try:
+#             Score = dataScore.val()[Score_test]
+#         except :
+#             Score = 0
+
+#         # การเพิ่มค่าเข้าไปใน array
+#         for i in range(len(arrayTest)):
+#             if Score_test in arrayTest[i]:
+#                 # print("ทำการเพิ่ม "+str(Score) +' เข้าไปใน array ช่อง '+str(i))
+#                 arrayTest[i].append(Score)
+#             # else:
+#                 # print(str(Score) +'ไม่อยู่ใน array ช่อง'+ str(i))
+
+# # remove Key Score in array
+# for Re_Score_test in KeyMemname.val():
+
+#     for ReKey in range(len(arrayTest)):
+#         if Re_Score_test in arrayTest[ReKey]:
+#             # print(Re_Score_test+"พบ อยู่ใน array..................................")
+#             arrayTest[ReKey].remove(Re_Score_test)
+#         # else:
+#         #     print("ไม่พบ อยู่ใน array")
+                
+# for AVG in range(len(arrayTest)):
+#     AVG_Score = '%.1f'%(sum(arrayTest[AVG])/len(arrayTest[AVG]))
+#     print(AVG_Score)
+#     AVG_Array.append(AVG_Score)
+# print(AVG_Array)
+
 
 
 
@@ -238,7 +286,6 @@ def ShowEvo():
         ShowMem = db.child('Subject').child(SubRef).child('Member').get()
         Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         if request.method == 'POST':
-            
             Member = request.form['Username']
             session['Member'] = Member
 
@@ -252,52 +299,148 @@ def ShowEvo():
         return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 
-@app.route("/Development", methods=['GET','POST'])
-def Development():
-    if session.get('Admin') == None:
-        return redirect(url_for('Login'))
-    else:
-        SubRef = session['SubjectRef']
-        ShowMem = db.child('Subject').child(SubRef).child('Member').get()
-        Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
-        if request.method == 'POST':
-            session['GameName'] = request.form['Name_Game']
-            DataRef = db.child('Subject').child(SubRef).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
-            if DataRef.val() != None:
-                haveData = "มีข้อมูล"
-                return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem , NameGame = session['GameName'],HaveData = haveData,DataSubject = Admin_Subject)
-            else:
-                nothaveData = "ไม่มีข้อมูล"
-                return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem , NameGame = session['GameName'], DonHavedata = nothaveData,DataSubject = Admin_Subject)
-
-        return redirect(url_for('ShowEvo'))
-
-
 
 @app.route("/dataChart")
 def DataChart():
+    Member = session['Member']
 
     SubjectRef = session['SubjectRef']
-    DataRef = db.child('Subject').child(SubjectRef).child('Member').child(session['Member']).child('TypeGame').child(session['GameName']).get()
-    
-    if DataRef.val() == None:
-        print("อยู่ใน if Data = None")
+    DataRefGame1 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('TypeGame').child('Game1').get()
+    DataRefGame2 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('TypeGame').child('Game2').get()
+    DataRefGame3 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('TypeGame').child('Game3').get()
 
-        ShowMem = db.child('Subject').child(SubjectRef).child('Member').get()
-        return render_template('ShowEvo.html', SubName = SubjectRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem)
-    else:
-        print("อยู่ใน else")
-        Datachart = ['0',]
-        lengthData = []
-        Count = 1
-        Sub_NameMem = db.child('Subject').child(SubjectRef).child('Member').child(session['Member']).get()
-        NameMember = Sub_NameMem.val()['Name']
-        for a in DataRef.each():
-            Datachart.append(a.val())
-            lengthData.append(Count)
-            Count += 1
+        # Chart Member main Game1
+    DatachartGame1 = ['0',]
+    DatachartGame2 = ['0',]
+    DatachartGame3 = ['0',]
 
-        return jsonify({'ChartData':Datachart,'LengthData':lengthData,'NameMem':NameMember})
+        # Count = 1
+    Sub_NameMem = db.child('Subject').child(SubjectRef).child('Member').child(Member).get()
+    NameMember = Sub_NameMem.val()['Name']
+    for G1 in DataRefGame1.each():
+        DatachartGame1.append(G1.val())
+    for G2 in DataRefGame2.each():
+        DatachartGame2.append(G2.val())
+    for G3 in DataRefGame3.each():
+        DatachartGame3.append(G3.val())
+
+    arrayGame1 = []
+    AVG_Array = ['0',]
+    arrayGame2 = []
+    AVG_Array2 = ['0',]
+    arrayGame3 = []
+    AVG_Array3 = ['0',]
+
+    # การหา AVG ของเกมที่1
+    # คนที่ส่งเข้ามา เพื่อที่หาจำนวนครั้งในการเล่น
+    for len_Score in DataRefGame1.val():
+
+        lenScore = [len_Score]
+        arrayGame1.append(lenScore)
+
+    # คนที่เล่นเกมนั้นทั้งหมด
+    MemberSubject1 = db.child('Subject').child(SubjectRef).child('Member')
+    for NameMem in MemberSubject1.get().val():
+        dataScore = db.child('Subject').child(SubjectRef).child('Member').child(NameMem).child('TypeGame').child('Game1').get()
+
+        for Score_test in DataRefGame1.val():
+
+            try:
+                Score = dataScore.val()[Score_test]
+            except :
+                Score = 0
+
+            # การเพิ่มค่าเข้าไปใน array
+            for i in range(len(arrayGame1)):
+                if Score_test in arrayGame1[i]:
+                    # print("ทำการเพิ่ม "+str(Score) +' เข้าไปใน array ช่อง '+str(i))
+                    arrayGame1[i].append(Score)
+                # else:
+                    # print(str(Score) +'ไม่อยู่ใน array ช่อง'+ str(i))
+
+# remove Key Score in array
+    for Re_Score_test in DataRefGame1.val():
+
+        for ReKey in range(len(arrayGame1)):
+            if Re_Score_test in arrayGame1[ReKey]:
+                # print(Re_Score_test+"พบ อยู่ใน array..................................")
+                arrayGame1[ReKey].remove(Re_Score_test)
+            # else:
+            #     print("ไม่พบ อยู่ใน array")
+                    
+    for AVG in range(len(arrayGame1)):
+        AVG_Score = '%.1f'%(sum(arrayGame1[AVG])/len(arrayGame1[AVG]))
+        # print(AVG_Score)
+        AVG_Array.append(AVG_Score)
+
+
+    # การหาคนที่ 2
+    for len_Score_Game2 in DataRefGame2.val():
+        lenScoreGame2 = [len_Score_Game2]
+        arrayGame2.append(lenScoreGame2)
+
+    MemberSubject2 = db.child('Subject').child(SubjectRef).child('Member')
+    for NameMem_Game2 in MemberSubject2.get().val():
+        dataScore_Game2 = db.child('Subject').child(SubjectRef).child('Member').child(NameMem_Game2).child('TypeGame').child('Game2').get()
+        # print(dataScore_Game2.val())
+        for Score_Game2 in DataRefGame2.val():
+            try:
+                Score_G2 = dataScore_Game2.val()[Score_Game2]
+
+            except :
+                Score_G2 = 0
+
+            # การเพิ่มค่าเข้าไปใน array
+            for i_G2 in range(len(arrayGame2)):
+                if Score_Game2 in arrayGame2[i_G2]:
+
+                    arrayGame2[i_G2].append(Score_G2)
+
+# remove Key Score in array
+    for Re_Score_G2 in DataRefGame2.val():
+        for ReKey_G2 in range(len(arrayGame2)):
+            if Re_Score_G2 in arrayGame2[ReKey_G2]:
+                arrayGame2[ReKey_G2].remove(Re_Score_G2)
+
+    for AVG_G2 in range(len(arrayGame2)):
+        AVG_Score_G2 = '%.1f'%(sum(arrayGame2[AVG_G2])/len(arrayGame2[AVG_G2]))
+
+        AVG_Array2.append(AVG_Score_G2)
+
+    # การหาคนที่ 3
+    for len_Score_Game3 in DataRefGame3.val():
+        lenScoreGame3 = [len_Score_Game3]
+        arrayGame3.append(lenScoreGame3)
+
+    MemberSubject3 = db.child('Subject').child(SubjectRef).child('Member')
+    for NameMem_Game3 in MemberSubject3.get().val():
+        dataScore_Game3 = db.child('Subject').child(SubjectRef).child('Member').child(NameMem_Game3).child('TypeGame').child('Game3').get()
+        # print(dataScore_Game2.val())
+        for Score_Game3 in DataRefGame3.val():
+            try:
+                Score_G3 = dataScore_Game3.val()[Score_Game3]
+
+            except :
+                Score_G3 = 0
+
+            # การเพิ่มค่าเข้าไปใน array
+            for i_G3 in range(len(arrayGame3)):
+                if Score_Game3 in arrayGame3[i_G3]:
+
+                    arrayGame3[i_G3].append(Score_G3)
+
+# remove Key Score in array
+    for Re_Score_G3 in DataRefGame3.val():
+        for ReKey_G3 in range(len(arrayGame3)):
+            if Re_Score_G3 in arrayGame3[ReKey_G3]:
+                arrayGame3[ReKey_G3].remove(Re_Score_G3)
+
+    for AVG_G3 in range(len(arrayGame3)):
+        AVG_Score_G3 = '%.1f'%(sum(arrayGame3[AVG_G3])/len(arrayGame3[AVG_G3]))
+
+        AVG_Array3.append(AVG_Score_G3)
+
+    return jsonify({'ChartDataGame1':DatachartGame1,'ChartDataGame2':DatachartGame2,'ChartDataGame3':DatachartGame3,'AVGGame1':AVG_Array,'AVGGame2':AVG_Array2,'AVGGame3':AVG_Array3,'NameMem':NameMember})
 
 @app.route("/DeleteSub_allPage", methods=['GET','POST'])
 def DeleteSub_allPage():
@@ -358,50 +501,153 @@ def Logout():
 def test():
     return render_template('test.html')
 
+@app.route("/dataCharttest")
+def DataCharttest():
 
-
-
-# CountScore = 1
-# np_arr1 = np.array([])
-# print(np_arr1)
-arrayTest = []
-
-KeyMemname = db.child('Subject').child('Anatome').child('Member').child('sanook33').child('TypeGame').child('Game1').get()
-
-for Name_Score in KeyMemname.val():
-    nook = Name_Score
-    arrayTest.append(nook)
-
-datatest = db.child('Subject').child('Anatome').child('Member')
-for NameMem in datatest.get().val():
     
-    # arrayTest.append(NameMem)
-    # print(NameMem)
-    dataScore = db.child('Subject').child('Anatome').child('Member').child(NameMem).child('TypeGame').child('Game1').get()
+    DataRefGame1 = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game1').get()
+    DataRefGame2 = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game2').get()
+    DataRefGame3 = db.child('Subject').child('Anatome').child('Member').child('Luner').child('TypeGame').child('Game3').get()
+
+        # Chart Member main Game1
+    DatachartGame1 = ['0',]
+    DatachartGame2 = ['0',]
+    DatachartGame3 = ['0',]
+
+        # Count = 1
+    Sub_NameMem = db.child('Subject').child('Anatome').child('Member').child('Luner').get()
+    NameMember = Sub_NameMem.val()['Name']
+    for G1 in DataRefGame1.each():
+        DatachartGame1.append(G1.val())
+    for G2 in DataRefGame2.each():
+        DatachartGame2.append(G2.val())
+    for G3 in DataRefGame3.each():
+        DatachartGame3.append(G3.val())
+
+    arrayGame1 = []
+    AVG_Array = ['0',]
+    arrayGame2 = []
+    AVG_Array2 = ['0',]
+    arrayGame3 = []
+    AVG_Array3 = ['0',]
+
     
 
-    for Score_test in KeyMemname.val():
-        # print(dataScore.val()[Score_test])
-        arrayTest.append(dataScore.val()[Score_test])
+    # การหา AVG ของเกมที่1
+    # คนที่ส่งเข้ามา เพื่อที่หาจำนวนครั้งในการเล่น
+    for len_Score in DataRefGame1.val():
+
+        lenScore = [len_Score]
+        arrayGame1.append(lenScore)
+
+    # คนที่เล่นเกมนั้นทั้งหมด
+    MemberSubject1 = db.child('Subject').child('Anatome').child('Member')
+    for NameMem in MemberSubject1.get().val():
+        dataScore = db.child('Subject').child('Anatome').child('Member').child(NameMem).child('TypeGame').child('Game1').get()
+
+        for Score_test in DataRefGame1.val():
+
+            try:
+                Score = dataScore.val()[Score_test]
+            except :
+                Score = 0
+
+            # การเพิ่มค่าเข้าไปใน array
+            for i in range(len(arrayGame1)):
+                if Score_test in arrayGame1[i]:
+                    # print("ทำการเพิ่ม "+str(Score) +' เข้าไปใน array ช่อง '+str(i))
+                    arrayGame1[i].append(Score)
+                # else:
+                    # print(str(Score) +'ไม่อยู่ใน array ช่อง'+ str(i))
+
+# remove Key Score in array
+    for Re_Score_test in DataRefGame1.val():
+
+        for ReKey in range(len(arrayGame1)):
+            if Re_Score_test in arrayGame1[ReKey]:
+                # print(Re_Score_test+"พบ อยู่ใน array..................................")
+                arrayGame1[ReKey].remove(Re_Score_test)
+            # else:
+            #     print("ไม่พบ อยู่ใน array")
+                    
+    for AVG in range(len(arrayGame1)):
+        AVG_Score = '%.1f'%(sum(arrayGame1[AVG])/len(arrayGame1[AVG]))
+        # print(AVG_Score)
+        AVG_Array.append(AVG_Score)
 
 
-#         if Score_test == 'Score_1':
-#             array1.append(dataScore.val()[Score_test])
-#         elif Score_test == 'Score_2':
-#             array2.append(dataScore.val()[Score_test])
-#         elif Score_test == 'Score_3':
-#             array3.append(dataScore.val()[Score_test])
-#         elif Score_test == 'Score_4':
-#             array4.append(dataScore.val()[Score_test])
-#         else:
-#             arrayTest.append(dataScore.val()[Score_test])
-# print(sum(array1)/len(array1))
-# print(sum(array2)/len(array2))
-# print(sum(array3)/len(array3))
-# print(sum(array4)/len(array4))
+    # การหาคนที่ 2
+    for len_Score_Game2 in DataRefGame2.val():
+        lenScoreGame2 = [len_Score_Game2]
+        arrayGame2.append(lenScoreGame2)
+
+    MemberSubject2 = db.child('Subject').child('Anatome').child('Member')
+    for NameMem_Game2 in MemberSubject2.get().val():
+        dataScore_Game2 = db.child('Subject').child('Anatome').child('Member').child(NameMem_Game2).child('TypeGame').child('Game2').get()
+        # print(dataScore_Game2.val())
+        for Score_Game2 in DataRefGame2.val():
+            try:
+                Score_G2 = dataScore_Game2.val()[Score_Game2]
+
+            except :
+                Score_G2 = 0
+
+            # การเพิ่มค่าเข้าไปใน array
+            for i_G2 in range(len(arrayGame2)):
+                if Score_Game2 in arrayGame2[i_G2]:
+
+                    arrayGame2[i_G2].append(Score_G2)
+
+# remove Key Score in array
+    for Re_Score_G2 in DataRefGame2.val():
+        for ReKey_G2 in range(len(arrayGame2)):
+            if Re_Score_G2 in arrayGame2[ReKey_G2]:
+                arrayGame2[ReKey_G2].remove(Re_Score_G2)
+
+    for AVG_G2 in range(len(arrayGame2)):
+        AVG_Score_G2 = '%.1f'%(sum(arrayGame2[AVG_G2])/len(arrayGame2[AVG_G2]))
+
+        AVG_Array2.append(AVG_Score_G2)
+
+    # การหาคนที่ 3
+    for len_Score_Game3 in DataRefGame3.val():
+        lenScoreGame3 = [len_Score_Game3]
+        arrayGame3.append(lenScoreGame3)
+
+    MemberSubject3 = db.child('Subject').child('Anatome').child('Member')
+    for NameMem_Game3 in MemberSubject3.get().val():
+        dataScore_Game3 = db.child('Subject').child('Anatome').child('Member').child(NameMem_Game3).child('TypeGame').child('Game3').get()
+        # print(dataScore_Game2.val())
+        for Score_Game3 in DataRefGame3.val():
+            try:
+                Score_G3 = dataScore_Game3.val()[Score_Game3]
+
+            except :
+                Score_G3 = 0
+
+            # การเพิ่มค่าเข้าไปใน array
+            for i_G3 in range(len(arrayGame3)):
+                if Score_Game3 in arrayGame3[i_G3]:
+
+                    arrayGame3[i_G3].append(Score_G3)
+
+# remove Key Score in array
+    for Re_Score_G3 in DataRefGame3.val():
+        for ReKey_G3 in range(len(arrayGame3)):
+            if Re_Score_G3 in arrayGame3[ReKey_G3]:
+                arrayGame3[ReKey_G3].remove(Re_Score_G3)
+
+    for AVG_G3 in range(len(arrayGame3)):
+        AVG_Score_G3 = '%.1f'%(sum(arrayGame3[AVG_G3])/len(arrayGame3[AVG_G3]))
+
+        AVG_Array3.append(AVG_Score_G3)
+
+    return jsonify({'ChartDataGame1':DatachartGame1,'ChartDataGame2':DatachartGame2,'ChartDataGame3':DatachartGame3,'AVGGame1':AVG_Array,'AVGGame2':AVG_Array2,'AVGGame3':AVG_Array3,'NameMem':NameMember})
 
 
-print(arrayTest)
+
+
+
 
 
 

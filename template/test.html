@@ -10,30 +10,119 @@
   <title>My Chart.js Chart</title>
 </head>
 <body>
-    <div class="chart-container" style="position: relative; height:10vh; width:30vw">
-        <canvas id="myChart"></canvas>
-    </div>
-
+    
     
 <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        console.log(ctx);
+        var Game1 = document.getElementById('myChart1').getContext('2d');
+        var Game2 = document.getElementById('myChart2').getContext('2d');
+        var Game3 = document.getElementById('myChart3').getContext('2d');
+
         var ShowData = $.get('/dataChart');
         
         ShowData.done(function(result){
-            new Chart(ctx, {
+            new Chart(Game1, {
                 type: 'line',
                 data: {
-                    labels: result.LengthData,
+                    labels: ['0','1','2','3','4','5','6','7','8','9'],
                     datasets: [{
-                        data :result.ChartData,
+                        label: 'Game1',
+                        data :result.ChartDataGame1,
                         backgroundColor:[
                             'rgba(255, 99, 132, 0.6)'
                         ],
                         borderWidth:3,
                         borderColor:'#777',
                         hoverBorderWidth:10,
-                        hoverBorderColor:'#000'}
+                        hoverBorderColor:'#000'},
+                        {
+                        label: 'AVG Game1',
+                        data :result.AVGGame1,
+                        backgroundColor:[
+                            'rgb(255, 165, 0, 0.6)'
+                        ],
+                        borderColor:'#777',
+                        borderWidth:3,
+                        hoverBorderWidth:10,
+                        },
+
+
+                        ]},
+                        
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                max: 60,
+                                min: 0,
+                                stepSize: 10
+                            }
+                        }]
+                    }
+                }
+            });
+            new Chart(Game2, {
+                type: 'line',
+                data: {
+                    labels: ['0','1','2','3','4','5','6','7','8','9'],
+                    datasets: [{
+                        label: 'Game2',
+                        data :result.ChartDataGame2,
+                        backgroundColor:[
+                            'rgba(234, 43, 255, 0.73)'
+                        ],
+                        borderWidth:3,
+                        borderColor:'#777',
+                        hoverBorderWidth:10,
+                        hoverBorderColor:'#000'},
+                        {
+                        label: 'AVG Game2',
+                        data :result.AVGGame2,
+                        backgroundColor:[
+                            'rgb(255, 165, 0, 0.6)'
+                        ],
+                        borderColor:'#777',
+                        borderWidth:3,
+                        hoverBorderWidth:10,
+                        },
+                        
+                        ]},
+                        
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                max: 60,
+                                min: 0,
+                                stepSize: 10
+                            }
+                        }]
+                    }
+                }
+            });
+            new Chart(Game3, {
+                type: 'line',
+                data: {
+                    labels: ['0','1','2','3','4','5','6','7','8','9'],
+                    datasets: [{
+                        label: 'Game3',
+                        data :result.ChartDataGame3,
+                        backgroundColor:[
+                            'rgba(163, 245, 54, 0.68)'
+                        ],
+                        borderWidth:3,
+                        borderColor:'#777',
+                        hoverBorderWidth:10,
+                        hoverBorderColor:'#000'},
+                        {
+                        label: 'AVG Game3',
+                        data :result.AVGGame3,
+                        backgroundColor:[
+                            'rgb(255, 165, 0, 0.8)'
+                        ],
+                        borderColor:'#777',
+                        borderWidth:3,
+                        hoverBorderWidth:10,
+                        },
                         
                         ]},
                         
