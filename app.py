@@ -531,8 +531,6 @@ def DataCharttest():
     arrayGame3 = []
     AVG_Array3 = ['0',]
 
-    
-
     # การหา AVG ของเกมที่1
     # คนที่ส่งเข้ามา เพื่อที่หาจำนวนครั้งในการเล่น
     for len_Score in DataRefGame1.val():
@@ -575,7 +573,6 @@ def DataCharttest():
         # print(AVG_Score)
         AVG_Array.append(AVG_Score)
 
-
     # การหาคนที่ 2
     for len_Score_Game2 in DataRefGame2.val():
         lenScoreGame2 = [len_Score_Game2]
@@ -584,7 +581,7 @@ def DataCharttest():
     MemberSubject2 = db.child('Subject').child('Anatome').child('Member')
     for NameMem_Game2 in MemberSubject2.get().val():
         dataScore_Game2 = db.child('Subject').child('Anatome').child('Member').child(NameMem_Game2).child('TypeGame').child('Game2').get()
-        # print(dataScore_Game2.val())
+
         for Score_Game2 in DataRefGame2.val():
             try:
                 Score_G2 = dataScore_Game2.val()[Score_Game2]
@@ -606,7 +603,6 @@ def DataCharttest():
 
     for AVG_G2 in range(len(arrayGame2)):
         AVG_Score_G2 = '%.1f'%(sum(arrayGame2[AVG_G2])/len(arrayGame2[AVG_G2]))
-
         AVG_Array2.append(AVG_Score_G2)
 
     # การหาคนที่ 3
@@ -621,7 +617,6 @@ def DataCharttest():
         for Score_Game3 in DataRefGame3.val():
             try:
                 Score_G3 = dataScore_Game3.val()[Score_Game3]
-
             except :
                 Score_G3 = 0
 
@@ -643,14 +638,6 @@ def DataCharttest():
         AVG_Array3.append(AVG_Score_G3)
 
     return jsonify({'ChartDataGame1':DatachartGame1,'ChartDataGame2':DatachartGame2,'ChartDataGame3':DatachartGame3,'AVGGame1':AVG_Array,'AVGGame2':AVG_Array2,'AVGGame3':AVG_Array3,'NameMem':NameMember})
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

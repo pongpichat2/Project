@@ -10,7 +10,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     
@@ -20,11 +20,136 @@
     <title>SUBJECT</title>
     <style>
         body{
+            font-family: 'Odibee Sans', cursive;
             background-size: cover;
             background-position: center;
             height: 100vh;
             margin: 0 0;
             background-image: url("/static/image/AddSub.jpg");
+        }
+        .Select-Sub{
+          position: fixed;
+          margin-top: 10px;
+          margin-left: 15px;
+        }
+        .Select-Sub thead .title-Select-Sub{
+          border-collapse: collapse;
+          width: 130px;
+          height: 45px;
+          font-size: 25px;
+          border: 2px solid black;
+          color: rgb(255, 255, 255);
+          text-align: center;
+          background-color: rgba(46, 43, 43, 0.637);
+        }
+        .Select-Sub tbody .detil-Select-Sub{
+          text-align: center;
+          border: 2px solid black;
+          background: rgba(255, 255, 255, 0.637);
+          font-size: 20px;
+        }
+        .Select-Sub tbody .detil-Select-Sub input[type='text']{
+
+          text-align: center;
+          border-collapse: collapse;
+          background: none;
+          border: none;
+        }
+        .Select-Sub tbody button{
+          background:linear-gradient(135deg, rgb(255, 255, 255) 30%, rgb(36, 125, 226));
+          margin-left:2px ;
+          border: 2px solid black;
+          border-radius: 15px;
+          transition: 0.5s;
+        }
+        .Select-Sub tbody button:hover{
+          box-shadow: black 1px 1px ;
+          background:linear-gradient(135deg,  rgb(36, 125, 226) 30%, rgb(36, 125, 226));
+        }
+        .Show-Quiz{
+          background: rgba(44, 44, 44, 0.801);
+          margin-top: 230px ;
+          margin-left: 300px ;
+          position: static;
+          width: 900px;
+          height: 400px;
+          border: black 3px solid;
+          border-radius: 20px;
+        }
+        .Show-Detil-Quiz{
+          /* border: 2px solid black; */
+          width: 1300px;
+          margin-top: 230px ;
+          margin-left: 200px ;
+        }
+        .Show-Detil-Quiz .table-Show-Detil-Quiz thead th{
+          text-align: center;
+          border: 2px solid black;
+          background: rgba(78, 150, 78, 0.705);
+          height: 30px;
+          font-size: 20px;
+        }
+        .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .No input[type='text']{
+          width: 50px;
+          text-align: center;
+          border-collapse: collapse;
+          background: none;
+          border: none;
+
+        }
+        .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']{
+          width: 120px;
+          height: 35px;
+          text-align: center;
+          border-collapse: collapse;
+          background: none;
+          border: none;
+          transition: 0.8s;
+        }
+        .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']:hover{
+          width: 200px;
+          font-size: 18px;
+          color: white;
+        }
+        .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']:focus{
+          width: 200px;
+          font-size: 18px;
+          color: white;
+          background: rgba(44, 43, 43, 0.568);
+        }
+        .table-Show-Detil-Quiz tbody td{
+          border: 2px solid black;
+          background: rgba(255, 255, 255, 0.568);
+          transition: 0.8s;
+        }
+        .table-Show-Detil-Quiz tbody td:hover{
+
+          border: 2px solid rgb(240, 48, 0);
+          background: rgba(44, 43, 43, 0.568);
+        }
+        .table-Show-Detil-Quiz tbody .But-edit{
+          margin-left: 5px;
+          border: 2px solid black;
+          border-radius: 20px;
+          background:linear-gradient(135deg, rgb(255, 255, 255) 30%, rgb(23, 201, 17));
+          transition: 0.8s;
+        }
+        .table-Show-Detil-Quiz tbody .But-edit:hover{
+          color: white;
+          box-shadow: black 1px 1px ;
+          background:linear-gradient(135deg,  rgb(0, 255, 34) 30%, rgb(1, 114, 16));
+        }
+        .table-Show-Detil-Quiz tbody .But-delete{
+          margin-left: 3px;
+          border: 2px solid black;
+          border-radius: 20px;
+          background:linear-gradient(135deg, rgb(255, 255, 255) 30%, rgb(221, 46, 46));
+          transition: 0.8s;
+        }
+        .table-Show-Detil-Quiz tbody .But-delete:hover{
+          color: white;
+          box-shadow: black 1px 1px ;
+          background:linear-gradient(135deg,  rgb(202, 69, 69) 30%, rgb(245, 2, 2));
         }
     </style>
     <script>
@@ -163,76 +288,81 @@
       </div>
       {% endif %}
 
-    <div style="margin-top:10%;">
-    <table border="2px">
-        <thead>
-            <tr>
-                <th>ชื่อวิชา</th>
-                <th>จำนวน</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for k in data.each() %}
-            <form action="/Subject" method="POST">
-            <tr>
-                <td> <input type="text" value="{%print(k.key())%}" name="Subname" readonly></td>
-                <td> {% print(k.val()['DataNum']) %}</td>
-                <td> <button type="Submit" class="btn btn-primary" >View</button></td>
-            </tr>
-            </form>
-            {% endfor %}
-        </tbody>
-    </table>
-    <!-- โชว์ข้อมูล คำถามในแต่ละรายวิชา -->
-    
-    {% if  NoneData %}
-        <h1>ยังไม่มีคำถามในรายวิชานี้</h1>
-    
-    {% elif haveData %}
-        <h1>{{Headtext}}</h1>
-        <table border="2px">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th >Quiz ?</th>
-                <th>Choice 1</th>
-                <th >Choice 2</th>
-                <th >Choice 3</th>
-                <th class="text-center">Choice 4</th>
-                <th class="text-center">Answer</th>
-                <th class="text-center" style="display: none;" >Edit</th>
-                <th class="text-center" style="display: none;">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for k in Show.each() %}
 
-            <form action="/Sub_Update" method="POST">
-                <tr>
-                    <td><input type="text" value="{%print(k.val()['ID'])%}" readonly name="NO_Sub"></td>
-                    <td><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
-                    <td><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
-                    <td><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
-                    <td><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
-                    <td><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
-                    <td><input type="radio" name="Answer" value="1">Choice1 <input type="radio" name="Answer" value="2">
-                      Choice2<input type="radio" name="Answer" value="3">Choice3<input type="radio" name="Answer" value="4">Choice4</td>
-                    <td><button type="Submit" value="Edit" name="Type_Up">Edit</button></td>
-                    <td><button type="Submit" value="Delete" name="Type_Up">Delete</button></td>
-                </tr>
-            </form>
+      <table class="Select-Sub">
+          <thead>
+              <tr>
+                  <th class="title-Select-Sub">Subject Name</th>
+                  <th class="title-Select-Sub">Number / item</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for k in data.each() %}
+              <form action="/Subject" method="POST">
+              <tr>
+                  <td class="detil-Select-Sub"> <input type="text" value="{%print(k.key())%}" name="Subname" readonly></td>
+                  <td class="detil-Select-Sub"> {% print(k.val()['DataNum']) %}</td>
+                  <td> <button type="Submit" >View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+              </tr>
+              </form>
+              {% endfor %}
+          </tbody>
+      </table>
 
-            {% endfor %}
-            
-            
-        </tbody>
-        
-    </table>
+      <!-- โชว์ข้อมูล คำถามในแต่ละรายวิชา -->
+      
+        {% if  NoneData %}
+        <div class="Show-Quiz">
+            <h1 style="text-align: center; margin-top: 150px ;font-size: 60px;font-weight: bold;color: red;">There are no questions in this course yet.</h1>
+        </div>
+        {% elif haveData %}
+        <div class="Show-Detil-Quiz">
+              <h1 style="margin-left: 500px ;">{{Headtext}}</h1>
+              <table class="table-Show-Detil-Quiz">
+                  <thead>
+                  <tr>
+                      <th>No.</th>
+                      <th >Quiz ?</th>
+                      <th>Choice 1</th>
+                      <th >Choice 2</th>
+                      <th >Choice 3</th>
+                      <th >Choice 4</th>
+                      <th >Answer</th>
 
-    {% else %}
-        <h1>โปรดเลือกวิชาที่ต้องการแสดงคำถาม</h1>
-    {% endif %}
-    </div>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for k in Show.each() %}
+
+                  <form action="/Sub_Update" method="POST">
+                      <tr>
+                          <td class="No"><input type="text" value="{%print(k.val()['ID'])%}" readonly name="NO_Sub"></td>
+                          <td class="Data"><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
+                          <td class="Data"><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
+                          <td class="Data"><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
+                          <td class="Data"><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
+                          <td class="Data"><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
+                          <td class="Data"><input type="radio" name="Answer" value="1">Choice1 <input type="radio" name="Answer" value="2">
+                            Choice2<input type="radio" name="Answer" value="3">Choice3<input type="radio" name="Answer" value="4">Choice4</td>
+                          <td style="border: none;  background: none;" ><button type="Submit" value="Edit" name="Type_Up" class="But-edit">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button></td>
+                          <td style="border: none; background: none;" > <button type="Submit" value="Delete" name="Type_Up" class="But-delete">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
+                      </tr>
+                  </form>
+
+                  {% endfor %}
+                  
+                  
+              </tbody>
+              
+          </table>
+        </div>
+        {% else %}
+        <div class="Show-Quiz">
+            <h1 style="text-align: center; margin-top: 150px; font-size: 60px;font-weight: bold; color: white;" >Please select the subject to express the question.</h1>
+          </div>
+        {% endif %}
+
+ 
         
         
 

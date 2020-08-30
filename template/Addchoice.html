@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
     <title>AddChoice</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice6.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/AddChoice6.css') }}"> -->
     <!-- <script src="{{ url_for('static', filename='js/addchioce2.js') }}"></script> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -14,8 +14,143 @@
 
 
 </head>
+<style>
+body{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url("/static/image/addchiose.jpg");
+}
+.borderform{
+    background-color: rgb(255, 255, 255,0.6);
+    margin: 3% 20%;
+    width:700px;
+    height: 630px;
+    border:rgb(0, 0, 0, 0.8) solid 2px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px
+}
+.AddQuiz p {
+    margin: 3px 50px;
+    font-family: 'Odibee Sans', cursive;
+    font-size: 20px;
+}
+.AddQuiz p input[type=text]{
+    text-align: center;
+    width: 600px;
+    height: 30px;
+    border: #000000 solid 2px;
+    transition: 0.5s;
+    font-family: 'Odibee Sans', cursive;
+    font-size: 20px;
 
-<script>    
+}
+.AddQuiz input[type=text]:focus{
+    font-size: 25px;
+    font-weight: bold;
+    height: 33px;
+    border: #09ff00 solid 2px;
+    box-shadow: 0 0 15px rgb(72, 255, 0)
+}
+.Answer-Choice{
+    position: relative;
+    text-align: center;
+    font-family: 'Odibee Sans', cursive;
+
+}
+
+.Answer-Choice input[type=radio]{
+    display: none;
+    margin:20px;
+}
+.Answer-Choice input[type=radio] + label{
+    display:inline-block;
+    width: 80px;
+    height: 40px;
+    margin-left: 40px;
+    background-color: none;
+    border: rgb(0, 0, 0) solid 2.5px;
+    transition: 0.6s;
+    text-align: center;
+}
+.Answer-Choice label{
+    line-height: 40px;
+}
+.Answer-Choice input[type=radio]:checked + label{
+    border: rgb(72, 255, 0) solid 3px;
+    color: rgb(54, 255, 14);
+    box-shadow: 0 0 20px rgba(0, 255, 34, 0.6);
+    border-radius: 20px;
+}
+.Button-Add{
+    text-align: center;
+    margin-top: 15px;
+
+}
+.Button-Add .BTSubmit {
+    background-color: white;
+    width: 150px;
+    height: 50px;
+    border: rgb(40, 133, 21) solid 1.5px;
+    color: rgb(28, 168, 0);
+    transition: 0.8s;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Odibee Sans', cursive;
+}
+.Button-Add .BTSubmit:hover {
+    background-color: rgba(12, 173, 52, 0.726);
+    border: rgb(59, 190, 33) solid 1.5px;
+    color: rgb(255, 255, 255);
+}
+.Button-Add .BTReset {
+    background-color: white;
+    width: 150px;
+    height: 50px;
+    border: rgb(236, 69, 69) solid 1.5px;
+    color: rgb(248, 0, 0);
+    transition: 0.8s;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Odibee Sans', cursive;
+}
+.Button-Add .BTReset:hover {
+    background-color: rgba(255, 0, 0, 0.726);
+    border: rgba(255, 0, 0, 0.726) solid 1.5px;
+    color: rgb(255, 255, 255);
+}
+
+.Cl-fieldset {
+    margin-left: 50px;
+    border: 3px solid #ff0000;
+    width: 600px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.Cl-fieldset legend {
+    width: 200px;
+    color: rgb(255, 0, 0);
+    font-size: 20px;
+    border-radius: 5px;
+    margin-left: 40px;
+}
+select{
+    text-align: center;
+    width: 610px;
+    height: 30px;
+    border: #000000 solid 2px;
+    transition: 0.5s;
+    font-family: 'Odibee Sans', cursive;
+    font-size: 20px;
+}
+
+</style>
+
+<script>
 function checkdata(){
     var Quiz = document.forms["AddChoice"]["Proposition"].value;
     var C1 = document.forms["AddChoice"]["Ch1"].value;
@@ -89,7 +224,6 @@ function checkdata(){
 
   }
 }
-
 
 </script>
 
@@ -222,13 +356,13 @@ function checkdata(){
                         
                         
                     </select></p>
-                    <p>Quiz ? : <br><input type="text" placeholder="โจทย์" name="Proposition" id="Proposition"></p>
-                    <p>Choice 1 : <br><input type="text" placeholder="ตัวเลือกที่ 1" name="Ch1" id="Ch1" ></p>
-                    <p>Choice 2 : <br><input type="text" placeholder="ตัวเลือกที่ 2" name="Ch2" id="Ch2" ></p>
-                    <p>Choice 3 : <br><input type="text" placeholder="ตัวเลือกที่ 3" name="Ch3" id="Ch3" ></p>
-                    <p>Choice 4 : <br><input type="text" placeholder="ตัวเลือกที่ 4" name="Ch4" id="Ch4" ></p><br>
+                    <p>Quiz ? : <br><input type="text" placeholder="Please enter Quiz ?" name="Proposition" id="Proposition"></p>
+                    <p>Choice 1 : <br><input type="text" placeholder="Please enter Choice 1" name="Ch1" id="Ch1" ></p>
+                    <p>Choice 2 : <br><input type="text" placeholder="Please enter Choice 2" name="Ch2" id="Ch2" ></p>
+                    <p>Choice 3 : <br><input type="text" placeholder="Please enter Choice 3" name="Ch3" id="Ch3" ></p>
+                    <p>Choice 4 : <br><input type="text" placeholder="Please enter Choice 4" name="Ch4" id="Ch4" ></p>
 
-                    <fieldset class="fieldset">
+                    <fieldset class="Cl-fieldset">
                         <legend> <p>Answer Chioce</p></legend>
                     
                         <div class="Answer-Choice">
@@ -240,6 +374,7 @@ function checkdata(){
                             </div>
                         </div>
                     </fieldset>
+
                     <div class="Button-Add">
                         <button type="submit" class="BTSubmit" onclick="return checkdata()">Submit</button>
                         <button type="reset" class="BTReset">Reset</button>
