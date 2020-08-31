@@ -12,6 +12,103 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <title>Evolution</title>
 </head>
+<style>
+  body{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0 0;
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  }
+  .Select-Sub-Evo{
+    /* position: fixed; */
+    text-align: center;
+    width: 650px;
+    /* border: 2px solid black; */
+    margin-top: 50px ;
+    margin-left: 400px;
+  }
+  .Error-Show{
+    /* text-align: center; */
+    position: static;
+    margin-top: 70px;
+    margin-left: 350px;
+    width: 750px;
+    height: 500px;
+    box-shadow: black 0 0 15px;
+    border-radius: 15px;
+    border: 3px solid black;
+    background: rgba(26, 26, 26, 0.616);
+  }
+  .Error-Show p {
+    text-align: center;
+    position: relative;
+    font-size: 50px;
+  }
+  .But-Show-MemberEvo{
+    color: white;
+    margin-left: 20px;
+    width: 100px;
+    height: 50px;
+    background: rgb(31, 30, 30,0.7);
+    box-shadow: black 0 0 15px;
+    border: black solid 2px;
+    border-radius: 10px;
+    transition: 0.8s;
+  }
+  .But-Show-MemberEvo:hover{
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.719) 2.5px 5px ;
+    background: rgb(247, 114, 25);
+  }
+  .Container-table-ShowMem{
+    text-align: center;
+    margin-left: 350px;
+    margin-top: 40px;
+    width: 800px;
+    /* border: black solid 2px; */
+  }
+  .Container-table-ShowMem p{
+    font-size: 40px;
+  }
+  .Container-table-ShowMem .Container-table-ShowMem-inside{
+    margin-left: 200px;
+    margin-top: 30px;
+  }
+  .Container-table-ShowMem .table-Show-Mem thead 
+  .title-table{
+    color: white;
+    font-size: 20px;
+    width: 100px;
+    height: 40px;
+    border-collapse: collapse;
+    border: 2px solid black;
+    background: rgba(48, 101, 199, 0.726);
+  }
+  .Container-table-ShowMem .table-Show-Mem tbody .data{
+    height: 40px;
+    text-align: center;
+    background: rgba(245, 245, 245, 0.466);
+    border: black 2px solid;
+    border-collapse: collapse;
+    transition: 0.8s;
+  }
+  .Container-table-ShowMem .table-Show-Mem tbody .data:hover{
+    background: rgba(100, 100, 100, 0.466);
+  }
+  .Container-table-ShowMem .table-Show-Mem tbody button{
+    background:linear-gradient(135deg, rgb(255, 255, 255) 30%, rgb(36, 125, 226));
+    margin-left:2px ;
+    border: 2px solid black;
+    border-radius: 15px;
+    transition: 0.5s;
+  }
+  .Container-table-ShowMem .table-Show-Mem tbody button:hover{
+    box-shadow: black 1px 1px ;
+          background:linear-gradient(135deg,  rgb(36, 125, 226) 30%, rgb(36, 125, 226));
+  }
+  
+</style>
 <script>
     var i=1;
     function add(){
@@ -144,54 +241,60 @@
       </div>
       {% endif %}
 
-    <h1> - Evolution - </h1>
 
+    <div class="Select-Sub-Evo">
+      <form action="/Evopage" method="POST">
+      {% for Sub in Subject.each() %}
 
-
-    <form action="/Evopage" method="POST">
-    {% for Sub in Subject.each() %}
-    
-
-    <button type="submit" value="{%print(Sub.key())%}" name="Sub_name">{% print(Sub.key()) %}</button>
-    
-    {% endfor %}
-    </form>
-
+      <button type="submit" class="But-Show-MemberEvo" value="{%print(Sub.key())%}" name="Sub_name">{% print(Sub.key()) %}</button>
+      
+      {% endfor %}
+      </form>
+    </div>
     {% if  ShowData %}
 
-        <h1> Show Data </h1>
-        <table border="2px">
-            <thead>
-                <tr>
-                    <td> Stu_Code </td>
-                    <td> Username </td>
-                    <td> Name </td>
-                </tr>
-            </thead>
-            <tbody>
-               
+      <div class="Container-table-ShowMem">
+      <p>Member in Subject Name : {{SubjectName}}</p>
 
-                {% for Sub in ShowData.each() %}
-                <form action="/ShowEvo" method="POST">
+        <div class="Container-table-ShowMem-inside">
+          <table class="table-Show-Mem">
+              <thead>
+                  <tr>
+                      <td class="title-table"> Studen Code </td>
+                      <td class="title-table"> Name </td>
+                  </tr>
+              </thead>
+              <tbody>
 
-                <tr>
-                    <td><input type="text" value="{% print(Sub.val()['Stu_Code'])%}" name="Stu_Code" readonly></td>
-                    <td><input type="text" name="Username" id="" value="{%print(Sub.key())%}" readonly></td>
-                    <td><input type="text" value="{%print(Sub.val()['Name'])%}" name="Name" readonly></td>
-                    <td><button type="submit" value="View" >View</button></td>
-                </tr>
-                </form>
-                {% endfor %}
-                
-            </tbody>
-        </table>
+                  {% for Sub in ShowData.each() %}
+                  <form action="/ShowEvo" method="POST">
+
+                  <tr>
+                      <td class="data"><input style="border: none; background: none; text-align: center;" type="text" value="{% print(Sub.val()['Stu_Code'])%}" name="Stu_Code" readonly></td>
+                      <td class="data"><input style="border: none; background: none;text-align: center;" type="text" value="{%print(Sub.val()['Name'])%}" name="Name" readonly></td>
+                      <td><button  type="submit" name="Username" id="" value="{%print(Sub.key())%}" value="View" >View  <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                  </tr>
+                  </form>
+                  {% endfor %}
+                  
+              </tbody>
+          </table>
+        </div>
+      </div>
 
     {% elif ErrorA %}
-
-        <h1>{{ErrorA}}</h1>
-    
+        <div class="Error-Show">
+          <img style="width: 200px; height: 200px; margin-left: 280px; margin-top: 30px;" src="https://img.icons8.com/officel/480/000000/cancel.png"/>
+        <p style="color: red;">There is no player in the course yet.</p>
+        </div>
     {% else %}
-        <h1>กรุณาเลือกวิชาที่ต้องการ</h1>
+        <div class="Error-Show">
+          <img style="position: absolute; margin-top: 80px; margin-left:350px;" src="https://img.icons8.com/doodle/96/000000/up-direction-arrow.png"/>
+          <div style="margin-top: 200px;">
+            <p style="color: coral;">Please click the button</p>
+            <p>Please select the subject to express the question.</p>
+        </div>
+        </div>
     {% endif %}
     
 

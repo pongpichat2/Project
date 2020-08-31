@@ -271,7 +271,7 @@ def Evopage():
                 return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText ,DataSubject = Admin_Subject)
             else:
                 
-                return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ) 
+                return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ,SubjectName = Sub) 
 
         return render_template('evo.html', Subject = ShowSubject,DataSubject = Admin_Subject)
 
