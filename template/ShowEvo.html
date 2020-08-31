@@ -20,17 +20,283 @@
         body{
           background-size: cover;
           background-position: center;
-          height: 200vh;
+          height: 100%;
           margin: 0 0;
           background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
         }
-        .ShowStatus{
-            margin: 5% 5%;
-            width: 1000px;
-            height: 800px;
-            background: rgba(160, 75, 75, 0.527);
-            position: absolute;
+        .ShowName-Mem .table-ShowName-Mem thead td{
+          color: white;
+          text-align: center;
+          height: 40px;
+          font-size: 20px;
+          background: rgba(219, 30, 172, 0.63);
+          border-collapse: collapse;
+          border: 2px solid black;
         }
+        .ShowName-Mem .table-ShowName-Mem tbody input[type='text']{
+          border: none;
+          background: none;
+          text-align: center;
+        }
+        .ShowName-Mem .table-ShowName-Mem tbody .data{
+          border: 2px solid black;
+          height: 30px;
+          background: rgba(255, 255, 255, 0.568);
+          transition: 0.8s;
+        }
+        .ShowName-Mem .table-ShowName-Mem tbody .data:hover{
+          background: rgba(77, 72, 72, 0.568);
+        }
+        .ShowName-Mem .table-ShowName-Mem tbody button{
+          background:linear-gradient(135deg, rgb(255, 255, 255) 30%, rgb(36, 125, 226));
+          margin-left:2px ;
+          border: 2px solid black;
+          border-radius: 15px;
+          transition: 0.5s;
+        }
+        .ShowName-Mem .table-ShowName-Mem tbody button:hover{
+          box-shadow: black 1px 1px ;
+          background:linear-gradient(135deg,  rgb(36, 125, 226) 30%, rgb(36, 125, 226));
+        }
+        .ShowStatus{
+            margin: 3% 3%;
+            width: 1300px;
+            /* background: rgba(160, 75, 75, 0.527); */
+            position: absolute;
+            /* border: black solid 2px; */
+        }
+        .title-text-Name{
+          background: rgba(59, 59, 59, 0.521);
+          text-align: center;
+          margin-left:550px;
+          width: 400px;
+          height: 120px;
+          border: 2px solid black;
+          border-radius: 20px;
+          
+        }
+        .container-table{
+          margin-top: 20px;
+          margin-left: 570px;
+        }
+        .Show-chart{
+          margin-top: 20px;
+        }
+        .Show-chart .container-chartOne{
+          background: rgba(212, 212, 212, 0.432);
+          box-shadow: black 0 0 15px;
+          border-radius: 15px;
+          text-align: center;
+          position: absolute;
+          width: 470px;
+          height: 300px;
+          border: solid 2px black;
+          transition: 0.8s;
+        }
+        /* .Show-chart .container-chartOne:hover {
+
+          width: 600px;
+          height: 400px;
+          
+        } */
+        .Show-chart .container-charttwo{
+          text-align: center;
+          background: rgba(214, 128, 128, 0.432);
+          box-shadow: black 0 0 15px;
+          border-radius: 15px;
+          position: absolute;
+          margin-left: 490px;
+          width: 470px;
+          height: 300px;
+          border: solid 1px black;
+        }
+        .Show-chart .container-chart3{
+          text-align: center;
+          background: rgba(127, 226, 123, 0.432);
+          box-shadow: black 0 0 15px;
+          border-radius: 15px;
+          position: absolute;
+          margin-left: 980px;
+          width: 470px;
+          height: 300px;
+          border: solid 1px black;
+        }
+        .Box-Animation{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border: 2px solid black;
+        background:rgba(29, 29, 29, 0.671);
+
+      }
+        .cssload-loader {
+        width: 235px;
+        height: 235px;
+        margin-left: 700px;
+        margin-top: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        animation: 1.44s cssload-spin cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -o-animation: 1.44s cssload-spin cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -ms-animation: 1.44s cssload-spin cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -webkit-animation: 1.44s cssload-spin cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -moz-animation: 1.44s cssload-spin cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+      }
+
+      .cssload-loader:before, .cssload-loader:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        border: 118px solid black;
+        border-top-color: rgb(250,66,72);
+        border-left-color: rgb(93,219,186);
+        border-bottom-color: rgb(237,230,112);
+        border-right-color: rgb(100,195,242);
+      }
+      .cssload-loader:before {
+        filter: blur(12px);
+          -o-filter: blur(12px);
+          -ms-filter: blur(12px);
+          -webkit-filter: blur(12px);
+          -moz-filter: blur(12px);
+      }
+      .cssload-loader:after {
+        animation: 1.44s cssload-normal-opacity cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -o-animation: 1.44s cssload-normal-opacity cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -ms-animation: 1.44s cssload-normal-opacity cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -webkit-animation: 1.44s cssload-normal-opacity cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+          -moz-animation: 1.44s cssload-normal-opacity cubic-bezier(0.46, -0.4, 0.2, 1.51) infinite both;
+      }
+
+
+
+
+
+      @keyframes cssload-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-2160deg);
+        }
+      }
+
+      @-o-keyframes cssload-spin {
+        0% {
+          -o-transform: rotate(0deg);
+        }
+        100% {
+          -o-transform: rotate(-2160deg);
+        }
+      }
+
+      @-ms-keyframes cssload-spin {
+        0% {
+          -ms-transform: rotate(0deg);
+        }
+        100% {
+          -ms-transform: rotate(-2160deg);
+        }
+      }
+
+      @-webkit-keyframes cssload-spin {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(-2160deg);
+        }
+      }
+
+      @-moz-keyframes cssload-spin {
+        0% {
+          -moz-transform: rotate(0deg);
+        }
+        100% {
+          -moz-transform: rotate(-2160deg);
+        }
+      }
+
+      @keyframes cssload-normal-opacity {
+        0% {
+          opacity: 1;
+        }
+        45% {
+          opacity: 0;
+        }
+        55% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @-o-keyframes cssload-normal-opacity {
+        0% {
+          opacity: 1;
+        }
+        45% {
+          opacity: 0;
+        }
+        55% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @-ms-keyframes cssload-normal-opacity {
+        0% {
+          opacity: 1;
+        }
+        45% {
+          opacity: 0;
+        }
+        55% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes cssload-normal-opacity {
+        0% {
+          opacity: 1;
+        }
+        45% {
+          opacity: 0;
+        }
+        55% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @-moz-keyframes cssload-normal-opacity {
+        0% {
+          opacity: 1;
+        }
+        45% {
+          opacity: 0;
+        }
+        55% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
     </style>
 </head>
 <body>
@@ -126,6 +392,7 @@
           </div>
         </div>
       </div>
+
       <!-- end  popup Change Password -->
       {% if Error %}
       <div class="alert alert-danger" role="alert">
@@ -133,63 +400,70 @@
       </div>
       {% endif %}
 
-    <h1>Show Development</h1>
+      <div class="Box-Animation" >
+        <div class="cssload-loader"></div>
+      </div>
 
     <!-- รายชื่อ Member ที่อยู่ในรายวิชา -->
     <div class="ShowName-Mem">
-        <table border="2px">
+      <div class="container-table">
+        <table class="table-ShowName-Mem">
             <thead>
                 <tr>
-                    <td> Stu_Code </td>
-                    
+                    <td> Studen Code </td>
                     <td> Name </td>
                 </tr>
             </thead>
             <tbody>
                 {% for Member in ShowData.each() %}
                 <form action="/ShowEvo" method="POST">
-
                     <tr>
-                        <td><input type="text" value="{% print(Member.val()['Stu_Code'])%}" name="Stu_Code" readonly></td>
-
-                        <td><input type="text" value="{%print(Member.val()['Name'])%}" name="Name" readonly></td>
-                        <td><button type="submit" value="{%print(Member.key())%}" name="Username" class="btn btn-primary">View</button></td>
+                        <td class="data"><input type="text" value="{% print(Member.val()['Stu_Code'])%}" name="Stu_Code" readonly></td>
+                        <td class="data"><input type="text" value="{%print(Member.val()['Name'])%}" name="Name" readonly></td>
+                        <td ><button type="submit" value="{%print(Member.key())%}" name="Username">View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
                     </tr>
-                    </form>
+                </form>
 
                 {% endfor %}
             </tbody>
-
         </table>
-
+      </div>
     </div>
 
     <form action="/Development" method="POST">
         
     <div class="ShowStatus">
+      <div class="title-text-Name">
         <h2>{{SubName}}</h2>
         <p>Student Code : {{StuCode}} <br> Name : {{NAME}} </p>
-        <!-- <button type="Submit" name="Name_Game" value="Game1" >G1</button> 
-        <button type="Submit" name="Name_Game" value="Game2">G2</button> 
-        <button type="Submit" name="Name_Game" value="Game3">G3</button> -->
+      </div>
 
     </form>
 
-    <!-- show chart -->
-    
-    <div class="Show-chart" style="width: 100%;">
-        <div style="width: 90%; height: 500px; ">
-          <div class="chart-container" style="position: relative; height:10vh; width:30vw;left: 0px;margin: 10%px;">
-              <canvas id="myChart1"></canvas>
+      <div class="Show-chart">
+          <div class="container-chartOne">
+            <h5>Type the Alphabet</h5>
+            <div class="chart-container1" style="margin-top: 40px;">
+                <canvas id="myChart1"></canvas>
+            </div>
           </div>
-          <div class="chart-container" style="position: relative; height:10vh; width:30vw;top: 0%; margin: 0px 500px;">
-              <canvas id="myChart2"></canvas>
+
+          <div class="container-charttwo">
+            <h5>Shoot Word</h5>
+            <div class="chart-container2" style="margin-top: 40px;">
+                <canvas id="myChart2"></canvas>
+            </div>
           </div>
-          <div class="chart-container" style="position: relative; height:10vh; width:30vw; margin-top: 10%;">
-              <canvas id="myChart3"></canvas>
+
+          <div class="container-chart3">
+            <h5>Adventures</h5>
+            <div class="chart-container3" style="margin-top: 40px;">
+                <canvas id="myChart3"></canvas>
+              </div>
           </div>
+
       </div>
-    </div>
+  </div>
 
     <script>
 
@@ -205,13 +479,11 @@
                 data: {
                     labels: ['0','1','2','3','4','5','6','7'],
                     datasets: [{
-                        label: 'Game1',
+                        label: 'Score',
                         data :result.ChartDataGame1,
-                        backgroundColor:[
-                            'rgba(255, 99, 132, 0.6)'
-                        ],
+                        
                         borderWidth:3,
-                        borderColor:'#777',
+                        borderColor:'rgb(30,144,255)',
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'},
                         {
@@ -224,7 +496,6 @@
                         borderWidth:3,
                         hoverBorderWidth:10,
                         },
-
 
                         ]},
                         
@@ -245,13 +516,11 @@
                 data: {
                     labels: ['0','1','2','3','4','5','6','7'],
                     datasets: [{
-                        label: 'Game2',
+                        label: 'Score',
                         data :result.ChartDataGame2,
-                        backgroundColor:[
-                            'rgba(234, 43, 255, 0.73)'
-                        ],
+                        
                         borderWidth:3,
-                        borderColor:'#777',
+                        borderColor:'rgb(30,144,255)',
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'},
                         {
@@ -284,13 +553,11 @@
                 data: {
                     labels: ['0','1','2','3','4','5','6','7'],
                     datasets: [{
-                        label: 'Game3',
+                        label: 'Score',
                         data :result.ChartDataGame3,
-                        backgroundColor:[
-                            'rgba(163, 245, 54, 0.68)'
-                        ],
+
                         borderWidth:3,
-                        borderColor:'#777',
+                        borderColor:'rgb(30,144,255)',
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'},
                         {
@@ -349,6 +616,18 @@
         }
 
   }
+  $(document).ready(function(){
+    
+      $(".Box-Animation").show();
+      setTimeout(function(){
+        $(".But-edit").addClass("Success");
+      }, 3700);
+      setTimeout(function(){
+        $(".Box-Animation").hide();
+      }, 4500)
+    
+    
+  });
     </script>
 
     </div>

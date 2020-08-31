@@ -25,7 +25,8 @@
             background-position: center;
             height: 100vh;
             margin: 0 0;
-            background-image: url("/static/image/AddSub.jpg");
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            /* background-image: url("/static/image/AddSub.jpg"); */
         }
         .Select-Sub{
           position: fixed;
@@ -151,8 +152,207 @@
           box-shadow: black 1px 1px ;
           background:linear-gradient(135deg,  rgb(202, 69, 69) 30%, rgb(245, 2, 2));
         }
+        .Box-Animation{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border: 2px solid black;
+  background:rgba(29, 29, 29, 0.671);
+
+}
+.cssload-circle{
+      margin: 300px auto;
+      width:120px;
+      height:120px;
+      background:rgb(236,240,241);
+      border:solid 8px rgb(44,62,80);
+      border-radius:100%;
+      overflow:hidden;
+      animation: cssload-rotates 2.3s infinite linear;
+      -o-animation: cssload-rotates 2.3s infinite linear;
+      -ms-animation: cssload-rotates 2.3s infinite linear;
+      -webkit-animation: cssload-rotates 2.3s infinite linear;
+      -moz-animation: cssload-rotates 2.3s infinite linear;
+  }
+  .cssload-up{
+      width: 45px;
+      height: 60px;
+      left:30px;
+      overflow:hidden;
+      background:rgb(204,238,255);
+      position:absolute;
+  }
+  .cssload-up:before,.cssload-up:after{
+      content:"";
+      width:45px;height:45px;
+      background:rgb(236,240,241);
+      position:absolute;
+      z-index:1;
+  }
+  .cssload-up:before{
+      top:45px;
+      left:-26px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-up:after{
+      top:45px; left:26px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-innera{
+      position:relative;
+      top:23px;
+      width:45px;height:45px;
+      background:rgb(241,196,15);
+      animation: cssload-mymove 2.3s infinite linear;
+      -o-animation: cssload-mymove 2.3s infinite linear;
+      -ms-animation: cssload-mymove 2.3s infinite linear;
+      -webkit-animation: cssload-mymove 2.3s infinite linear;
+      -moz-animation: cssload-mymove 2.3s infinite linear;
+  }
+  .cssload-down{
+      width: 45px;
+      height: 60px;
+      left:30px;
+      top:60px;
+      overflow:hidden;
+      background:rgb(204,238,255);
+      position:absolute;
+      z-index:1;
+  }
+  .cssload-down:before,.cssload-down:after{
+      content:"";
+      width:45px;
+      height:60px;
+      background:rgb(236,240,241);
+      position:absolute;
+      z-index:1;
+  }
+  .cssload-down:before{
+      top:-38px;
+      left:-26px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-down:after{
+      top:-38px;
+      left:36px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-innerb{
+      position:relative;
+      top:60px;
+      width:45px;height:45px; background:rgb(241,196,15);
+      animation: cssload-mymoveb 2.3s infinite linear;
+      -o-animation: cssload-mymoveb 2.3s infinite linear;
+      -ms-animation: cssload-mymoveb 2.3s infinite linear;
+      -webkit-animation: cssload-mymoveb 2.3s infinite linear;
+      -moz-animation: cssload-mymoveb 2.3s infinite linear;
+  }
+
+
+  @keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-o-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-ms-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-webkit-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-moz-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-o-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-ms-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-webkit-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-moz-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @keyframes cssload-rotates{
+      0%{transform:rotate(0deg);}
+      80%{transform:rotate(0deg);}
+      100%{transform:rotate(180deg);}
+  }
+
+  @-o-keyframes cssload-rotates{
+      0%{-o-transform:rotate(0deg);}
+      80%{-o-transform:rotate(0deg);}
+      100%{-o-transform:rotate(180deg);}
+  }
+
+  @-ms-keyframes cssload-rotates{
+      0%{-ms-transform:rotate(0deg);}
+      80%{-ms-transform:rotate(0deg);}
+      100%{-ms-transform:rotate(180deg);}
+  }
+
+  @-webkit-keyframes cssload-rotates{
+      0%{-webkit-transform:rotate(0deg);}
+      80%{-webkit-transform:rotate(0deg);}
+      100%{-webkit-transform:rotate(180deg);}
+  }
+
+  @-moz-keyframes cssload-rotates{
+      0%{-moz-transform:rotate(0deg);}
+      80%{-moz-transform:rotate(0deg);}
+      100%{-moz-transform:rotate(180deg);}
+  }
+
     </style>
     <script>
+
     var i=1;
     function add(){
     i++;
@@ -182,6 +382,36 @@
         }
 
   }
+  function Con_edit(){
+
+      return confirm("You want to edit it, right ?");
+
+  }
+
+  function Con_delete(){
+    return confirm("You want to Delete it, right ?");
+  }
+
+  $(document).ready(function(){
+    $(".But-edit").click(function(){
+      $(".Box-Animation").show();
+      setTimeout(function(){
+        $(".But-edit").addClass("Success");
+      }, 3700);
+      setTimeout(function(){
+        $(".Box-Animation").hide();
+      }, 2000)
+    });
+    $(".But-delete").click(function(){
+      $(".Box-Animation").show();
+      setTimeout(function(){
+        $(".But-delete").addClass("Success");
+      }, 3700);
+      setTimeout(function(){
+        $(".Box-Animation").hide();
+      }, 2000)
+    });
+  });
 
     </script>
     
@@ -289,6 +519,17 @@
       {% endif %}
 
 
+
+      <div class="Box-Animation" style="display: none;">
+        <div class="cssload-circle" >
+          <div class="cssload-up">
+              <div class="cssload-innera"></div>
+          </div>
+          <div class="cssload-down">
+              <div class="cssload-innerb"></div>
+          </div>
+        </div>
+      </div>
       <table class="Select-Sub">
           <thead>
               <tr>
@@ -327,7 +568,8 @@
                       <th >Choice 2</th>
                       <th >Choice 3</th>
                       <th >Choice 4</th>
-                      <th >Answer</th>
+                      <th style="color: red;">Answer(Before)</th>
+                      <th>Answer(After)</th>
 
                   </tr>
               </thead>
@@ -342,10 +584,11 @@
                           <td class="Data"><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
-                          <td class="Data"><input type="radio" name="Answer" value="1">Choice1 <input type="radio" name="Answer" value="2">
-                            Choice2<input type="radio" name="Answer" value="3">Choice3<input type="radio" name="Answer" value="4">Choice4</td>
-                          <td style="border: none;  background: none;" ><button type="Submit" value="Edit" name="Type_Up" class="But-edit">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button></td>
-                          <td style="border: none; background: none;" > <button type="Submit" value="Delete" name="Type_Up" class="But-delete">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
+                          <td class=""><input type="text" value="{%print(k.val()['ans'])%}" readonly style="color: red; text-align: center; border: none; background: none;"></td>
+                          <td class="Data"><input type="radio" id="Answer" name="Answer" value="1">Choice1 <input type="radio" id="Answer" name="Answer" value="2">
+                            Choice2<input type="radio" name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
+                          <td style="border: none;  background: none;" ><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button></td>
+                          <td style="border: none; background: none;" > <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
                       </tr>
                   </form>
 

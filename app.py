@@ -228,20 +228,21 @@ def Sub_Update():
         C2 = request.form['C2']
         C3 = request.form['C3']
         C4 = request.form['C4']
-        Answer = request.form['Answer']
-        if(Answer == '1'):
-            Answer = C1
-        elif(Answer == '2'):
-            Answer = C2
-        elif(Answer == '3'):
-            Answer = C3
-        elif(Answer == '4'):
-            Answer = C4
+        
 
         
         TypeUp = request.form['Type_Up']
 
         if TypeUp == 'Edit':
+            Answer = request.form['Answer']
+            if(Answer == '1'):
+                Answer = C1
+            elif(Answer == '2'):
+                Answer = C2
+            elif(Answer == '3'):
+                Answer = C3
+            elif(Answer == '4'):
+                Answer = C4
             AvgUpdate = Cal.Calchoice(Answer)
             db.child('Subject').child(Subname).child('Quiz').child('NO_'+NO_Sub).update({"Qu":Quiz,"C1":C1,"C2":C2,"C3":C3,"C4":C4,"ans":Answer,"Time":AvgUpdate})
         elif TypeUp == 'Delete':
