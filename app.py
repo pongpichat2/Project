@@ -228,9 +228,7 @@ def Sub_Update():
         C2 = request.form['C2']
         C3 = request.form['C3']
         C4 = request.form['C4']
-        
 
-        
         TypeUp = request.form['Type_Up']
 
         if TypeUp == 'Edit':

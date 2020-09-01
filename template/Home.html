@@ -17,6 +17,7 @@
 
 
     body{
+        
         background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
         background-size: cover;
         background-position: center;
@@ -54,7 +55,7 @@
    }
 
 
-    .Add-Choice .Title{
+    .Add-Choice #Title{
         width: 100%;
         margin: 20% 38%;
         color: rgb(168, 168, 168);
@@ -140,8 +141,15 @@
         margin-top: 18%;
         margin-left: 40%;
     }
+    .Select-Langua{
+      margin-left: 200px;
+      height: 35px;
+      border: black 1px solid;
+      border-radius: 15px;
 
-    
+    }
+
+
 
 
 </style>
@@ -169,7 +177,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">{{name}}</a>
               </li>
+              
+            <div class="Select-Langua">
+              <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
+                  <option  value="EN">EN</option>
+                  <option  value="TH">TH</option>
+              </select>
+            </div>
+  
             
+
             <!-- dropdow -->
             
              
@@ -266,13 +283,17 @@
 
       {% endif %}
 
+<!-- 
+      <p class="trasla" id="" key='Name-Test'>Nook</p>
+      <p class="trasla" id="" key='fname'>Pongpichat</p> -->
+
     <div style="position: absolute;">
         <a href="/Addchoice" class="AddChoice">
             <div class="Add-Choice">
                 <img src="/static/image/wrong.png"  alt="">
-                <p class="Title">Add - Choice</p>
+                <p  id="Title"  key='Add-title' class="trasla">Add - Choice</p>
 
-                <p style="color: white; position: absolute; margin: 400px 120px;">* Go To the page Add-Choice is a function to add questions.</p>
+                <p style="color: white; position: absolute; margin: 400px 120px;" class="trasla" key='Add-detil'>* Go To the page Add-Choice is a function to add questions.</p>
             </div>
         </a>
 
@@ -280,9 +301,9 @@
             <div class="Add-Sub">
                 <img src="/static/image/books.png"  alt="">
 
-                <p class="TitleSub">SUBJECT</p>
+                <p class="TitleSub" id="traslation" key='Sub-title'>SUBJECT</p>
 
-                <p style="color: white; position: absolute; margin: 170px 120px;">* function to Edit questions in Subject.</p>
+                <p style="color: white; position: absolute; margin: 170px 120px;" class="trasla" key='Sub-detil'>* function to Edit questions in Subject.</p>
             </div>
         </a>
 
@@ -290,9 +311,9 @@
             <div class="Quiz">
                 <img src="/static/image/question2.png"  alt="">
 
-                <p class="TitleQ">Evolution</p>
+                <p class="TitleQ" id="traslation">Evolution</p>
 
-                <p style="color: white; position: absolute; margin: 230px 90px;">* function to View Evolution Studen in Subject.</p>
+                <p style="color: white; position: absolute; margin: 230px 70px;" class="trasla" key='evo-detil'>* function to View Evolution Studen in Subject.</p>
             </div>
         </a>
     </div>
@@ -330,6 +351,32 @@
         }
 
   }
+
+  var arrlang = {
+    'EN':{
+      'Add-detil' : '* Go To the page Add-Choice is a function to add questions.',
+      'Sub-detil' : '* function to Edit questions in Subject.',
+      'evo-detil' : '* function to View Evolution Studen in Subject.'
+
+    },
+    'TH':{
+      'Add-detil' : '* ไปที่หน้า Add-Choice เป็นฟังก์ชันสำหรับเพิ่มคำถาม',
+      'Sub-detil' : '* ฟังก์ชั่นแก้ไขคำถามในรายวิชาของตนเอง',
+      'evo-detil' : '* ฟังก์ชั่นเพื่อดู พัฒนาการของนักเรียนในรายวิชาของตนเอง'
+
+    }
+  };
+  $(document).ready(function(){
+    $('.select-langua-Op').click(function(){
+      var langua = document.getElementById('select-langua-Op').value;
+ 
+      $('.trasla').each(function(index, element){
+        $(this).text(arrlang[langua][$(this).attr('key')]);
+    });
+    });
+
+  });
+
   
 </script>
 </html>
