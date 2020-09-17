@@ -5,45 +5,51 @@ from firebase import Firebase
 import Calculat as Cal
 from array import *
 
-
-y = 16%5
-print(float(y))
-
-if y == 0 or y == 5:
-    print('ลงตัว')
-else:
-    print('ไม่ลงตัว')
-# dataset = [[5,15,3,1,30,20,0,14,45,2,7,5],[9,4,10,5,12,13,24]]
+#ใช้หลังจาก read Score มาใส่ใน Array เสร็จแล้ว
+# dataset = [[5,15,3,1,0,14,16,2,7,20],[9,8,10,7,12],[2],[5,90]]
+# ValBeeteew = 8
 # for k in range(len(dataset)):
-
-#     Xi = (len(dataset[k])+1)/2
-#     datasort = sorted(dataset[k])
-#     print(Xi % 5) 
-#     print(datasort[int(Xi-1)])
-#     if Xi%5 == 0:
-#         mid =  datasort[int(Xi-1)]
-#         print(mid)
-#         for test in range(len(datasort)):
-#             print(datasort[test])
-#             if datasort[test] > (mid-10) and datasort[test] <= (mid+10):
-#                 print(str(datasort[test]) +'อยู่ในช่วง')
-#             else :
-#                 dataset.remove(datasort[test])
-#                 print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
-
-#     else:
-#         XiMax = math.ceil(Xi)
-#         Ximin = math.floor(Xi)
-#         median = (datasort[Ximin]+datasort[XiMax])/2
-
-        # for Posi in range(len(datasort)):
-        #     if datasort[Posi] > (median-10) and datasort[Posi] <= (median+10):
-        #         print(str(datasort[Posi]) +'อยู่ในช่วง')
-        #     else :
-        #         dataset.remove(datasort[Posi])
-        #         print(str(datasort[Posi]) +'ไม่อยู่ในช่วง'+str(median-10)+"และ"+str(median+10))
+#     countCheckData = len(dataset[k])
+#     # print(countCheckData)
+#     if countCheckData == 1:
+#         continue
+#     elif countCheckData == 2:
+#         continue
+#     elif countCheckData > 2:
+        
+#         Xi = (len(dataset[k])+1)/2
+#         datasort = sorted(dataset[k])
+#         # print(Xi)
+#         # print(datasort[int(Xi-1)])
+#         if "." in str(Xi):
+#             #เช็คค่าหลังจุด ทศนิยม ว่าเป็น 5 หรือ 0
+#             ValDina = str(Xi).split(".")[-1]
+#             # print(ValDina)
+#             if ValDina == '0':
+#                 mid =  datasort[int(Xi-1)]
+#                 # print(mid)
+#                 # print(datasort)
+#                 for test in range(len(datasort)):
+#                     # print(datasort[test])
+#                     if datasort[test] > (mid-ValBeeteew) and datasort[test] <= (mid+ValBeeteew):
+#                         # print(str(datasort[test]) +'อยู่ในช่วง')
+#                         continue
+#                     else :
+#                         dataset[k].remove(datasort[test])
+#                         # print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
+#             elif ValDina == '5':
+#                 XiMax = math.ceil(Xi)
+#                 Ximin = math.floor(Xi)
+#                 median = (datasort[Ximin-1]+datasort[XiMax-1])/2
+#                 for Posi in range(len(datasort)):
+#                     # print(datasort[Posi])
+#                     if datasort[Posi] > (median-ValBeeteew) and datasort[Posi] <= (median+ValBeeteew):
+#                         # print(str(datasort[Posi]) +'อยู่ในช่วง')
+#                         continue
+#                     else :
+#                         dataset[k].remove(datasort[Posi])
+#                         # print(str(datasort[Posi]) +'ไม่อยู่ในช่วง'+str(median-10)+"และ"+str(median+10)) 
 # print(dataset)
-
 
 config = {
     "apiKey": "AIzaSyAh2ji3JKKX-QHZv53sxXlNbpc_qet9yDU",
@@ -62,6 +68,20 @@ auth = firebase.auth()
 
 app = Flask(__name__,template_folder='template')
 app.secret_key = "hello"
+
+
+# zxc = []
+# testdata = db.child('Subject1').child('Into to CS').child('Member').get()
+
+# for x in testdata.each():
+
+#     childkey = db.child('Subject1').child('Into to CS').child('Member').child(x.key()).child('AdventuresGame').get()
+#     for score_test in childkey.each():
+#         timeScore = db.child('Subject1').child('Into to CS').child('Member').child(x.key()).child('AdventuresGame').child(score_test.key()).get()
+#         # print(timeScore.val()['score'])
+#         zxc.append(timeScore.val()['score'])
+# print(zxc)
+
 
 @app.route("/")
 def Login():
@@ -131,6 +151,15 @@ def Home():
         IDAdmin = session['Admin']
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         return render_template('Home.html',name = IDAdmin ,DataSubject = Admin_Subject)
+
+@app.route("/Home_TH")
+def Home_TH():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
+        return render_template('Home_TH.html',name = IDAdmin ,DataSubject = Admin_Subject)
         
 @app.route("/Addchoice") #URL
 def hello():
@@ -141,6 +170,16 @@ def hello():
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         return render_template('Addchoice.html', data = Sub,DataSubject = Admin_Subject)
+
+@app.route("/Addchoice_TH") #URL
+def Addchoice_TH():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
+        Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
+        return render_template('Addchoice_TH.html', data = Sub,DataSubject = Admin_Subject)
 
 # Insert คำถามลงใน Database #
 @app.route("/insertChoice", methods=['GET','POST'])
@@ -167,14 +206,16 @@ def insertChoice():
 
         Avgtime = Cal.Calchoice(Answer)
         
-        checkdata = db.child("Subject").child(subject).child("Quiz").get().val()
+        checkdata = db.child(subject).get().val()
+        # checkdata = db.child("Subject").child(subject).child("Quiz").get().val()
         
         if checkdata == None:
-            db.child("Subject").child(subject).child("Quiz").child("NO_1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
+            db.child(subject).child("NO1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
+            # db.child("Subject").child(subject).child("Quiz").child("NO_1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
             db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
         else:
-            countDataQuiz = str(len(db.child("Subject").child(subject).child("Quiz").get().val())+1)
-            db.child("Subject").child(subject).child("Quiz").child("NO_"+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
+            countDataQuiz = str(len(db.child(subject).get().val())+1)
+            db.child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
             db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
         return redirect(url_for('hello'))
 
@@ -190,7 +231,7 @@ def Subject():
             Sub_name = request.form['Subname']
             session['Subname_Update'] = Sub_name
 
-            ShowSub = db.child('Subject').child(Sub_name).child('Quiz').get()
+            ShowSub = db.child(Sub_name).get()
             if ShowSub.val() == None :
                 textError = "None"
                 return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , NoneData = textError)
@@ -199,6 +240,28 @@ def Subject():
                 return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , haveData = textHave)
 
         return render_template('Subject.html',data = Detil,DataSubject = Admin_Subject)
+
+@app.route("/Subject_TH", methods=['GET','POST'])
+def Subject_TH():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        user = session['Admin']
+        Detil = db.child('Admin').child(user).child('Subject_pro').get()
+        Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
+        if request.method == 'POST':
+            Sub_name = request.form['Subname']
+            session['Subname_Update'] = Sub_name
+
+            ShowSub = db.child(Sub_name).get()
+            if ShowSub.val() == None :
+                textError = "None"
+                return render_template('Subject_TH.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , NoneData = textError)
+            else:
+                textHave = "haveData"
+                return render_template('Subject_TH.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , haveData = textHave)
+
+        return render_template('Subject_TH.html',data = Detil,DataSubject = Admin_Subject)
 
 @app.route("/Sub_Update", methods=['GET','POST'])
 def Sub_Update():
@@ -225,12 +288,11 @@ def Sub_Update():
             elif(Answer == '4'):
                 Answer = C4
             AvgUpdate = Cal.Calchoice(Answer)
-            db.child('Subject').child(Subname).child('Quiz').child('NO_'+NO_Sub).update({"Qu":Quiz,"C1":C1,"C2":C2,"C3":C3,"C4":C4,"ans":Answer,"Time":AvgUpdate})
+            db.child(Subname).child('NO'+NO_Sub).update({"Qu":Quiz,"C1":C1,"C2":C2,"C3":C3,"C4":C4,"ans":Answer,"Time":AvgUpdate})
         elif TypeUp == 'Delete':
-
-            db.child('Subject').child(Subname).child('Quiz').child('NO_'+NO_Sub).remove()
+            db.child(Subname).child('NO'+NO_Sub).remove()
             try:
-                countDataQuiz = str(len(db.child("Subject").child(Subname).child("Quiz").get().val()))
+                countDataQuiz = str(len(db.child(Subname).get().val()))
                 db.child('Admin').child(user).child('Subject_pro').child(Subname).update({"DataNum":countDataQuiz})
             except:
                 db.child('Admin').child(user).child('Subject_pro').child(Subname).update({"DataNum":0})
@@ -260,6 +322,29 @@ def Evopage():
 
         return render_template('evo.html', Subject = ShowSubject,DataSubject = Admin_Subject)
 
+@app.route("/Evopage_TH", methods=['GET','POST'])
+def Evopage_TH():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        user = session['Admin']
+        ShowSubject = db.child('Admin').child(user).child('Subject_pro').get()
+        Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
+
+        if request.method == 'POST':
+            Sub = request.form['Sub_name']
+            SubMem = db.child('Subject').child(Sub).child('Member').get()
+
+            session['SubjectRef'] = Sub
+            if SubMem.val() == None:
+                ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
+                return render_template('evo_TH.html',Subject = ShowSubject , ErrorA = ErrorText ,DataSubject = Admin_Subject)
+            else:
+                
+                return render_template('evo_TH.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ,SubjectName = Sub) 
+
+        return render_template('evo_TH.html', Subject = ShowSubject,DataSubject = Admin_Subject)
+
 
 
 @app.route("/ShowEvo", methods=['GET','POST'])
@@ -277,22 +362,41 @@ def ShowEvo():
             DataUser = db.child('Subject').child(SubRef).child('Member').child(session['Member']).get()
 
             Name = DataUser.val()['Name']
-            Stu_Code = DataUser.val()['Stu_Code']
+            Email = DataUser.val()['Email']
 
             session['NameMember'] = Name
-            session['StuCode'] = Stu_Code
-        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , StuCode = session['StuCode'], ShowData = ShowMem ,DataSubject = Admin_Subject)
+            session['Email'] = Email
+        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
+@app.route("/ShowEvo_TH", methods=['GET','POST'])
+def ShowEvo_TH():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        SubRef = session['SubjectRef']
+        ShowMem = db.child('Subject').child(SubRef).child('Member').get()
+        Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
+        if request.method == 'POST':
+            Member = request.form['Username']
+            session['Member'] = Member
 
+            DataUser = db.child('Subject').child(SubRef).child('Member').child(session['Member']).get()
+
+            Name = DataUser.val()['Name']
+            Email = DataUser.val()['Email']
+
+            session['NameMember'] = Name
+            session['Email'] = Email
+        return render_template('ShowEvo_TH.html', SubName = SubRef, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 @app.route("/dataChart")
 def DataChart():
     Member = session['Member']
 
     SubjectRef = session['SubjectRef']
-    DataRefGame1 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('TypeGame').child('Game1').get()
-    DataRefGame2 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('TypeGame').child('Game2').get()
-    DataRefGame3 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('TypeGame').child('Game3').get()
+    DataRefGame1 = db.child('IntroGame').child('Alphabet').child(Member).get()
+    DataRefGame2 = db.child('IntroGame').child('ShootGame').child(Member).get()
+    DataRefGame3 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('AdventuresGame').get()
 
         # Chart Member main 
     DatachartGame1 = ['0',]
@@ -303,11 +407,13 @@ def DataChart():
     Sub_NameMem = db.child('Subject').child(SubjectRef).child('Member').child(Member).get()
     NameMember = Sub_NameMem.val()['Name']
     for G1 in DataRefGame1.each():
-        DatachartGame1.append(G1.val())
+
+        DatachartGame1.append(G1.val()['score'])
     for G2 in DataRefGame2.each():
-        DatachartGame2.append(G2.val())
+        DatachartGame2.append(G2.val()['score'])
     for G3 in DataRefGame3.each():
-        DatachartGame3.append(G3.val())
+        # print(G3.val()['score'])
+        DatachartGame3.append(G3.val()['score'])
 
     arrayGame1 = []
     AVG_Array = ['0',]
@@ -319,19 +425,20 @@ def DataChart():
     # การหา AVG ของเกมที่1
     # คนที่ส่งเข้ามา เพื่อที่หาจำนวนครั้งในการเล่น
     for len_Score in DataRefGame1.val():
-
-        lenScore = [len_Score]
+        dataScore_Game1 = db.child('IntroGame').child('Alphabet').child(Member).child(len_Score).get()
+        lenScore = [dataScore_Game1.val()['score']]
         arrayGame1.append(lenScore)
-
+    # print(arrayGame1)
     # คนที่เล่นเกมนั้นทั้งหมด
-    MemberSubject1 = db.child('Subject').child(SubjectRef).child('Member')
+    MemberSubject1 = db.child('IntroGame').child('Alphabet')
     for NameMem in MemberSubject1.get().val():
-        dataScore = db.child('Subject').child(SubjectRef).child('Member').child(NameMem).child('TypeGame').child('Game1').get()
+        dataScore = db.child('IntroGame').child('Alphabet').child(NameMem).get()
 
         for Score_test in DataRefGame1.val():
+            Data_Allscore = db.child('IntroGame').child('Alphabet').child(NameMem).child(Score_test).get()
 
             try:
-                Score = dataScore.val()[Score_test]
+                Score = Data_Allscore.val()['score']
             except :
                 continue
 
@@ -352,25 +459,61 @@ def DataChart():
                 arrayGame1[ReKey].remove(Re_Score_test)
             # else:
             #     print("ไม่พบ อยู่ใน array")
-                    
+    ValBeeteew = 10
+    for Data_Game1 in range(len(arrayGame1)):
+        countCheckData_G1 = len(arrayGame1[Data_Game1])
+        if countCheckData_G1 <= 2:
+            continue
+        else :
+            Xi = (len(arrayGame1[Data_Game1])+1)/2
+            datasort = sorted(arrayGame1[Data_Game1])
+
+            if "." in str(Xi):
+                ValDina = str(Xi).split(".")[-1]
+                if ValDina == '0':
+                    mid =  datasort[int(Xi-1)]
+                    # print(mid)
+                    # print(datasort)
+                    for test in range(len(datasort)):
+                        # print(datasort[test])
+                        if datasort[test] > (mid-ValBeeteew) and datasort[test] <= (mid+ValBeeteew):
+                            # print(str(datasort[test]) +'อยู่ในช่วง')
+                            continue
+                        else :
+                            arrayGame1[Data_Game1].remove(datasort[test])
+                            # print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
+            elif ValDina == '5':
+                XiMax = math.ceil(Xi)
+                Ximin = math.floor(Xi)
+                median = (datasort[Ximin-1]+datasort[XiMax-1])/2
+                for Posi in range(len(datasort)):
+                    # print(datasort[Posi])
+                    if datasort[Posi] > (median-ValBeeteew) and datasort[Posi] <= (median+ValBeeteew):
+                        # print(str(datasort[Posi]) +'อยู่ในช่วง')
+                        continue
+                    else :
+                        arrayGame3[Data_Game1].remove(datasort[Posi])
+
     for AVG in range(len(arrayGame1)):
         AVG_Score = '%.1f'%(sum(arrayGame1[AVG])/len(arrayGame1[AVG]))
-        # print(AVG_Score)
+   
         AVG_Array.append(AVG_Score)
-
 
     # การหาเกม 2
     for len_Score_Game2 in DataRefGame2.val():
-        lenScoreGame2 = [len_Score_Game2]
-        arrayGame2.append(lenScoreGame2)
+        dataScore_Game2 = db.child('IntroGame').child('ShootGame').child(Member).child(len_Score_Game2).get()
+        lenScoreGame2 = [dataScore_Game2.val()['score']]
 
-    MemberSubject2 = db.child('Subject').child(SubjectRef).child('Member')
+        arrayGame2.append(lenScoreGame2)
+    
+    MemberSubject2 = db.child('IntroGame').child('ShootGame')
     for NameMem_Game2 in MemberSubject2.get().val():
-        dataScore_Game2 = db.child('Subject').child(SubjectRef).child('Member').child(NameMem_Game2).child('TypeGame').child('Game2').get()
+        dataScore_Game2 = db.child('IntroGame').child('ShootGame').child(NameMem).get()
         # print(dataScore_Game2.val())
         for Score_Game2 in DataRefGame2.val():
+            Data_Allscore_G2 = db.child('IntroGame').child('ShootGame').child(NameMem).child(Score_test).get()
             try:
-                Score_G2 = dataScore_Game2.val()[Score_Game2]
+                Score_G2 = Data_Allscore_G2.val()['score']
 
             except :
                 continue
@@ -387,23 +530,60 @@ def DataChart():
             if Re_Score_G2 in arrayGame2[ReKey_G2]:
                 arrayGame2[ReKey_G2].remove(Re_Score_G2)
 
+    #การหาค่ามัธยฐาน
+    ValBeeteew = 10
+    for Data_Game2 in range(len(arrayGame2)):
+        countCheckData_G2 = len(arrayGame2[Data_Game2])
+        if countCheckData_G2 <= 2:
+            continue
+        else :
+            Xi = (len(arrayGame3[Data_Game2])+1)/2
+            datasort = sorted(arrayGame3[Data_Game2])
+
+            if "." in str(Xi):
+                ValDina = str(Xi).split(".")[-1]
+                if ValDina == '0':
+                    mid =  datasort[int(Xi-1)]
+                    # print(mid)
+                    # print(datasort)
+                    for test in range(len(datasort)):
+                        # print(datasort[test])
+                        if datasort[test] > (mid-ValBeeteew) and datasort[test] <= (mid+ValBeeteew):
+                            # print(str(datasort[test]) +'อยู่ในช่วง')
+                            continue
+                        else :
+                            arrayGame2[Data_Game2].remove(datasort[test])
+                            # print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
+            elif ValDina == '5':
+                XiMax = math.ceil(Xi)
+                Ximin = math.floor(Xi)
+                median = (datasort[Ximin-1]+datasort[XiMax-1])/2
+                for Posi in range(len(datasort)):
+                    # print(datasort[Posi])
+                    if datasort[Posi] > (median-ValBeeteew) and datasort[Posi] <= (median+ValBeeteew):
+                        # print(str(datasort[Posi]) +'อยู่ในช่วง')
+                        continue
+                    else :
+                        arrayGame2[Data_Game2].remove(datasort[Posi])
+
     for AVG_G2 in range(len(arrayGame2)):
         AVG_Score_G2 = '%.1f'%(sum(arrayGame2[AVG_G2])/len(arrayGame2[AVG_G2]))
 
         AVG_Array2.append(AVG_Score_G2)
 
-    # การหาคนที่ 3
-    for len_Score_Game3 in DataRefGame3.val():
-        lenScoreGame3 = [len_Score_Game3]
-        arrayGame3.append(lenScoreGame3)
 
+    # การหาคนที่ 3
+
+    
     MemberSubject3 = db.child('Subject').child(SubjectRef).child('Member')
     for NameMem_Game3 in MemberSubject3.get().val():
-        dataScore_Game3 = db.child('Subject').child(SubjectRef).child('Member').child(NameMem_Game3).child('TypeGame').child('Game3').get()
-        # print(dataScore_Game2.val())
+        dataScore_Game3 = db.child('Subject').child(SubjectRef).child('Member').child(NameMem_Game3).child('AdventuresGame').get()
+        
         for Score_Game3 in DataRefGame3.val():
+            dataScore_Game3Date = dataScore_Game3 = db.child('Subject').child(SubjectRef).child('Member').child(NameMem_Game3).child('AdventuresGame').child(Score_Game3).get()
+            
             try:
-                Score_G3 = dataScore_Game3.val()[Score_Game3]
+                Score_G3 = dataScore_Game3Date.val()['score']
 
             except :
                 continue
@@ -413,17 +593,57 @@ def DataChart():
                 if Score_Game3 in arrayGame3[i_G3]:
 
                     arrayGame3[i_G3].append(Score_G3)
-
+                    
+        
 # remove Key Score in array
     for Re_Score_G3 in DataRefGame3.val():
         for ReKey_G3 in range(len(arrayGame3)):
             if Re_Score_G3 in arrayGame3[ReKey_G3]:
                 arrayGame3[ReKey_G3].remove(Re_Score_G3)
+    
+    #การหาค่ามัธยฐาน
+    ValBeeteew = 10
+    for Data_Game3 in range(len(arrayGame3)):
+        countCheckData_G3 = len(arrayGame3[Data_Game3])
+        if countCheckData_G3 <= 2:
+            continue
+        else :
+            Xi = (len(arrayGame3[Data_Game3])+1)/2
+            datasort = sorted(arrayGame3[Data_Game3])
+
+            if "." in str(Xi):
+                ValDina = str(Xi).split(".")[-1]
+                if ValDina == '0':
+                    mid =  datasort[int(Xi-1)]
+                    # print(mid)
+                    # print(datasort)
+                    for test in range(len(datasort)):
+                        # print(datasort[test])
+                        if datasort[test] > (mid-ValBeeteew) and datasort[test] <= (mid+ValBeeteew):
+                            # print(str(datasort[test]) +'อยู่ในช่วง')
+                            continue
+                        else :
+                            arrayGame3[Data_Game3].remove(datasort[test])
+                            # print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
+            elif ValDina == '5':
+                XiMax = math.ceil(Xi)
+                Ximin = math.floor(Xi)
+                median = (datasort[Ximin-1]+datasort[XiMax-1])/2
+                for Posi in range(len(datasort)):
+                    # print(datasort[Posi])
+                    if datasort[Posi] > (median-ValBeeteew) and datasort[Posi] <= (median+ValBeeteew):
+                        # print(str(datasort[Posi]) +'อยู่ในช่วง')
+                        continue
+                    else :
+                        arrayGame3[Data_Game3].remove(datasort[Posi])
+    
 
     for AVG_G3 in range(len(arrayGame3)):
         AVG_Score_G3 = '%.1f'%(sum(arrayGame3[AVG_G3])/len(arrayGame3[AVG_G3]))
 
         AVG_Array3.append(AVG_Score_G3)
+        print(AVG_Array3)
+
 
 
     return jsonify({'ChartDataGame1':DatachartGame1,'ChartDataGame2':DatachartGame2,'ChartDataGame3':DatachartGame3,'AVGGame1':AVG_Array,'AVGGame2':AVG_Array2,'AVGGame3':AVG_Array3,'NameMem':NameMember})
@@ -449,10 +669,8 @@ def AddSub_allPage():
             CheckSubject = db.child('Admin').child(Admin).child("Subject_pro").get()
             if AddSub[i] in CheckSubject.val():
                 SubError = "วิชา : "+AddSub[i]+" "+Subindata
-                print(SubError)
                 return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, ErrorSub = SubError)
             else:
-
                 db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0"})
 
     return redirect(url_for('Home'))

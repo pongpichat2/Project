@@ -164,27 +164,29 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Addchoice">Add-Choice</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Subject">Subject</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Evopage">Evolution</a>
-            </li>
+                <a class="nav-link" href="/Home_TH">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/Addchoice_TH">Add-Choice </a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/Subject_TH">Subject</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Evopage_TH">Evolution</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">{{name}}</a>
               </li>
               
             <div class="Select-Langua">
               <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <a href=""><option  value="EN">EN</option></a>
-                  <a href="/Home_TH"><option  value="TH">TH</option></a>
+                  <option  value="EN">EN</option>
+                  <option  value="TH" selected>TH</option>
               </select>
             </div>
+  
+            
 
             <!-- dropdow -->
             
@@ -194,8 +196,8 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
-                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
+                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-family: 'Sarabun', sans-serif;">เพิ่มวิชา</button>
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter" style="font-family: 'Sarabun', sans-serif;">แก้ไขรหัสผ่าน</button>
                 <a class="dropdown-item" href="/Logout">Log Out</a>
               </div>
             </li>
@@ -209,7 +211,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">Add Subject</h5>
+              <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;font-family: 'Sarabun', sans-serif;">เพิ่มรายวิชา</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -217,19 +219,20 @@
             <div class="modal-body">
             {% for ShowSub in DataSubject.each() %}
               <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
-                  <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" onclick="return Co_Delete()">Delete</button><br>
+                  <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" style="font-family: 'Sarabun', sans-serif;" onclick="return Co_Delete()">ลบ</button><br>
                   
 
               </form>
             {% endfor %}
-
+              
             <form action="AddSub_allPage" method="post">
-            <p>Add-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
+                <br>
+            <p style="font-family: 'Sarabun', sans-serif;">ชื่อวิชาที่ต้องการเพิ่ม : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
                 <div id="new_chq"></div>
                   <input type="hidden" value="1" id="total_chq">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">ADD</button>
+                <div class="modal-footer" >
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
                 </div>
             </form>
             </div>
@@ -241,9 +244,9 @@
       <!-- popup Change Password -->
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
+          <div class="modal-content" style="font-family: 'Sarabun', sans-serif;">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">แก้ไขรหัสผ่าน</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -256,8 +259,8 @@
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" onclick="Co_Pass()">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+              <button type="submit" class="btn btn-primary" onclick="Co_Pass()">ยืนยันการเปลี่ยน</button>
             </div>
         </form>
           </div>
@@ -287,32 +290,32 @@
       <p class="trasla" id="" key='fname'>Pongpichat</p> -->
 
     <div style="position: absolute;">
-        <a href="/Addchoice" class="AddChoice">
+        <a href="/Addchoice_TH" class="AddChoice">
             <div class="Add-Choice">
                 <img src="/static/image/wrong.png"  alt="">
-                <p  id="Title"  key='Add-title' class="trasla">Add - Choice</p>
+                <p  id="Title"  key='Add-title' class="trasla" style="font-family: 'Sarabun', sans-serif;">เพิ่มคำถาม</p>
 
-                <p style="color: white; position: absolute; margin: 400px 120px;" class="trasla" key='Add-detil'>* Go To the page Add-Choice is a function to add questions.</p>
+                <p style="color: white; position: absolute; margin: 400px 150px;font-family: 'Sarabun', sans-serif;">* ไปที่หน้า Add-Choice เป็นฟังก์ชันสำหรับเพิ่มคำถาม</p>
             </div>
         </a>
 
-        <a href="/Subject" class="AddSub">
+        <a href="/Subject_TH" class="AddSub">
             <div class="Add-Sub">
                 <img src="/static/image/books.png"  alt="">
 
-                <p class="TitleSub" id="traslation" key='Sub-title'>SUBJECT</p>
+                <p class="TitleSub" id="traslation" key='Sub-title' style="font-family: 'Sarabun', sans-serif;">รายวิชา</p>
 
-                <p style="color: white; position: absolute; margin: 170px 120px;" class="trasla" key='Sub-detil'>* function to Edit questions in Subject.</p>
+                <p style="color: white; position: absolute; margin: 170px 120px; font-family: 'Sarabun', sans-serif;">* ฟังก์ชั่นแก้ไขคำถามในรายวิชาของตนเอง'</p>
             </div>
         </a>
 
-        <a href="/Evopage" class="Quiz-a">
+        <a href="/Evopage_TH" class="Quiz-a">
             <div class="Quiz">
                 <img src="/static/image/question2.png"  alt="">
 
-                <p class="TitleQ" id="traslation">Evolution</p>
+                <p class="TitleQ" id="traslation" style="font-family: 'Sarabun', sans-serif;">พัฒนาการ</p>
 
-                <p style="color: white; position: absolute; margin: 230px 70px;" class="trasla" key='evo-detil'>* function to View Evolution Studen in Subject.</p>
+                <p style="color: white; position: absolute; margin: 230px 70px; font-family: 'Sarabun', sans-serif;">* ฟังก์ชั่นเพื่อดู พัฒนาการของนักเรียนในรายวิชาของตนเอง</p>
             </div>
         </a>
     </div>
@@ -351,27 +354,13 @@
 
   }
 
-  // var arrlang = {
-  //   'EN':{
-  //     'Add-detil' : '* Go To the page Add-Choice is a function to add questions.',
-  //     'Sub-detil' : '* function to Edit questions in Subject.',
-  //     'evo-detil' : '* function to View Evolution Studen in Subject.'
 
-  //   },
-  //   'TH':{
-  //     'Add-detil' : '* ไปที่หน้า Add-Choice เป็นฟังก์ชันสำหรับเพิ่มคำถาม',
-  //     'Sub-detil' : '* ฟังก์ชั่นแก้ไขคำถามในรายวิชาของตนเอง',
-  //     'evo-detil' : '* ฟังก์ชั่นเพื่อดู พัฒนาการของนักเรียนในรายวิชาของตนเอง'
-
-  //   }
-  // };
-  //แปะ element แทรกตรง
   $(document).ready(function(){
     $('.select-langua-Op').change(function(){
       var langua = document.getElementById('select-langua-Op').value;
-      console.log(langua)
-      if(langua == 'TH'){
-        window.location.href = "/Home_TH";
+ 
+      if(langua == 'EN'){
+        window.location.href = "/Home";
       }
     });
 

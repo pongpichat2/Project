@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ADD Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -29,7 +29,7 @@
             /* background-image: url("/static/image/AddSub.jpg"); */
         }
         .Select-Sub{
-          font-family: 'Odibee Sans', cursive;
+        font-family: 'Sarabun', sans-serif;
           position: fixed;
           margin-top: 10px;
           margin-left: 15px;
@@ -45,14 +45,14 @@
           background-color: rgba(46, 43, 43, 0.637);
         }
         .Select-Sub tbody .detil-Select-Sub{
-          font-family: 'Odibee Sans', cursive;
+            font-family: 'Sarabun', sans-serif;
           text-align: center;
           border: 2px solid black;
           background: rgba(255, 255, 255, 0.637);
           font-size: 20px;
         }
         .Select-Sub tbody .detil-Select-Sub input[type='text']{
-          font-family: 'Odibee Sans', cursive;
+            font-family: 'Sarabun', sans-serif;
           text-align: center;
           border-collapse: collapse;
           background: none;
@@ -70,7 +70,7 @@
           background:linear-gradient(135deg,  rgb(36, 125, 226) 30%, rgb(36, 125, 226));
         }
         .Show-Quiz{
-          font-family: 'Odibee Sans', cursive;
+            font-family: 'Sarabun', sans-serif;
           background: rgba(44, 44, 44, 0.801);
           margin-top: 230px ;
           margin-left: 300px ;
@@ -84,8 +84,8 @@
           /* border: 2px solid black; */
           width: 1300px;
           margin-top: 230px ;
-          margin-left: 200px ;
-          font-family: 'Odibee Sans', cursive;
+          margin-left: 100px ;
+          font-family: 'Sarabun', sans-serif;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz thead th{
           text-align: center;
@@ -93,10 +93,10 @@
           background: rgba(78, 150, 78, 0.705);
           height: 30px;
           font-size: 20px;
-          font-family: 'Odibee Sans', cursive;
+          font-family: 'Sarabun', sans-serif;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .No input[type='text']{
-          font-family: 'Odibee Sans', cursive;
+            font-family: 'Sarabun', sans-serif;
           width: 50px;
           text-align: center;
           border-collapse: collapse;
@@ -114,7 +114,7 @@
           transition: 0.8s;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']:hover{
-          width: 200px;
+          width: 180px;
           font-size: 18px;
           color: white;
         }
@@ -166,13 +166,6 @@
   background:rgba(29, 29, 29, 0.671);
 
 }
-.Select-Langua{
-      margin-left: 200px;
-      height: 35px;
-      border: black 1px solid;
-      border-radius: 15px;
-
-    }
 .cssload-circle{
       margin: 300px auto;
       width:120px;
@@ -363,6 +356,14 @@
       100%{-moz-transform:rotate(180deg);}
   }
 
+  .Select-Langua{
+      margin-left: 200px;
+      height: 35px;
+      border: black 1px solid;
+      border-radius: 15px;
+
+    }
+
     </style>
     <script>
 
@@ -429,121 +430,127 @@
     $('.select-langua-Op').change(function(){
       var langua = document.getElementById('select-langua-Op').value;
  
-      if(langua == 'TH'){
-        window.location.href = "/Subject_TH";
+      if(langua == 'EN'){
+        window.location.href = "/Subject";
       }
     });
 
   });
+
 
     </script>
     
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Addchoice">Add-Choice</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/Subject">Subject</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Evopage">Evolution</a>
-            </li>
-            
-            <div class="Select-Langua">
-              <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <option  value="EN">EN</option>
-                  <option  value="TH" >TH</option>
-              </select>
-            </div>
-
-            <li class="nav-item dropdown">
-
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
-                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
-                <a class="dropdown-item" href="/Logout">Log Out</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      
-
-      <!-- popup Edit - Subject -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">Add Subject</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            {% for ShowSub in DataSubject.each() %}
-              <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
-                  <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" onclick="return Co_Delete()">Delete</button><br>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item ">
+                  <a class="nav-link" href="/Home_TH">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="/Addchoice_TH">Add-Choice </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/Subject_TH">Subject</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/Evopage_TH">Evolution</a>
+                </li>
+    
+    
+                <div class="Select-Langua">
+                    <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
+                        <option  value="EN">EN</option>
+                        <option  value="TH" selected>TH</option>
+                    </select>
+                  </div>
+    
+                <!-- dropdow -->
+                
+                 
+                <li class="nav-item dropdown">
                   
-
-              </form>
-            {% endfor %}
-
-            <form action="AddSub_allPage" method="post">
-            <p>Add-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
-                <div id="new_chq"></div>
-                  <input type="hidden" value="1" id="total_chq">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-family: 'Sarabun', sans-serif;">เพิ่มวิชา</button>
+                    <button type="button" data-toggle="modal" data-target="#exampleModalCenter" style="font-family: 'Sarabun', sans-serif;">แก้ไขรหัสผ่าน</button>
+                    <a class="dropdown-item" href="/Logout">Log Out</a>
+                  </div>
+                </li>
+              
+              </ul>
+            </div>
+          </nav>
+    
+          <!-- popup Edit - Subject -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;font-family: 'Sarabun', sans-serif;">เพิ่มรายวิชา</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                {% for ShowSub in DataSubject.each() %}
+                  <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
+                      <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" style="font-family: 'Sarabun', sans-serif;" onclick="return Co_Delete()">ลบ</button><br>
+                      
+    
+                  </form>
+                {% endfor %}
+                  
+                <form action="AddSub_allPage" method="post">
+                    <br>
+                <p style="font-family: 'Sarabun', sans-serif;">ชื่อวิชาที่ต้องการเพิ่ม : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
+                    <div id="new_chq"></div>
+                      <input type="hidden" value="1" id="total_chq">
+                    <div class="modal-footer" >
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
+                        <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
+                    </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End popup Edit - Subject -->
+    
+          <!-- popup Change Password -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content" style="font-family: 'Sarabun', sans-serif;">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">แก้ไขรหัสผ่าน</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="ChangePass_allPage" method="POST">
+                      <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
+                      <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
+                      <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
+    
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                  <button type="submit" class="btn btn-primary" onclick="Co_Pass()">ยืนยันการเปลี่ยน</button>
                 </div>
             </form>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- End popup Edit - Subject -->
-
-      <!-- popup Change Password -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="ChangePass_allPage" method="POST">
-                  <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
-                  <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
-                  <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" onclick="Co_Pass()">Save changes</button>
-            </div>
-        </form>
-          </div>
-        </div>
-      </div>
-      <!-- end  popup Change Password -->
+          <!-- end  popup Change Password -->
 
       {% if Error %}
       <div class="alert alert-danger" role="alert">
@@ -566,13 +573,13 @@
       <table class="Select-Sub">
           <thead>
               <tr>
-                  <th class="title-Select-Sub">Subject Name</th>
-                  <th class="title-Select-Sub">Number / item</th>
+                  <th class="title-Select-Sub">ชื่อรายวิชา</th>
+                  <th class="title-Select-Sub">จำนวนข้อ</th>
               </tr>
           </thead>
           <tbody>
               {% for k in data.each() %}
-              <form action="/Subject" method="POST">
+              <form action="/Subject_TH" method="POST">
               <tr>
                   <td class="detil-Select-Sub"> <input type="text" value="{%print(k.key())%}" name="Subname" readonly></td>
                   <td class="detil-Select-Sub"> {% print(k.val()['DataNum']) %}</td>
@@ -587,22 +594,22 @@
       
         {% if  NoneData %}
         <div class="Show-Quiz">
-            <h1 style="text-align: center; margin-top: 150px ;font-size: 60px;font-weight: bold;color: red;">There are no questions in this course yet.</h1>
+            <h1 style="text-align: center; margin-top: 150px ;font-size: 60px;font-weight: bold;color: red;">ยังไม่มีคำถามในรายวิชานี้กรุณาเพิ่มคำถาม</h1>
         </div>
         {% elif haveData %}
         <div class="Show-Detil-Quiz">
-              <h1 style="margin-left: 500px ;">{{Headtext}}</h1>
+              <h1 style="margin-left: 500px; font-weight: bold;">{{Headtext}}</h1>
               <table class="table-Show-Detil-Quiz">
                   <thead>
                   <tr>
-                      <th>No.</th>
-                      <th >Quiz ?</th>
-                      <th>Choice 1</th>
-                      <th >Choice 2</th>
-                      <th >Choice 3</th>
-                      <th >Choice 4</th>
-                      <th style="color: red;">Answer(Before)</th>
-                      <th>Answer(After)</th>
+                      <th>ข้อ.</th>
+                      <th >โจทย์ ?</th>
+                      <th> ตัวเลือกที่ 1</th>
+                      <th >ตัวเลือกที่ 2</th>
+                      <th >ตัวเลือกที่ 3</th>
+                      <th >ตัวเลือกที่ 4</th>
+                      <th style="color: red;">คำตอบก่อนหน้า</th>
+                      <th>คำตอบที่แก้ไข</th>
 
                   </tr>
               </thead>
@@ -618,10 +625,10 @@
                           <td class="Data"><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
                           <td class=""><input type="text" value="{%print(k.val()['ans'])%}" readonly style="color: red; text-align: center; border: none; background: none;"></td>
-                          <td class="Data"><input type="radio" id="Answer" name="Answer" value="1">Choice1 <input type="radio" id="Answer" name="Answer" value="2">
-                            Choice2<input type="radio" name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
-                          <td style="border: none;  background: none;" ><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button></td>
-                          <td style="border: none; background: none;" > <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
+                          <td class="Data" style="font-size: 10px; font-weight: bold;"><input type="radio" id="Answer" name="Answer" value="1">ตัวเลือกที่ 1 <input type="radio" id="Answer" name="Answer" value="2">
+                            ตัวเลือกที่ 2<input type="radio" name="Answer" id="Answer" value="3">ตัวเลือกที่ 3<input type="radio" name="Answer" id="Answer" value="4">ตัวเลือกที่ 4</td>
+                          <td style="border: none;  background: none;" ><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">แก้ไข <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button></td>
+                          <td style="border: none; background: none;" > <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">ลบ<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
                       </tr>
                   </form>
 
@@ -634,7 +641,7 @@
         </div>
         {% else %}
         <div class="Show-Quiz">
-            <h1 style="text-align: center; margin-top: 150px; font-size: 60px;font-weight: bold; color: white;" >Please select the subject to express the question.</h1>
+            <h1 style="text-align: center; margin-top: 150px; font-size: 60px;font-weight: bold; color: white;" >กรุณาเลือกรายวิชาที่ต้องการแสดงคำถาม .</h1>
           </div>
         {% endif %}
 

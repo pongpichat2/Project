@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Development</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200&display=swap" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -25,6 +25,8 @@
           background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
         }
         .ShowName-Mem .table-ShowName-Mem thead td{
+        font-family: 'Sarabun', sans-serif;
+        font-weight: bold;
           color: white;
           text-align: center;
           height: 40px;
@@ -39,6 +41,8 @@
           text-align: center;
         }
         .ShowName-Mem .table-ShowName-Mem tbody .data{
+            font-family: 'Sarabun', sans-serif;
+            
           border: 2px solid black;
           height: 30px;
           background: rgba(255, 255, 255, 0.568);
@@ -346,85 +350,89 @@
 
             <div class="Select-Langua">
               <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <option  value="EN" selected>EN</option>
-                  <option  value="TH" >TH</option>
+                  <option  value="EN" >EN</option>
+                  <option  value="TH" selected>TH</option>
               </select>
             </div>
+            <!-- dropdow -->
+            
+             
             <li class="nav-item dropdown">
-
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
-                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
-                <a class="dropdown-item" href="/Logout">Log Out</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <!-- popup Edit - Subject -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">Add Subject</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            {% for ShowSub in DataSubject.each() %}
-              <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
-                  <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" onclick="return Co_Delete()">Delete</button><br>
-                  
-
-              </form>
-            {% endfor %}
-
-            <form action="AddSub_allPage" method="post">
-            <p>Add-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
-                <div id="new_chq"></div>
-                  <input type="hidden" value="1" id="total_chq">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
+              
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-family: 'Sarabun', sans-serif;">เพิ่มวิชา</button>
+                  <button type="button" data-toggle="modal" data-target="#exampleModalCenter" style="font-family: 'Sarabun', sans-serif;">แก้ไขรหัสผ่าน</button>
+                  <a class="dropdown-item" href="/Logout">Log Out</a>
                 </div>
-            </form>
+              </li>
+            
+            </ul>
+          </div>
+        </nav>
+  
+        <!-- popup Edit - Subject -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;font-family: 'Sarabun', sans-serif;">เพิ่มรายวิชา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              {% for ShowSub in DataSubject.each() %}
+                <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
+                    <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" style="font-family: 'Sarabun', sans-serif;" onclick="return Co_Delete()">ลบ</button><br>
+                    
+  
+                </form>
+              {% endfor %}
+                
+              <form action="AddSub_allPage" method="post">
+                  <br>
+              <p style="font-family: 'Sarabun', sans-serif;">ชื่อวิชาที่ต้องการเพิ่ม : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
+                  <div id="new_chq"></div>
+                    <input type="hidden" value="1" id="total_chq">
+                  <div class="modal-footer" >
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
+                      <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
+                  </div>
+              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- End popup Edit - Subject -->
-
-      <!-- popup Change Password -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <!-- End popup Edit - Subject -->
+  
+        <!-- popup Change Password -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="font-family: 'Sarabun', sans-serif;">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">แก้ไขรหัสผ่าน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="ChangePass_allPage" method="POST">
+                    <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
+                    <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
+                    <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
+  
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                <button type="submit" class="btn btn-primary" onclick="Co_Pass()">ยืนยันการเปลี่ยน</button>
+              </div>
+          </form>
             </div>
-            <div class="modal-body">
-              <form action="ChangePass_allPage" method="POST">
-                  <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
-                  <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
-                  <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" onclick="Co_Pass()">Save changes</button>
-            </div>
-        </form>
           </div>
         </div>
-      </div>
-
-      <!-- end  popup Change Password -->
+        <!-- end  popup Change Password -->
       {% if Error %}
       <div class="alert alert-danger" role="alert">
         รหัสผ่านไม่ผู้ต้องกรุณาทำรายการใหม่
@@ -453,16 +461,16 @@
             <thead>
                 <tr>
                     <td> Email </td>
-                    <td> Name </td>
+                    <td> ชื่อ </td>
                 </tr>
             </thead>
             <tbody>
                 {% for Member in ShowData.each() %}
-                <form action="/ShowEvo" method="POST">
+                <form action="/ShowEvo_TH" method="POST">
                     <tr>
                         <td class="data"><input type="text" value="{% print(Member.val()['Email'])%}" name="email" readonly></td>
                         <td class="data"><input type="text" value="{%print(Member.val()['Name'])%}" name="Name" readonly></td>
-                        <td ><button type="submit" value="{%print(Member.key())%}" name="Username">View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                        <td ><button type="submit" value="{%print(Member.key())%}" name="Username">ดู <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
                     </tr>
                 </form>
 
@@ -477,7 +485,7 @@
     <div class="ShowStatus">
       <div class="title-text-Name">
         <h2>{{SubName}}</h2>
-        <p>E-mail : {{email}} <br> Name : {{NAME}} </p>
+        <p>E-mail : {{email}} <br> ชื่อ : {{NAME}} </p>
       </div>
 
     </form>
@@ -521,7 +529,7 @@
                 data: {
                     labels: ['0','1','2','3','4','5','6','7'],
                     datasets: [{
-                        label: 'Score',
+                        label: 'คะแนน',
                         data :result.ChartDataGame1,
                         
                         borderWidth:3,
@@ -529,7 +537,7 @@
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'},
                         {
-                        label: 'AVG',
+                        label: 'ค่าเฉลี่ย',
                         data :result.AVGGame1,
                         backgroundColor:[
                             'rgb(255, 165, 0, 0.6)'
@@ -558,7 +566,7 @@
                 data: {
                     labels: ['0','1','2','3','4','5','6','7'],
                     datasets: [{
-                        label: 'Score',
+                        label: 'คะแนน',
                         data :result.ChartDataGame2,
                         
                         borderWidth:3,
@@ -566,7 +574,7 @@
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'},
                         {
-                        label: 'AVG',
+                        label: 'ค่าเฉลี่ย',
                         data :result.AVGGame2,
                         backgroundColor:[
                             'rgb(255, 165, 0, 0.6)'
@@ -582,7 +590,7 @@
                     scales: {
                         yAxes: [{
                             ticks: {
-                                max: 60,
+                                max: 80,
                                 min: 0,
                                 stepSize: 10
                             }
@@ -595,7 +603,7 @@
                 data: {
                     labels: ['0','1','2','3','4','5','6','7'],
                     datasets: [{
-                        label: 'Score',
+                        label: 'คะแนน',
                         data :result.ChartDataGame3,
 
                         borderWidth:3,
@@ -603,7 +611,7 @@
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'},
                         {
-                        label: 'AVG',
+                        label: 'ค่าเฉลี่ย',
                         data :result.AVGGame3,
                         backgroundColor:[
                             'rgb(255, 165, 0, 0.8)'
@@ -675,8 +683,8 @@
       $('.select-langua-Op').change(function(){
       var langua = document.getElementById('select-langua-Op').value;
       
-      if(langua == 'TH'){
-        window.location.href = "/ShowEvo_TH";
+      if(langua == 'EN'){
+        window.location.href = "/ShowEvo";
       }
     });
   });
