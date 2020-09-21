@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200&display=swap" rel="stylesheet">
     
@@ -11,151 +13,100 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
-    <title>Home Page</title>
+    <title>Evolution</title>
 </head>
 <style>
-
-
-    body{
-        
-        background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-        background-size: cover;
-        background-position: center;
-        height: 100%;
-    }
-    /* .navbar{
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 150px;
-        background-color: rgba(0, 0, 0, 0.788);
-        position: fixed;
-        overflow: hidden;
-    } */
-
-    .AddChoice{
-        position: fixed;
-        text-decoration: none;
-        display: inline-block;
-        width: 680px;
-        height: 500px;
-        margin: 130px 100px;
-        border-radius: 15px;
-        background-color: rgba(7, 1, 27, 0.719);
-        box-shadow: 0 0 20px black;
-        background-image: url("/static/image/more.png");
-        background-size: cover;
-        background-position: center;
-        transition: 0.8s;
-   }
-   .AddChoice:hover{
-        border: rgb(29, 28, 28) solid 4px;
-        width: 685px;
-        height: 505px;
-   }
-
-
-    .Add-Choice #Title{
-        width: 100%;
-        margin: 20% 38%;
-        color: rgb(168, 168, 168);
-        font-weight: bold;
-        font-size: 50px;
-        position: absolute;
-        font-family: 'Odibee Sans', cursive;
-    } 
-
-    .Add-Choice img{
-        position: absolute;
-        margin-top: 30%;
-        margin-left: 41%;
-    }
-
-    .AddSub{
-        margin-top: 130px;
-        margin-left: 800px;
-        text-decoration: none;
-        display: inline-block;
-        position: fixed;
-        width: 530px;
-        height: 220px;
-        border-radius: 15px;
-        background-color: rgba(7, 1, 27, 0.719);
-        background-image: url("/static/image/bookwal.png");
-        background-size: cover;
-        background-position: center;
-        box-shadow: 0 0 20px black;
-        transition: 0.8s;
-    }
-    .AddSub:hover{
-        border: rgb(29, 28, 28) solid 4px;
-        width: 535px;
-        height: 225px;
-    }
-    .AddSub .TitleSub{
-        width: 100%;
-        margin: 7% 38%;
-        color: rgb(168, 168, 168);
-        font-weight: bold;
-        font-size: 35px;
-        position: absolute;
-        font-family: 'Odibee Sans', cursive;
-    }
-    .AddSub img{
-        position: absolute;
-        margin-top: 18%;
-        margin-left: 42%;
-    }
-    .Quiz-a{
-        margin-top: 370px;
-        margin-left: 800px;
-        text-decoration: none;
-        display: inline-block;
-        position: fixed;
-        width: 530px;
-        height: 260px;
-        border-radius: 15px;
-        background-color: rgba(7, 1, 27, 0.719);
-        background-image: url("/static/image/Quizwal1.png");
-        background-size: cover;
-        background-position: center;
-        box-shadow: 0 0 20px black;
-        transition: 0.8s;
-    }
-    .Quiz-a:hover{
-        border: rgb(29, 28, 28) solid 4px;
-        width: 535px;
-        height: 265px;
-    }
-    .Quiz-a .TitleQ{
-        color: rgb(168, 168, 168);
-        margin: 7% 38%;
-        width: 100%;
-        font-weight: bold;
-        font-size: 40px;
-        position: absolute;
-        font-family: 'Odibee Sans', cursive;
-    }
-    .Quiz-a img{
-        position: absolute;
-        margin-top: 18%;
-        margin-left: 40%;
-    }
-    .Select-Langua{
+     body{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0 0;
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  }
+  .Select-Langua{
       margin-left: 200px;
       height: 35px;
       border: black 1px solid;
       border-radius: 15px;
+    
+    }
+    .box-select-Game{
+        
+        text-align: center;
+        width: 450px;
+        height:100px;
+        border: black 2px solid;
+        margin: 50px 550px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px black;
+        background-color: rgba(54, 54, 54, 0.541);
+    }
+    .box-select-Game p {
+        font-family: 'Odibee Sans', cursive;
+        font-size: 40px;
+        font-weight: bold;
+    }
+    .game-Alpha{
+        margin: 0 50px;
+        position: absolute;
+        width: 450px;
+        height: 300px;
+        /* border: black 2px solid; */
 
     }
+    .game-Alpha p{
+        font-size: 35px;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+    }
+    .game-Alpha button{
+      background: none;
+      border: none;
+        width: 100%;
+        height: 78%;
+        /* background-color: rgba(54, 54, 54, 0.541); */
+    }
+    .game-shoot{
 
-
-
+        position: absolute;
+        margin: 0 530px;
+        width: 450px;
+        height: 300px;
+        /* border: black 2px solid; */
+    }
+    .game-shoot p{
+        font-size: 35px;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+    }
+    .game-shoot button{
+      background: none;
+      border: none;
+        width: 100%;
+        height: 78%;
+        /* background-color: rgba(54, 54, 54, 0.541); */
+    }
+    .game-Adventure{
+        margin: 0 1010px;
+        width: 450px;
+        height: 300px;
+        /* border: black 2px solid; */
+    }
+    .game-Adventure p{
+        font-size: 35px;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+    }
+    .game-Adventure button{
+      background: none;
+      border: none;
+        width: 100%;
+        height: 78%;
+        /* background-color: rgba(54, 54, 54, 0.541); */
+    }
 
 </style>
 <body>
-    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,34 +114,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
+            <li class="nav-item ">
+              <a class="nav-link" href="/Home_TH">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Addchoice_TH">Add-Choice</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Subject_TH">Subject</a>
+            </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/Evoindex_TH">Evolution</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Addchoice">Add-Choice</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Subject">Subject</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Evoindex">Evolution</a>
-            </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">{{name}}</a>
-              </li>
-              
+
             <div class="Select-Langua">
               <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <a href=""><option  value="EN">EN</option></a>
-                  <a href="/Home_TH"><option  value="TH">TH</option></a>
+                  <option  value="EN" >EN</option>
+                  <option  value="TH" selected>TH</option>
               </select>
             </div>
-
-            <!-- dropdow -->
             
-             
             <li class="nav-item dropdown">
-              
+
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -199,7 +144,6 @@
                 <a class="dropdown-item" href="/Logout">Log Out</a>
               </div>
             </li>
-          
           </ul>
         </div>
       </nav>
@@ -229,7 +173,7 @@
                   <input type="hidden" value="1" id="total_chq">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">ADD</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
                 </div>
             </form>
             </div>
@@ -265,60 +209,39 @@
       </div>
       <!-- end  popup Change Password -->
 
-      {% if Error %}
-      <div class="alert alert-danger" role="alert">
-        รหัสผ่านไม่ผู้ต้องกรุณาทำรายการใหม่
-      </div>
-      {% elif SuccessPass %}
-      <div class="alert alert-success alert-dismissible fade show"  style="width: 100%; position: absolute;">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success!</strong> Change Password Success
-      </div>
-      {% elif ErrorSub %}
-      <div class="alert alert-danger alert-dismissible fade show" style="width: 100%; position: absolute;">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Add Subject Error ! </strong> {{ErrorSub}}
+      <div class="box-select-Game">
+        <p style="margin-top:20px ;font-family: 'Sarabun', sans-serif;font-weight: bold;">กรุณาเลือกเกมส์</p>
       </div>
 
-      {% endif %}
+      <form action="/Evoindex_TH" method="post">
+      <div class="menu-game">
+          <div class="game-Alpha">
+              <p style="text-align: center;">Alphabet</p>
+              <button name="NameGame" value="Alphabet"><div>
+                  
+                <img src="/static/image/Alpha.PNG" style="width: 440px;height:250px ;" alt="">
+              </div></button>
 
-<!-- 
-      <p class="trasla" id="" key='Name-Test'>Nook</p>
-      <p class="trasla" id="" key='fname'>Pongpichat</p> -->
+          </div>
+          <div class="game-shoot">
+            <p style="text-align: center;">Shoot - Game</p>
+            <button name="NameGame" value="Shoot"><div>
+                
+              <img src="/static/image/shoot.PNG" style="width: 440px;height:250px ;" alt="">
+            </div></button>
 
-    <div style="position: absolute;">
-        <a href="/Addchoice" class="AddChoice">
-            <div class="Add-Choice">
-                <img src="/static/image/wrong.png"  alt="">
-                <p  id="Title"  key='Add-title' class="trasla">Add - Choice</p>
+        </div>
+        <div class="game-Adventure">
+            <p style="text-align: center;">Adventure</p>
+            <button name="NameGame" value="Adventure"><div>
+                
+              <img src="/static/image/Adven.PNG" style="width: 440px;height:250px ;"  alt="">
+            </div></button>
 
-                <p style="color: white; position: absolute; margin: 400px 120px;" class="trasla" key='Add-detil'>* Go To the page Add-Choice is a function to add questions.</p>
-            </div>
-        </a>
+        </div>
 
-        <a href="/Subject" class="AddSub">
-            <div class="Add-Sub">
-                <img src="/static/image/books.png"  alt="">
-
-                <p class="TitleSub" id="traslation" key='Sub-title'>SUBJECT</p>
-
-                <p style="color: white; position: absolute; margin: 170px 120px;" class="trasla" key='Sub-detil'>* function to Edit questions in Subject.</p>
-            </div>
-        </a>
-
-        <a href="/Evoindex" class="Quiz-a">
-            <div class="Quiz">
-                <img src="/static/image/question2.png"  alt="">
-
-                <p class="TitleQ" id="traslation">Evolution</p>
-
-                <p style="color: white; position: absolute; margin: 230px 70px;" class="trasla" key='evo-detil'>* function to View Evolution Studen in Subject.</p>
-            </div>
-        </a>
-    </div>
-
-
-   
+      </div>
+    </form>
 </body>
 <script>
     var i=1;
@@ -350,18 +273,16 @@
         }
 
   }
-
   $(document).ready(function(){
-    $('.select-langua-Op').change(function(){
-      var langua = document.getElementById('select-langua-Op').value;
-      console.log(langua)
-      if(langua == 'TH'){
-        window.location.href = "/Home_TH";
-      }
+      $('.select-langua-Op').change(function(){
+        var langua = document.getElementById('select-langua-Op').value;
+  
+        if(langua == 'EN'){
+          window.location.href = "/Evoindex";
+        }
+      });
+  
     });
 
-  });
-
-  
 </script>
 </html>

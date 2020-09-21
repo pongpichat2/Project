@@ -22,52 +22,8 @@
     /* background-image: url('/static/image/Adventure.jpg'); */
     background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   }
-  .Select-Sub-Evo{
-    font-family: 'Odibee Sans', cursive;
-    /* position: fixed; */
-    text-align: center;
-    width: 650px;
-    /* border: 2px solid black; */
-    margin-top: 180px;
-    margin-left: 400px;
-  }
-  .Error-Show{
-    font-family: 'Odibee Sans', cursive;
-    /* text-align: center; */
-    position: static;
-    margin-top: 50px;
-    margin-left: 350px;
-    width: 750px;
-    height: 500px;
-    box-shadow: black 0 0 15px;
-    border-radius: 15px;
-    border: 3px solid black;
-    background: rgba(26, 26, 26, 0.616);
-  }
-  .Error-Show p {
-    font-family: 'Odibee Sans', cursive;
-    text-align: center;
-    position: relative;
-    font-size: 50px;
-  }
-  .But-Show-MemberEvo{
-    font-family: 'Odibee Sans', cursive;
-    color: white;
-    margin-left: 20px;
-    width: 100px;
-    height: 50px;
-    background: rgb(31, 30, 30,0.7);
-    box-shadow: black 0 0 15px;
-    border: black solid 2px;
-    border-radius: 10px;
-    transition: 0.8s;
-  }
-  .But-Show-MemberEvo:hover{
-    
-    border-radius: 25px;
-    box-shadow: rgba(0, 0, 0, 0.719) 2.5px 5px ;
-    background: rgb(247, 114, 25);
-  }
+
+
   .Container-table-ShowMem{
     font-family: 'Odibee Sans', cursive;
     text-align: center;
@@ -89,7 +45,7 @@
   }
   .Container-table-ShowMem .Container-table-ShowMem-inside{
     font-family: 'Odibee Sans', cursive;
-    margin-left: 200px;
+    margin-left: 180px;
     margin-top: 30px;
   }
   .Container-table-ShowMem .table-Show-Mem thead 
@@ -126,6 +82,7 @@
     box-shadow: black 1px 1px ;
           background:linear-gradient(135deg,  rgb(36, 125, 226) 30%, rgb(36, 125, 226));
   }
+
   .game-Alpha{
     position: absolute;
       margin: 50px 150px;
@@ -194,7 +151,43 @@
       background-image: none;
     background-color: rgba(179, 175, 175, 0.514);
     }
-    
+    .title-NameGame{
+        text-align: center;
+        margin: 0 550px;
+        margin-top: 200px;
+        width: 400px;
+        height: 60px;
+
+    }
+    .Error-Show{
+    font-family: 'Odibee Sans', cursive;
+    /* text-align: center; */
+    position: static;
+    margin-top: 50px;
+    margin-left: 350px;
+    width: 750px;
+    height: 500px;
+    box-shadow: black 0 0 15px;
+    border-radius: 15px;
+    border: 3px solid black;
+    background: rgba(26, 26, 26, 0.616);
+  }
+  .Error-Show p {
+    font-family: 'Odibee Sans', cursive;
+    text-align: center;
+    position: relative;
+    font-size: 50px;
+  }
+  .Select-Sub-Evo{
+    font-family: 'Odibee Sans', cursive;
+    /* position: fixed; */
+    text-align: center;
+    width: 650px;
+    /* border: 2px solid black; */
+    margin-top: 180px;
+    margin-left: 400px;
+  }
+
 </style>
 <script>
     var i=1;
@@ -237,22 +230,22 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item ">
-              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/Home_TH">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Addchoice">Add-Choice</a>
+              <a class="nav-link" href="/Addchoice_TH">Add-Choice</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Subject">Subject</a>
+              <a class="nav-link" href="/Subject_TH">Subject</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/Evoindex">Evolution</a>
+              <a class="nav-link" href="/Evoindex_TH">Evolution</a>
             </li>
 
             <div class="Select-Langua">
               <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <option  value="EN" selected>EN</option>
-                  <option  value="TH" >TH</option>
+                  <option  value="EN" >EN</option>
+                  <option  value="TH" selected>TH</option>
               </select>
             </div>
             
@@ -339,21 +332,21 @@
     <form action="" method="post"> -->
     <div class="Container-Select-Gmae">
       <div>
-        <a href="Evoalpha">
         <div class="game-Alpha">
+            <a href="/Evoalpha_TH">
         <button name="NameGame" value="Alphabet">
           <p style="font-size: 30px; font-weight: bold; font-family: 'Odibee Sans', cursive;margin-top: 10px;">Alphabet</p> 
         </button></a>
       </div>
       <div class="game-shoot">
-        <a href="Evoshoot">
+        <a href="Evoshoot_TH">
         <button name="NameGame" value="Shoot"><div>
           <p style="font-size: 30px; font-weight: bold; font-family: 'Odibee Sans', cursive;margin-top: 10px;">Shoot - Game</p> 
         </div></button></a>
 
     </div>
     <div class="game-Adventure">
-      <a href="/Evopage">
+      <a href="/Evopage_TH">
       <button name="NameGame" value="Adventure"><div>
         <p style="font-size: 30px; font-weight: bold; font-family: 'Odibee Sans', cursive;margin-top: 10px;">Adventure</p> 
       </div></button></a>
@@ -362,66 +355,43 @@
   </div>
   <!-- </form> -->
       
-    </div>
-    <div class="Select-Sub-Evo">
-      <form action="/Evopage" method="POST">
-      {% for Sub in Subject.each() %}
-
-      <button type="submit" class="But-Show-MemberEvo" value="{%print(Sub.key())%}" name="Sub_name">{% print(Sub.key()) %}</button>
-      
-      
-      {% endfor %}
-
-      </form>
-    </div>
-    {% if  ShowData %}
-
-      <div class="Container-table-ShowMem">
-      <p>Member in Subject Name : {{SubjectName}}</p>
-
+    <div>
+        <div class="title-NameGame">    
+            <p style="margin-top: 20px;font-size: 40px;font-weight: bold;font-family: 'Odibee Sans', cursive;">Shoot - Game</p>
+        </div>
+        <div class="Container-table-ShowMem">
+        {% if havedata %}
         <div class="Container-table-ShowMem-inside">
-          <table class="table-Show-Mem">
-              <thead>
-                  <tr>
-                      <td class="title-table"> E-mail </td>
-                      <td class="title-table"> Name </td>
-                  </tr>
-              </thead>
-              <tbody>
+            <table class="table-Show-Mem">
+                <thead>
+                    <tr>
+                        <td class="title-table"> E-mail </td>
+                        <td class="title-table"> ชื่อ </td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for MemberShoot in mainGameShoot.each() %}
+                <form action="/ShowEvoShoot_TH" method="POST">
+                    <tr>
+                        <td class="data"><input type="text" style="border: none; background: none; text-align: center;width: 220px;" value="{% print(MemberShoot.val()['Email'])%}" name="email" readonly></td>
+                        <td class="data"><input type="text" style="border: none; background: none; text-align: center;" value="{%print(MemberShoot.val()['Name'])%}" name="Name" readonly></td>
+                        <td ><button type="submit" value="{%print(MemberShoot.key())%}" name="Username">View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                    </tr>
+                </form>
 
-                  {% for Sub in ShowData.each() %}
-                  <form action="/ShowEvo" method="POST">
+                {% endfor %}
 
-                  <tr>
-                      <td class="data"><input style="border: none; background: none; text-align: center;" type="text" value="{% print(Sub.val()['Email'])%}" name="email" readonly></td>
-                      <td class="data"><input style="border: none; background: none;text-align: center;" type="text" value="{%print(Sub.val()['Name'])%}" name="Name" readonly></td>
-                      <td><button  type="submit" name="Username" id="" value="{%print(Sub.key())%}" value="View" >View  <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
-                  </tr>
-                  </form>
-                  {% endfor %}
-                  
-              </tbody>
-          </table>
+                </tbody>
+            </table>
         </div>
-      </div>
-
-    {% elif ErrorA %}
-        <div class="Error-Show">
-          <img style="width: 200px; height: 200px; margin-left: 280px; margin-top: 30px;" src="https://img.icons8.com/officel/480/000000/cancel.png"/>
-        <p style="color: red;">There is no player in the course yet.</p>
-        </div>
-    {% else %}
-        <div class="Error-Show">
-          <img style="position: absolute; margin-top: 80px; margin-left:330px;" src="https://img.icons8.com/doodle/96/000000/up-direction-arrow.png"/>
-          <div style="margin-top: 200px;">
-            <p style="color: coral;">Please click the button</p>
-            <p>Please select the subject to express the question.</p>
-        </div>
-        </div>
-    {% endif %}
-    
-
-
+    </div>
+        {% elif error %}
+            <div class="Error-Show">
+                <img style="width: 200px; height: 200px; margin-left: 280px; margin-top: 30px;" src="https://img.icons8.com/officel/480/000000/cancel.png"/>
+            <p style="color: red;">There is no player in the course yet.</p>
+            </div>
+        {% endif %}
+    </div>
     
 </body>
 <script>
@@ -429,8 +399,8 @@
     $('.select-langua-Op').change(function(){
       var langua = document.getElementById('select-langua-Op').value;
 
-      if(langua == 'TH'){
-        window.location.href = "/Evopage_TH";
+      if(langua == 'EN'){
+        window.location.href = "/Evoshoot";
       }
     });
 

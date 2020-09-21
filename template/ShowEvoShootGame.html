@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Development</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200&display=swap" rel="stylesheet">
+
     <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -25,10 +25,9 @@
           background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
         }
         .ShowName-Mem .table-ShowName-Mem thead td{
-        font-family: 'Sarabun', sans-serif;
-        font-weight: bold;
           color: white;
           text-align: center;
+          width: 200px;
           height: 40px;
           font-size: 20px;
           background: rgba(219, 30, 172, 0.63);
@@ -41,8 +40,6 @@
           text-align: center;
         }
         .ShowName-Mem .table-ShowName-Mem tbody .data{
-            font-family: 'Sarabun', sans-serif;
-            
           border: 2px solid black;
           height: 30px;
           background: rgba(255, 255, 255, 0.568);
@@ -82,37 +79,14 @@
         }
         .container-table{
           margin-top: 20px;
-          margin-left: 600px;
+          margin-left: 570px;
         }
         .Show-chart{
           margin-top: 150px;
         }
-        /* .Show-chart .container-chartOne{
-          background: rgba(212, 212, 212, 0.432);
-          box-shadow: black 0 0 15px;
-          border-radius: 15px;
-          text-align: center;
-          position: absolute;
-          width: 470px;
-          height: 300px;
-          border: solid 2px black;
-          transition: 0.8s;
-        } */
-        
-        /* .Show-chart .container-charttwo{
+        .Show-chart .container-charttwo{
           text-align: center;
           background: rgba(214, 128, 128, 0.432);
-          box-shadow: black 0 0 15px;
-          border-radius: 15px;
-          position: absolute;
-          margin-left: 490px;
-          width: 470px;
-          height: 300px;
-          border: solid 1px black;
-        } */
-        .Show-chart .container-chart3{
-          text-align: center;
-          background: rgba(127, 226, 123, 0.432);
           box-shadow: black 0 0 15px;
           border-radius: 15px;
           position: absolute;
@@ -121,6 +95,7 @@
           height: 500px;
           border: solid 1px black;
         }
+
         .Box-Animation{
         width: 100%;
         height: 100%;
@@ -331,103 +306,98 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item ">
-              <a class="nav-link" href="/Home_TH">Home </a>
+              <a class="nav-link" href="/Home">Home </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Addchoice_TH">Add-Choice</a>
+              <a class="nav-link" href="/Addchoice">Add-Choice</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Subject_TH">Subject</a>
+              <a class="nav-link" href="/Subject">Subject</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/Evopage_TH">Evolution</a>
+              <a class="nav-link" href="/Evoindex">Evolution</a>
             </li>
 
             <div class="Select-Langua">
               <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <option  value="EN" >EN</option>
-                  <option  value="TH" selected>TH</option>
+                  <option  value="EN" selected>EN</option>
+                  <option  value="TH" >TH</option>
               </select>
             </div>
-            <!-- dropdow -->
-            
-             
             <li class="nav-item dropdown">
-              
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-family: 'Sarabun', sans-serif;">เพิ่มวิชา</button>
-                  <button type="button" data-toggle="modal" data-target="#exampleModalCenter" style="font-family: 'Sarabun', sans-serif;">แก้ไขรหัสผ่าน</button>
-                  <a class="dropdown-item" href="/Logout">Log Out</a>
-                </div>
-              </li>
-            
-            </ul>
-          </div>
-        </nav>
-  
-        <!-- popup Edit - Subject -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;font-family: 'Sarabun', sans-serif;">เพิ่มรายวิชา</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
+                <a class="dropdown-item" href="/Logout">Log Out</a>
               </div>
-              <div class="modal-body">
-              {% for ShowSub in DataSubject.each() %}
-                <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
-                    <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" style="font-family: 'Sarabun', sans-serif;" onclick="return Co_Delete()">ลบ</button><br>
-                    
-  
-                </form>
-              {% endfor %}
-                
-              <form action="AddSub_allPage" method="post">
-                  <br>
-              <p style="font-family: 'Sarabun', sans-serif;">ชื่อวิชาที่ต้องการเพิ่ม : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
-                  <div id="new_chq"></div>
-                    <input type="hidden" value="1" id="total_chq">
-                  <div class="modal-footer" >
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
-                      <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
-                  </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- popup Edit - Subject -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">Add Subject</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            {% for ShowSub in DataSubject.each() %}
+              <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
+                  <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" onclick="return Co_Delete()">Delete</button><br>
+                  
               </form>
-              </div>
+            {% endfor %}
+
+            <form action="AddSub_allPage" method="post">
+            <p>Add-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
+                <div id="new_chq"></div>
+                  <input type="hidden" value="1" id="total_chq">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
             </div>
           </div>
         </div>
-        <!-- End popup Edit - Subject -->
-  
-        <!-- popup Change Password -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="font-family: 'Sarabun', sans-serif;">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">แก้ไขรหัสผ่าน</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form action="ChangePass_allPage" method="POST">
-                    <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
-                    <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
-                    <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
-  
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                <button type="submit" class="btn btn-primary" onclick="Co_Pass()">ยืนยันการเปลี่ยน</button>
-              </div>
-          </form>
+      </div>
+      <!-- End popup Edit - Subject -->
+
+      <!-- popup Change Password -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              <form action="ChangePass_allPage" method="POST">
+                  <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
+                  <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
+                  <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" onclick="Co_Pass()">Save changes</button>
+            </div>
+        </form>
           </div>
         </div>
-        <!-- end  popup Change Password -->
+      </div>
+
+      <!-- end  popup Change Password -->
       {% if Error %}
       <div class="alert alert-danger" role="alert">
         รหัสผ่านไม่ผู้ต้องกรุณาทำรายการใหม่
@@ -456,16 +426,16 @@
             <thead>
                 <tr>
                     <td> Email </td>
-                    <td> ชื่อ </td>
+                    <td> Name </td>
                 </tr>
             </thead>
             <tbody>
                 {% for Member in ShowData.each() %}
-                <form action="/ShowEvo_TH" method="POST">
+                <form action="/ShowEvoShoot" method="POST">
                     <tr>
                         <td class="data"><input type="text" value="{% print(Member.val()['Email'])%}" name="email" readonly></td>
                         <td class="data"><input type="text" value="{%print(Member.val()['Name'])%}" name="Name" readonly></td>
-                        <td ><button type="submit" value="{%print(Member.key())%}" name="Username">ดู <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                        <td ><button type="submit" value="{%print(Member.key())%}" name="Username">View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
                     </tr>
                 </form>
 
@@ -479,137 +449,51 @@
         
     <div class="ShowStatus">
       <div class="title-text-Name">
-        <h2>{{SubName}}</h2>
-        <p>E-mail : {{email}} <br> ชื่อ : {{NAME}} </p>
+        <h5>Shoot - Game</h5>
+        <p>E-mail : {{email}} <br> Name : {{NAME}} </p>
       </div>
 
     </form>
 
       <div class="Show-chart">
-          <!-- <div class="container-chartOne">
-            <h5>Type the Alphabet</h5>
-            <div class="chart-container1" style="margin-top: 40px;">
-                <canvas id="myChart1"></canvas>
-            </div>
-          </div>
-
-          <div class="container-charttwo">
+        <div class="container-charttwo">
             <h5>Shoot Word</h5>
             <div class="chart-container2" style="margin-top: 40px;">
                 <canvas id="myChart2"></canvas>
             </div>
-          </div> -->
-
-          <div class="container-chart3">
-            <h5>Adventures</h5>
-            <div class="chart-container3" style="margin-top: 40px;">
-                <canvas id="myChart3"></canvas>
-              </div>
           </div>
+
+
+          
 
       </div>
   </div>
 
     <script>
 
-        // var Game1 = document.getElementById('myChart1').getContext('2d');
-        // var Game2 = document.getElementById('myChart2').getContext('2d');
-        var Game3 = document.getElementById('myChart3').getContext('2d');
+        var Game2 = document.getElementById('myChart2').getContext('2d');
+
 
         var ShowData = $.get('/dataChart');
         
         ShowData.done(function(result){
-            // new Chart(Game1, {
-            //     type: 'line',
-            //     data: {
-            //         labels: result.Label_G1,
-            //         datasets: [{
-            //             label: 'คะแนน',
-            //             data :result.ChartDataGame1,
-                        
-            //             borderWidth:3,
-            //             borderColor:'rgb(30,144,255)',
-            //             hoverBorderWidth:10,
-            //             hoverBorderColor:'#000'},
-            //             {
-            //             label: 'ค่าเฉลี่ย',
-            //             data :result.AVGGame1,
-            //             backgroundColor:[
-            //                 'rgb(255, 165, 0, 0.6)'
-            //             ],
-            //             borderColor:'#777',
-            //             borderWidth:3,
-            //             hoverBorderWidth:10,
-            //             },
-
-            //             ]},
-                        
-            //     options: {
-            //         scales: {
-            //             yAxes: [{
-            //                 ticks: {
-            //                     max: 60,
-            //                     min: 0,
-            //                     stepSize: 10
-            //                 }
-            //             }]
-            //         }
-            //     }
-            // });
-            // new Chart(Game2, {
-            //     type: 'line',
-            //     data: {
-            //         labels: result.Label_G2,
-            //         datasets: [{
-            //             label: 'คะแนน',
-            //             data :result.ChartDataGame2,
-                        
-            //             borderWidth:3,
-            //             borderColor:'rgb(30,144,255)',
-            //             hoverBorderWidth:10,
-            //             hoverBorderColor:'#000'},
-            //             {
-            //             label: 'ค่าเฉลี่ย',
-            //             data :result.AVGGame2,
-            //             backgroundColor:[
-            //                 'rgb(255, 165, 0, 0.6)'
-            //             ],
-            //             borderColor:'#777',
-            //             borderWidth:3,
-            //             hoverBorderWidth:10,
-            //             },
-                        
-            //             ]},
-                        
-            //     options: {
-            //         scales: {
-            //             yAxes: [{
-            //                 ticks: {
-            //                     max: 80,
-            //                     min: 0,
-            //                     stepSize: 10
-            //                 }
-            //             }]
-            //         }
-            //     }
-            // });
-            new Chart(Game3, {
+            new Chart(Game2, {
                 type: 'line',
                 data: {
-                    labels: result.Label_G3,
+                    labels: result.Label_G2,
                     datasets: [{
-                        label: 'คะแนน',
-                        data :result.ChartDataGame3,
-
+                        label: 'Score',
+                        data :result.ChartDataGame2,
+                        
                         borderWidth:3,
                         borderColor:'rgb(30,144,255)',
                         hoverBorderWidth:10,
                         hoverBorderColor:'#000'},
                         {
-                        label: 'ค่าเฉลี่ย',
-                        data :result.AVGGame3,
+                        label: 'AVG',
+                        data :result.AVGGame2,
                         backgroundColor:[
-                            'rgb(255, 165, 0, 0.8)'
+                            'rgb(255, 165, 0, 0.6)'
                         ],
                         borderColor:'#777',
                         borderWidth:3,
@@ -630,6 +514,7 @@
                     }
                 }
             });
+            
     }
     );
     var i=1;
@@ -673,13 +558,13 @@
         $(".ShowStatus").show();
         $(".Box-Animation").hide();
         
-      }, 0)
+      }, 5000)
     
       $('.select-langua-Op').change(function(){
       var langua = document.getElementById('select-langua-Op').value;
       
-      if(langua == 'EN'){
-        window.location.href = "/ShowEvo";
+      if(langua == 'TH'){
+        window.location.href = "/ShowEvoShoot_TH";
       }
     });
   });

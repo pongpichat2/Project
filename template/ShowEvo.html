@@ -27,6 +27,7 @@
         .ShowName-Mem .table-ShowName-Mem thead td{
           color: white;
           text-align: center;
+          width: 200px;
           height: 40px;
           font-size: 20px;
           background: rgba(219, 30, 172, 0.63);
@@ -83,7 +84,7 @@
         .Show-chart{
           margin-top: 150px;
         }
-        .Show-chart .container-chartOne{
+        /* .Show-chart .container-chartOne{
           background: rgba(212, 212, 212, 0.432);
           box-shadow: black 0 0 15px;
           border-radius: 15px;
@@ -93,33 +94,18 @@
           height: 300px;
           border: solid 2px black;
           transition: 0.8s;
-        }
-        /* .Show-chart .container-chartOne:hover {
-
-          width: 600px;
-          height: 400px;
-          
         } */
-        .Show-chart .container-charttwo{
-          text-align: center;
-          background: rgba(214, 128, 128, 0.432);
-          box-shadow: black 0 0 15px;
-          border-radius: 15px;
-          position: absolute;
-          margin-left: 490px;
-          width: 470px;
-          height: 300px;
-          border: solid 1px black;
-        }
+
+       
         .Show-chart .container-chart3{
           text-align: center;
           background: rgba(127, 226, 123, 0.432);
           box-shadow: black 0 0 15px;
           border-radius: 15px;
           position: absolute;
-          margin-left: 980px;
-          width: 470px;
-          height: 300px;
+          margin-left: 320px;
+          width: 800px;
+          height: 500px;
           border: solid 1px black;
         }
         .Box-Animation{
@@ -483,19 +469,9 @@
     </form>
 
       <div class="Show-chart">
-          <div class="container-chartOne">
-            <h5>Type the Alphabet</h5>
-            <div class="chart-container1" style="margin-top: 40px;">
-                <canvas id="myChart1"></canvas>
-            </div>
-          </div>
+          
 
-          <div class="container-charttwo">
-            <h5>Shoot Word</h5>
-            <div class="chart-container2" style="margin-top: 40px;">
-                <canvas id="myChart2"></canvas>
-            </div>
-          </div>
+          
 
           <div class="container-chart3">
             <h5>Adventures</h5>
@@ -509,91 +485,18 @@
 
     <script>
 
-        var Game1 = document.getElementById('myChart1').getContext('2d');
-        var Game2 = document.getElementById('myChart2').getContext('2d');
+        // var Game1 = document.getElementById('myChart1').getContext('2d');
+        // var Game2 = document.getElementById('myChart2').getContext('2d');
         var Game3 = document.getElementById('myChart3').getContext('2d');
 
         var ShowData = $.get('/dataChart');
         
         ShowData.done(function(result){
-            new Chart(Game1, {
-                type: 'line',
-                data: {
-                    labels: ['0','1','2','3','4','5','6','7'],
-                    datasets: [{
-                        label: 'Score',
-                        data :result.ChartDataGame1,
-                        
-                        borderWidth:3,
-                        borderColor:'rgb(30,144,255)',
-                        hoverBorderWidth:10,
-                        hoverBorderColor:'#000'},
-                        {
-                        label: 'AVG',
-                        data :result.AVGGame1,
-                        backgroundColor:[
-                            'rgb(255, 165, 0, 0.6)'
-                        ],
-                        borderColor:'#777',
-                        borderWidth:3,
-                        hoverBorderWidth:10,
-                        },
-
-                        ]},
-                        
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                max: 60,
-                                min: 0,
-                                stepSize: 10
-                            }
-                        }]
-                    }
-                }
-            });
-            new Chart(Game2, {
-                type: 'line',
-                data: {
-                    labels: ['0','1','2','3','4','5','6','7'],
-                    datasets: [{
-                        label: 'Score',
-                        data :result.ChartDataGame2,
-                        
-                        borderWidth:3,
-                        borderColor:'rgb(30,144,255)',
-                        hoverBorderWidth:10,
-                        hoverBorderColor:'#000'},
-                        {
-                        label: 'AVG',
-                        data :result.AVGGame2,
-                        backgroundColor:[
-                            'rgb(255, 165, 0, 0.6)'
-                        ],
-                        borderColor:'#777',
-                        borderWidth:3,
-                        hoverBorderWidth:10,
-                        },
-                        
-                        ]},
-                        
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                max: 60,
-                                min: 0,
-                                stepSize: 10
-                            }
-                        }]
-                    }
-                }
-            });
+            
             new Chart(Game3, {
                 type: 'line',
                 data: {
-                    labels: ['0','1','2','3','4','5','6','7'],
+                    labels: result.Label_G3,
                     datasets: [{
                         label: 'Score',
                         data :result.ChartDataGame3,
@@ -670,7 +573,7 @@
         $(".ShowStatus").show();
         $(".Box-Animation").hide();
         
-      }, 5000)
+      }, 0)
     
       $('.select-langua-Op').change(function(){
       var langua = document.getElementById('select-langua-Op').value;

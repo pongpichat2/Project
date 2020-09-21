@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Odibee+Sans&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>Evolution</title>
+</head>
+<style>
+    body{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0 0;
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  }
+  .Select-Langua{
+      margin-left: 200px;
+      height: 35px;
+      border: black 1px solid;
+      border-radius: 15px;
+    
+    }
+    .box-select-Game{
+        
+        text-align: center;
+        width: 450px;
+        height:100px;
+        border: black 2px solid;
+        margin: 50px 550px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px black;
+        background-color: rgba(54, 54, 54, 0.541);
+    }
+    .box-select-Game p {
+        font-family: 'Odibee Sans', cursive;
+        font-size: 40px;
+        font-weight: bold;
+    }
+    .game-Alpha{
+        margin: 0 50px;
+        position: absolute;
+        width: 450px;
+        height: 300px;
+        /* border: black 2px solid; */
+
+    }
+    .game-Alpha p{
+        font-size: 35px;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+    }
+    .game-Alpha button{
+      background: none;
+      border: none;
+        width: 100%;
+        height: 78%;
+        /* background-color: rgba(54, 54, 54, 0.541); */
+    }
+    .game-shoot{
+
+        position: absolute;
+        margin: 0 530px;
+        width: 450px;
+        height: 300px;
+        /* border: black 2px solid; */
+    }
+    .game-shoot p{
+        font-size: 35px;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+    }
+    .game-shoot button{
+      background: none;
+      border: none;
+        width: 100%;
+        height: 78%;
+        /* background-color: rgba(54, 54, 54, 0.541); */
+    }
+    .game-Adventure{
+        margin: 0 1010px;
+        width: 450px;
+        height: 300px;
+        /* border: black 2px solid; */
+    }
+    .game-Adventure p{
+        font-size: 35px;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+    }
+    .game-Adventure button{
+      background: none;
+      border: none;
+        width: 100%;
+        height: 78%;
+
+    }
+
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item ">
+              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Addchoice">Add-Choice</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Subject">Subject</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/Evopage">Evolution</a>
+            </li>
+
+            <div class="Select-Langua">
+              <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
+                  <option  value="EN" selected>EN</option>
+                  <option  value="TH" >TH</option>
+              </select>
+            </div>
+            
+            <li class="nav-item dropdown">
+
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
+                <a class="dropdown-item" href="/Logout">Log Out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- popup Edit - Subject -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">Add Subject</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            {% for ShowSub in DataSubject.each() %}
+              <form action="/DeleteSub_allPage" method="POST" name="Delete_Sub">
+                  <input type="text" name="Subject_Befor" id="Subject_Be" value="{%print(ShowSub.key())%}" readonly><button type="submit" name= "But_Delete" value="Delete" onclick="return Co_Delete()">Delete</button><br>
+                  
+
+              </form>
+            {% endfor %}
+
+            <form action="AddSub_allPage" method="post">
+            <p>Add-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
+                <div id="new_chq"></div>
+                  <input type="hidden" value="1" id="total_chq">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End popup Edit - Subject -->
+
+      <!-- popup Change Password -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="ChangePass_allPage" method="POST">
+                  <p>รหัสผ่านเดิม : <br> <input type="password" name="Pass_Before"></p>
+                  <p>รหัสผ่านใหม่: <br> <input type="password" name="Pass_After" id="Pass_After"></p>
+                  <p>รหัสผ่านยืนยันรหัสผ่าน : <br> <input type="password" name="CoPass_After" id="CoPass_After"></p>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" onclick="Co_Pass()">Save changes</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
+      <!-- end  popup Change Password -->
+
+      <div class="box-select-Game">
+        <p style="margin-top:20px ;">Please select a game</p>
+      </div>
+
+      <form action="/Evoindex" method="post">
+      <div class="menu-game">
+          <div class="game-Alpha">
+              <p style="text-align: center;">Alphabet</p>
+              <button name="NameGame" value="Alphabet"><div>
+                  
+                <img src="/static/image/Alpha.PNG" style="width: 440px;height:250px ;" alt="">
+              </div></button>
+
+          </div>
+          <div class="game-shoot">
+            <p style="text-align: center;">Shoot - Game</p>
+            <button name="NameGame" value="Shoot"><div>
+                
+              <img src="/static/image/shoot.PNG" style="width: 440px;height:250px ;" alt="">
+            </div></button>
+
+        </div>
+        <div class="game-Adventure">
+            <p style="text-align: center;">Adventure</p>
+            <button name="NameGame" value="Adventure"><div>
+                
+              <img src="/static/image/Adven.PNG" style="width: 440px;height:250px ;"  alt="">
+            </div></button>
+
+        </div>
+
+      </div>
+    </form>
+
+</body>
+<script>
+    var i=1;
+    function add(){
+    i++;
+    var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]' ><button type='button'onclick='remove();' id='Subbut_"+i+"'>x</button><br id = 'br_"+i+"'>";
+    $('#new_chq').append(new_input);
+    $('#total_chq').val(i)
+  }
+  function remove(){
+    var last_chq_no = $('#total_chq').val();
+    if(last_chq_no>0){
+      $('#Sub_'+last_chq_no).remove();
+      $('#Subbut_'+last_chq_no).remove();
+      $('#br_'+last_chq_no).remove();
+      $('#total_chq').val(last_chq_no-1);
+    }
+  }
+  function Co_Delete(){
+
+    return confirm("คุณต้องการลบวิชาใช่หรือไม่ ?");
+  }
+  function Co_Pass(){
+      var Pass_Af = document.getElementById('Pass_After').value;
+      var Pass_Co = document.getElementById('CoPass_After').value;
+        if(Pass_Af != Pass_Co){
+            alert("โปรดเช็ครหัสผ่านใหม่ไม่เข้ากันโปรดเช็ค !!")
+            return false;
+        }
+
+  }
+  $(document).ready(function(){
+      $('.select-langua-Op').change(function(){
+        var langua = document.getElementById('select-langua-Op').value;
+  
+        if(langua == 'TH'){
+          window.location.href = "/Evoindex_TH";
+        }
+      });
+  
+    });
+</script>
+</html>
