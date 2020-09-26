@@ -19,8 +19,8 @@
     background-position: center;
     height: 110vh;
     margin: 0 0;
-    /* background-image: url('/static/image/Adventure.jpg'); */
-    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    background-image: url('/static/image/G4Wall.png');
+    /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
   }
   .Select-Sub-Evo{
     font-family: 'Odibee Sans', cursive;
@@ -42,7 +42,7 @@
     box-shadow: black 0 0 15px;
     border-radius: 15px;
     border: 3px solid black;
-    background: rgba(26, 26, 26, 0.616);
+    background: rgba(255, 255, 255, 0.816);
   }
   .Error-Show p {
     font-family: 'Odibee Sans', cursive;
@@ -56,8 +56,8 @@
     margin-left: 20px;
     width: 100px;
     height: 50px;
-    background: rgb(31, 30, 30,0.7);
-    box-shadow: black 0 0 15px;
+    background: rgba(148, 148, 148, 0.7);
+    box-shadow: rgba(250, 241, 113, 0.836) 0 0 15px;
     border: black solid 2px;
     border-radius: 10px;
     transition: 0.8s;
@@ -71,9 +71,7 @@
   .Container-table-ShowMem{
     font-family: 'Odibee Sans', cursive;
     text-align: center;
-    margin-left: 350px;
-    margin-top: 40px;
-    width: 800px;
+
     /* border: black solid 2px; */
   }
   .Select-Langua{
@@ -89,7 +87,7 @@
   }
   .Container-table-ShowMem .Container-table-ShowMem-inside{
     font-family: 'Odibee Sans', cursive;
-    margin-left: 200px;
+    margin-left: 80px;
     margin-top: 30px;
   }
   .Container-table-ShowMem .table-Show-Mem thead 
@@ -194,6 +192,55 @@
       background-image: none;
     background-color: rgba(179, 175, 175, 0.514);
     }
+    .Container-Show{
+      width: 580px;
+      background: rgba(255, 255, 255, 0.75);
+      height: 40%;
+      margin: 50px 450px;
+      border: black 2px solid;
+      border-radius: 15px;
+      box-shadow: 0 0 15px black;
+    }
+    .Select-Langua{
+      margin-top: 5px;
+      margin-left: 20px;
+      height: 35px;
+      background: rgba(46, 46, 46, 0.562);
+      border: black 1px solid;
+      border-radius: 15px;
+      transition: 0.5s;
+    }
+    .Select-Langua:hover{
+      background: orangered;
+      box-shadow: 1px 1px 0 black;
+    }
+    .bg-light{
+      background-color: #16161686!important;
+      transition: 0.8s;
+    }
+    .bg-light:hover {
+
+      background-color: #646464b7!important;
+    }
+    .dropdown-menu button{
+      width: 100%;
+      background: none;
+      border: none;
+      transition: 0.8s;
+    }
+    .dropdown-menu button:hover{
+      background-color: rgba(43, 43, 43, 0.493);
+    }
+    .dropdown-menu{
+      margin-right: 900px !important;
+    }
+    .nav-item{
+      font-size: 20px;
+    }
+    .nav-link{
+      margin-left: 20px;
+      transition: 0.8s;
+    }
     
 </style>
 <script>
@@ -230,7 +277,7 @@
 </script>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -246,15 +293,11 @@
               <a class="nav-link" href="/Subject">Subject</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/Evoindex">Evolution</a>
+              <a class="nav-link" href="/Evoindex" style="color: rgb(255, 68, 0);">Evolution</a>
             </li>
+            <p style="margin-left: 650px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
 
-            <div class="Select-Langua">
-              <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <option  value="EN" selected>EN</option>
-                  <option  value="TH" >TH</option>
-              </select>
-            </div>
+            
             
             <li class="nav-item dropdown">
 
@@ -263,9 +306,15 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
-                <a class="dropdown-item" href="/Logout">Log Out</a>
+                <a  href="/Logout"><button>Log Out</button> </a>
               </div>
             </li>
+            <div class="Select-Langua">
+              <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
+                  <option  value="EN" selected>EN</option>
+                  <option  value="TH" >TH</option>
+              </select>
+            </div>
           </ul>
         </div>
       </nav>
@@ -374,8 +423,9 @@
 
       </form>
     </div>
+    
     {% if  ShowData %}
-
+      <div class="Container-Show" >
       <div class="Container-table-ShowMem">
       <p>Member in Subject Name : {{SubjectName}}</p>
 
@@ -404,6 +454,7 @@
           </table>
         </div>
       </div>
+    </div>
 
     {% elif ErrorA %}
         <div class="Error-Show">

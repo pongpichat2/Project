@@ -18,22 +18,12 @@
 
 
     body{
-        
-        background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-        background-size: cover;
-        background-position: center;
-        height: 100%;
+      background-image: url('/static/image/G11Wall.jpg');
+      background-size: 100% 100%;
+      background-position: center;
+      height: 100vh;
+      margin: 0;
     }
-    /* .navbar{
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 150px;
-        background-color: rgba(0, 0, 0, 0.788);
-        position: fixed;
-        overflow: hidden;
-    } */
-
     .AddChoice{
         position: fixed;
         text-decoration: none;
@@ -42,7 +32,7 @@
         height: 500px;
         margin: 130px 100px;
         border-radius: 15px;
-        background-color: rgba(7, 1, 27, 0.719);
+        background-color: rgba(31, 30, 30, 0.822);
         box-shadow: 0 0 20px black;
         background-image: url("/static/image/more.png");
         background-size: cover;
@@ -59,7 +49,7 @@
     .Add-Choice #Title{
         width: 100%;
         margin: 20% 38%;
-        color: rgb(168, 168, 168);
+        color: rgb(218, 218, 218);
         font-weight: bold;
         font-size: 50px;
         position: absolute;
@@ -81,7 +71,7 @@
         width: 530px;
         height: 220px;
         border-radius: 15px;
-        background-color: rgba(7, 1, 27, 0.719);
+        background-color: rgba(31, 30, 30, 0.822);
         background-image: url("/static/image/bookwal.png");
         background-size: cover;
         background-position: center;
@@ -96,7 +86,7 @@
     .AddSub .TitleSub{
         width: 100%;
         margin: 7% 38%;
-        color: rgb(168, 168, 168);
+        color: rgb(218, 218, 218);
         font-weight: bold;
         font-size: 35px;
         position: absolute;
@@ -116,7 +106,7 @@
         width: 530px;
         height: 260px;
         border-radius: 15px;
-        background-color: rgba(7, 1, 27, 0.719);
+        background-color: rgba(31, 30, 30, 0.822);
         background-image: url("/static/image/Quizwal1.png");
         background-size: cover;
         background-position: center;
@@ -129,7 +119,7 @@
         height: 265px;
     }
     .Quiz-a .TitleQ{
-        color: rgb(168, 168, 168);
+        color: rgb(196, 196, 196);
         margin: 7% 38%;
         width: 100%;
         font-weight: bold;
@@ -143,30 +133,62 @@
         margin-left: 40%;
     }
     .Select-Langua{
-      margin-left: 200px;
+      margin-top: 5px;
+      margin-left: 20px;
       height: 35px;
+      background: rgba(46, 46, 46, 0.562);
       border: black 1px solid;
       border-radius: 15px;
-
+      transition: 0.5s;
     }
+    .Select-Langua:hover{
+      background: orangered;
+      box-shadow: 1px 1px 0 black;
+    }
+    .bg-light{
+      background-color: #16161686!important;
+      transition: 0.8s;
+    }
+    .bg-light:hover {
 
-
+      background-color: #444444cb!important;
+      box-shadow: 0 0 15px black;
+    }
+    .dropdown-menu button{
+      width: 100%;
+      background: none;
+      border: none;
+      transition: 0.8s;
+    }
+    .dropdown-menu button:hover{
+      background-color: rgba(43, 43, 43, 0.493);
+    }
+    .dropdown-menu{
+      margin-right: 900px !important;
+    }
+    .nav-item{
+      font-size: 20px;
+    }
+    .nav-link{
+      margin-left: 20px;
+      transition: 0.8s;
+    }
 
 
 </style>
 <body>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <!-- <span class="navbar-toggler-icon"></span> -->
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item active" style="font-size: 20px;">
+              <a class="nav-link" style="color: rgb(255, 68, 0);" href="/Home" >Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" >
               <a class="nav-link" href="/Addchoice">Add-Choice</a>
             </li>
             <li class="nav-item">
@@ -175,34 +197,33 @@
             <li class="nav-item">
               <a class="nav-link" href="/Evoindex">Evolution</a>
             </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">{{name}}</a>
-              </li>
+            
+            <p style="margin-left: 650px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
+
+            <!-- dropdow -->
+
+            <li class="nav-item dropdown">
               
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </a>
+          
+              <div class="dropdown-menu"  aria-labelledby="navbarDropdownMenuLink">
+                <button type="button"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
+                <a href="/Logout"><button>Log Out</button> </a>
+              </div>
+            
+            </li>
             <div class="Select-Langua">
               <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
                   <a href=""><option  value="EN">EN</option></a>
                   <a href="/Home_TH"><option  value="TH">TH</option></a>
               </select>
             </div>
-
-            <!-- dropdow -->
-            
-             
-            <li class="nav-item dropdown">
-              
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
-                <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
-                <a class="dropdown-item" href="/Logout">Log Out</a>
-              </div>
-            </li>
-          
           </ul>
         </div>
       </nav>
+ 
 
       <!-- popup Edit - Subject -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -308,7 +329,7 @@
 
         <a href="/Evoindex" class="Quiz-a">
             <div class="Quiz">
-                <img src="/static/image/question2.png"  alt="">
+                <img src="/static/image/growth.png" width="90px" height="90px" alt="">
 
                 <p class="TitleQ" id="traslation">Evolution</p>
 

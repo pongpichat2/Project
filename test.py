@@ -1,7 +1,4 @@
-import numpy as np
-
-
-def Calchoice(Answer):
+def Calchoice():
     timeText = 0.2
     Shift = 0.1 #เมื่อมีการ กด Shift
     timedistance = 0.15 #เวลาของระยะห่างต่อ 1 จุด
@@ -10,7 +7,7 @@ def Calchoice(Answer):
     timeDuplicate = 0.01 #เวลาของตัวอักษรที่ซ้ำ
     totaltime = 0.0 #เวลาโดยรวม
 
-    TextOnShift = [['!','Q','A','Z',], ['@','W','S','X'], ['#','E','D','C'], ['$','R','F','V','%','T','G','B'], 
+    TextOnShift = [['!','Q','A','Z'], ['@','W','S','X'], ['#','E','D','C'], ['$','R','F','V','%','T','G','B'], 
                                 ['&','U','J','M','^','Y','H','N'], ['*','I','K','<'], ['(','O','L','>'], [')','P',':','?','"','{','}','_','+']]
 
         #---------------ปุ่ม  "  ' and  \  " ไม่สามารถใส่ได้เนื่องจากเป็นเครื่องหมายในภาษา----------------------------#
@@ -20,8 +17,10 @@ def Calchoice(Answer):
     ENG_array =['!','Q','A','Z','@','W','S','X','#','E','D','C','$','R','F','V','%','T','G','B','&','U','J','M','^','Y','H','N','*','I','K','<'
                 ,'(','O','L','>',')','P',':','?','"','{','}','_','+','1','q','a','z','2','w','s','x','3','e','d','c','4','r','f','v','5','t','g','b',
                 '7','u','j','m','6','y','h','n','8','i','k',',','9','o','l','.','0','p',';','/','[',']','-','=']
-
-    asw = Answer
+    
+    # thaitext = [['ๅ','ๆ','ฟ','ผ'],[]]
+    
+    asw = input('กรุณากรอกค่า :')
     text = list(asw)
 
 
@@ -195,8 +194,6 @@ def Calchoice(Answer):
                                     break
         else:
             countThai = len(text)
-            totaltime += (countThai*0.2)
-    # print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
-    timeAvg = ('%.3f'%(totaltime))
-    return timeAvg
-        
+            totaltime += (countThai*0.3)
+    print('เวลาที่ได้ %.4f'%(totaltime),"นาที")
+Calchoice()

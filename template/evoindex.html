@@ -15,11 +15,12 @@
 </head>
 <style>
     body{
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
     height: 100vh;
     margin: 0 0;
-    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
+    background-image: url('/static/image/G7Wall.jpg');
   }
   .Select-Langua{
       margin-left: 200px;
@@ -102,11 +103,52 @@
         height: 78%;
 
     }
+    .Select-Langua{
+      margin-top: 5px;
+      margin-left: 20px;
+      height: 35px;
+      background: rgba(46, 46, 46, 0.562);
+      border: black 1px solid;
+      border-radius: 15px;
+      transition: 0.5s;
+    }
+    .Select-Langua:hover{
+      background: orangered;
+      box-shadow: 1px 1px 0 black;
+    }
+    .bg-light{
+      background-color: #16161686!important;
+      transition: 0.8s;
+    }
+    .bg-light:hover {
+
+background-color: #444444cb!important;
+box-shadow: 0 0 15px black;
+}
+    .dropdown-menu button{
+      width: 100%;
+      background: none;
+      border: none;
+      transition: 0.8s;
+    }
+    .dropdown-menu button:hover{
+      background-color: rgba(43, 43, 43, 0.493);
+    }
+    .dropdown-menu{
+      margin-right: 900px !important;
+    }
+    .nav-item{
+      font-size: 20px;
+    }
+    .nav-link{
+      margin-left: 20px;
+      transition: 0.8s;
+    }
 
 </style>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+     
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -122,16 +164,10 @@
               <a class="nav-link" href="/Subject">Subject</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/Evopage">Evolution</a>
+              <a class="nav-link" href="/Evoindex" style="color: rgb(255, 68, 0);">Evolution</a>
             </li>
+            <p style="margin-left: 650px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
 
-            <div class="Select-Langua">
-              <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
-                  <option  value="EN" selected>EN</option>
-                  <option  value="TH" >TH</option>
-              </select>
-            </div>
-            
             <li class="nav-item dropdown">
 
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -139,9 +175,15 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Subject</button>
                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter">Change Password</button>
-                <a class="dropdown-item" href="/Logout">Log Out</a>
+                <a  href="/Logout"><button>Log Out</button> </a>
               </div>
             </li>
+            <div class="Select-Langua">
+              <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
+                  <option  value="EN" selected>EN</option>
+                  <option  value="TH" >TH</option>
+              </select>
+            </div>
           </ul>
         </div>
       </nav>

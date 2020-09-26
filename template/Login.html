@@ -15,19 +15,19 @@
     <title>Document</title>
     <style>
         body{
-            background-size: cover;
+            background-size: 100% 100%;
             background-position: center;
             height: 100vh;
             margin: 0;
             /* background-image: linear-gradient(-20deg, #0b0b31 0%, #181131 100%); */
-            background-image: url("/static/image/wallpaper.jpg");
+            background-image: url("/static/image/G8Wall.jpg");
         }
 
         .form-login{
             margin: 2% 33%;
             width: 460px;
             height: 280px;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(126, 126, 126, 0.8);
             border-radius: 20px;
             color: rgba(190, 51, 0, 0.89);
             border: 1px solid rgba(0, 0, 0, 0.5);
@@ -41,7 +41,8 @@
             height: 50px;
             text-align: center;
             /* color: rgb(255, 255, 255); */
-            border: none;
+            border:2px solid black ;
+     
             border-radius: 25px;
             font-size: 20px;
             font-family: 'Acme', sans-serif;
@@ -77,7 +78,7 @@
             color: rgb(6, 95, 51);
         }
         .form-login .buttonSub{
-            margin-left: 150px ;
+
             width: 100px;
             height: 45px;
             color: white;
@@ -94,6 +95,50 @@
             color: rgb(0, 255, 0);
             border: rgb(9, 255, 0) solid 2px ;
             box-shadow: 0 0 15px rgb(9, 255, 0) ;
+        }
+        .modal-body input[type='text'], input[type='password']{
+          border: 2px solid black;
+        }
+        .modal-body .but-add{
+          border: black 2px solid;
+          font-weight: bold;
+          background: rgba(63, 63, 206, 0.658);
+          margin-left: 10px;
+          transition: 0.8s;
+        }
+        .modal-body .but-add:hover{
+          border-radius: 10px;
+          background: rgb(9, 99, 24);
+        }
+        .modal-body .but-Delete{
+          border: black 2px solid;
+          font-weight: bold;
+          background: rgba(255, 0, 34, 0.658);
+          margin-left: 10px;
+          margin-top: 10px;
+          transition: 0.8s;
+        }
+        .modal-body .but-Delete:hover{
+          background: brown;
+          border-radius: 10px;
+        }
+        .but-Regis{
+            margin-left: 200px;
+            width: 100px;
+            height: 45px;
+            color: white;
+            background: rgba(190, 102, 43, 0.6);
+            border: rgb(255, 255, 255) solid 2px ;
+            border-radius: 20px;
+            font-family: 'Acme', sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.8s;
+        }
+        .but-Regis:hover{
+          border: rgba(255, 115, 0, 0.753) solid 2px ;
+          box-shadow: 0 0 15px rgba(255, 115, 0)  ;
+          color: rgba(255, 115, 0, 0.753) ;
         }
     </style>
     <script>
@@ -144,7 +189,7 @@
                 <p style="font-weight: bold;" class="Datainput">Username &nbsp;:&nbsp;&nbsp; <input type="text" id="Username" name="Username"></p>
                 <p style="font-weight: bold;" class="Datainput">Password &nbsp;:&nbsp;&nbsp; <input type="password" id="password" name="password"></p>
                 
-                <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Register</button>
+                <p><button type="button"  data-toggle="modal" class="but-Regis" data-target="#exampleModal" data-whatever="@mdo">Register</button>
                     <button type="submit" class="buttonSub" onclick="return CheckLogin()">Log in</button> 
         </form>
         
@@ -157,7 +202,7 @@
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body" style="background: black;">
+                        <div class="modal-body">
                           <form action="/Register" method="POST">
                             
                               <p>Username : <br><input type="text" class="form-control" id="recipient-name" name="Username"></p>
@@ -165,7 +210,7 @@
                               <p>Co-Password : <br><input type="password" class="form-control" id="recipient-name" name="Con_Pass"></p>
                               <p>E-mail : <br><input type="text" class="form-control" id="recipient-name" name="Email" ></p>
 
-                              <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" onclick="add()">+</button></p>
+                              <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" class="but-add" onclick="add()">+</button></p>
                               <div id="new_chq"> </div>
                               <input type="hidden" value="1" id="total_chq">
                             <div class="modal-footer">
@@ -185,7 +230,7 @@
     var i=1;
     function add(){
     i++;
-    var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]' ><button type='button'onclick='remove();' id='Subbut_"+i+"'>x</button><br id = 'br_"+i+"'>";
+    var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]' ><button type='button' class='but-Delete' onclick='remove();' id='Subbut_"+i+"'>x</button><br id = 'br_"+i+"'>";
     $('#new_chq').append(new_input);
     $('#total_chq').val(i)
   }

@@ -5,8 +5,6 @@ from firebase import Firebase
 import Calculat as Cal
 from array import *
 
-
-
 config = {
     "apiKey": "AIzaSyAh2ji3JKKX-QHZv53sxXlNbpc_qet9yDU",
     "authDomain": "quiz-game-37caa.firebaseapp.com",
@@ -24,6 +22,7 @@ auth = firebase.auth()
 
 app = Flask(__name__,template_folder='template')
 app.secret_key = "hello"
+
 
 
 
@@ -45,6 +44,7 @@ def CheckLogin():
                 # เก็บ session 
             if ref.val()['Password'] == Password :
                 session['Admin'] = Username
+                session['EmailAdmin'] = ref.val()['Email']
                     # print(session['User'])
                     # print('Go to Page Home')
                 return redirect(url_for("Home"))
@@ -93,8 +93,9 @@ def Home():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-        return render_template('Home.html',name = IDAdmin ,DataSubject = Admin_Subject)
+        return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject)
 
 @app.route("/Home_TH")
 def Home_TH():
@@ -102,8 +103,9 @@ def Home_TH():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-        return render_template('Home_TH.html',name = IDAdmin ,DataSubject = Admin_Subject)
+        return render_template('Home_TH.html',name = EmailAdmin ,DataSubject = Admin_Subject)
         
 @app.route("/Addchoice") #URL
 def hello():
@@ -111,9 +113,10 @@ def hello():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-        return render_template('Addchoice.html', data = Sub,DataSubject = Admin_Subject)
+        return render_template('Addchoice.html',name = EmailAdmin, data = Sub,DataSubject = Admin_Subject)
 
 @app.route("/Addchoice_TH") #URL
 def Addchoice_TH():
@@ -121,9 +124,10 @@ def Addchoice_TH():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-        return render_template('Addchoice_TH.html', data = Sub,DataSubject = Admin_Subject)
+        return render_template('Addchoice_TH.html',name = EmailAdmin, data = Sub,DataSubject = Admin_Subject)
 
 # Insert คำถามลงใน Database #
 @app.route("/insertChoice", methods=['GET','POST'])
@@ -150,16 +154,16 @@ def insertChoice():
 
         Avgtime = Cal.Calchoice(Answer)
         
-        checkdata = db.child(subject).get().val()
+        checkdata = db.child('Class').child(subject).get().val()
         # checkdata = db.child("Subject").child(subject).child("Quiz").get().val()
         
         if checkdata == None:
-            db.child(subject).child("NO1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
+            db.child('Class').child(subject).child("NO1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
             # db.child("Subject").child(subject).child("Quiz").child("NO_1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
-            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
+            db.child('Class').child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
         else:
-            countDataQuiz = str(len(db.child(subject).get().val())+1)
-            db.child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
+            countDataQuiz = str(len(db.child('Class').child(subject).get().val())+1)
+            db.child('Class').child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
             db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
         return redirect(url_for('hello'))
 
@@ -168,6 +172,7 @@ def Subject():
     if session.get('Admin') == None:
         return redirect(url_for('Login'))
     else:
+        EmailAdmin = session['EmailAdmin']
         user = session['Admin']
         Detil = db.child('Admin').child(user).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
@@ -175,21 +180,22 @@ def Subject():
             Sub_name = request.form['Subname']
             session['Subname_Update'] = Sub_name
 
-            ShowSub = db.child(Sub_name).get()
+            ShowSub = db.child('Class').child(Sub_name).get()
             if ShowSub.val() == None :
                 textError = "None"
-                return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , NoneData = textError)
+                return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , NoneData = textError,name = EmailAdmin)
             else:
                 textHave = "haveData"
-                return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , haveData = textHave)
+                return render_template('Subject.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , haveData = textHave,name = EmailAdmin)
 
-        return render_template('Subject.html',data = Detil,DataSubject = Admin_Subject)
+        return render_template('Subject.html',data = Detil,DataSubject = Admin_Subject,name = EmailAdmin)
 
 @app.route("/Subject_TH", methods=['GET','POST'])
 def Subject_TH():
     if session.get('Admin') == None:
         return redirect(url_for('Login'))
     else:
+        EmailAdmin = session['EmailAdmin']
         user = session['Admin']
         Detil = db.child('Admin').child(user).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
@@ -197,15 +203,15 @@ def Subject_TH():
             Sub_name = request.form['Subname']
             session['Subname_Update'] = Sub_name
 
-            ShowSub = db.child(Sub_name).get()
+            ShowSub = db.child('Class').child(Sub_name).get()
             if ShowSub.val() == None :
                 textError = "None"
-                return render_template('Subject_TH.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , NoneData = textError)
+                return render_template('Subject_TH.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , NoneData = textError,name = EmailAdmin)
             else:
                 textHave = "haveData"
-                return render_template('Subject_TH.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , haveData = textHave)
+                return render_template('Subject_TH.html',data = Detil,Show = ShowSub ,Headtext = Sub_name,DataSubject = Admin_Subject , haveData = textHave,name = EmailAdmin)
 
-        return render_template('Subject_TH.html',data = Detil,DataSubject = Admin_Subject)
+        return render_template('Subject_TH.html',data = Detil,DataSubject = Admin_Subject,name = EmailAdmin)
 
 @app.route("/Sub_Update", methods=['GET','POST'])
 def Sub_Update():
@@ -232,11 +238,11 @@ def Sub_Update():
             elif(Answer == '4'):
                 Answer = C4
             AvgUpdate = Cal.Calchoice(Answer)
-            db.child(Subname).child('NO'+NO_Sub).update({"Qu":Quiz,"C1":C1,"C2":C2,"C3":C3,"C4":C4,"ans":Answer,"Time":AvgUpdate})
+            db.child('Class').child(Subname).child('NO'+NO_Sub).update({"Qu":Quiz,"C1":C1,"C2":C2,"C3":C3,"C4":C4,"ans":Answer,"Time":AvgUpdate})
         elif TypeUp == 'Delete':
-            db.child(Subname).child('NO'+NO_Sub).remove()
+            db.child('Class').child(Subname).child('NO'+NO_Sub).remove()
             try:
-                countDataQuiz = str(len(db.child(Subname).get().val()))
+                countDataQuiz = str(len(db.child('Class').child(Subname).get().val()))
                 db.child('Admin').child(user).child('Subject_pro').child(Subname).update({"DataNum":countDataQuiz})
             except:
                 db.child('Admin').child(user).child('Subject_pro').child(Subname).update({"DataNum":0})
@@ -249,6 +255,7 @@ def Evopage():
         return redirect(url_for('Login'))
     else:
         user = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         ShowSubject = db.child('Admin').child(user).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
 
@@ -262,12 +269,12 @@ def Evopage():
                 session['SubjectRef'] = Sub
                 if SubMem.val() == None:
                     ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
-                    return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText ,DataSubject = Admin_Subject)
+                    return render_template('evo.html',Subject = ShowSubject , ErrorA = ErrorText ,DataSubject = Admin_Subject,name = EmailAdmin)
                 else:
                     
-                    return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ,SubjectName = Sub) 
+                    return render_template('evo.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ,SubjectName = Sub,name = EmailAdmin) 
 
-        return render_template('evo.html', Subject = ShowSubject,DataSubject = Admin_Subject)
+        return render_template('evo.html', Subject = ShowSubject,DataSubject = Admin_Subject,name = EmailAdmin)
 
 @app.route("/Evopage_TH", methods=['GET','POST'])
 def Evopage_TH():
@@ -275,6 +282,7 @@ def Evopage_TH():
         return redirect(url_for('Login'))
     else:
         user = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         ShowSubject = db.child('Admin').child(user).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(user).child('Subject_pro').get()
 
@@ -285,12 +293,12 @@ def Evopage_TH():
             session['SubjectRef'] = Sub
             if SubMem.val() == None:
                 ErrorText = "ยังไม่มีผู้เล่นในรายวิชานี้"
-                return render_template('evo_TH.html',Subject = ShowSubject , ErrorA = ErrorText ,DataSubject = Admin_Subject)
+                return render_template('evo_TH.html',Subject = ShowSubject , ErrorA = ErrorText ,DataSubject = Admin_Subject,name = EmailAdmin)
             else:
                 
-                return render_template('evo_TH.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ,SubjectName = Sub) 
+                return render_template('evo_TH.html',Subject = ShowSubject , ShowData = SubMem,DataSubject = Admin_Subject ,SubjectName = Sub,name = EmailAdmin) 
 
-        return render_template('evo_TH.html', Subject = ShowSubject,DataSubject = Admin_Subject)
+        return render_template('evo_TH.html', Subject = ShowSubject,DataSubject = Admin_Subject,name = EmailAdmin)
 
 @app.route("/ShowEvo", methods=['GET','POST'])
 def ShowEvo():
@@ -298,6 +306,7 @@ def ShowEvo():
         return redirect(url_for('Login'))
     else:
         SubRef = session['SubjectRef']
+        EmailAdmin = session['EmailAdmin']
         ShowMem = db.child('Subject').child(SubRef).child('Member').get()
         Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         if request.method == 'POST':
@@ -311,7 +320,7 @@ def ShowEvo():
 
             session['NameMember'] = Name
             session['Email'] = Email
-        return render_template('ShowEvo.html', SubName = SubRef, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
+        return render_template('ShowEvo.html',name = EmailAdmin, SubName = SubRef, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 @app.route("/ShowEvo_TH", methods=['GET','POST'])
 def ShowEvo_TH():
@@ -319,6 +328,7 @@ def ShowEvo_TH():
         return redirect(url_for('Login'))
     else:
         SubRef = session['SubjectRef']
+        EmailAdmin = session['EmailAdmin']
         ShowMem = db.child('Subject').child(SubRef).child('Member').get()
         Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         if request.method == 'POST':
@@ -332,7 +342,7 @@ def ShowEvo_TH():
 
             session['NameMember'] = Name
             session['Email'] = Email
-        return render_template('ShowEvo_TH.html', SubName = SubRef, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
+        return render_template('ShowEvo_TH.html',name = EmailAdmin, SubName = SubRef, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 @app.route("/ShowEvoAlpha", methods=['GET','POST'])
 def ShowEvoAlpha():
@@ -341,6 +351,7 @@ def ShowEvoAlpha():
     else:
         Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         ShowMem = db.child('IntroGame').child('Alphabet').get()
+        EmailAdmin = session['EmailAdmin']
         if request.method == 'POST':
             Member = request.form['Username']
             session['Member'] = Member
@@ -350,7 +361,7 @@ def ShowEvoAlpha():
             session['NameMember'] = Name
             session['Email'] = Email
 
-        return render_template('ShowEvoAlpha.html', NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
+        return render_template('ShowEvoAlpha.html', NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject,name = EmailAdmin)
 @app.route("/ShowEvoAlpha_TH", methods=['GET','POST'])
 def ShowEvoAlpha_TH():
     if session.get('Admin') == None:
@@ -358,6 +369,7 @@ def ShowEvoAlpha_TH():
     else:
         Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         ShowMem = db.child('IntroGame').child('Alphabet').get()
+        EmailAdmin = session['EmailAdmin']
         if request.method == 'POST':
             Member = request.form['Username']
             session['Member'] = Member
@@ -367,7 +379,7 @@ def ShowEvoAlpha_TH():
             session['NameMember'] = Name
             session['Email'] = Email
 
-        return render_template('ShowEvoAlpha_TH.html', NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
+        return render_template('ShowEvoAlpha_TH.html',name = EmailAdmin, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 @app.route("/ShowEvoShoot", methods=['GET','POST'])
 def ShowEvoShoot():
@@ -376,6 +388,7 @@ def ShowEvoShoot():
     else:
         Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         ShowMem = db.child('IntroGame').child('ShootGame').get()
+        EmailAdmin = session['EmailAdmin']
         if request.method == 'POST':
             Member = request.form['Username']
             session['Member'] = Member
@@ -385,7 +398,7 @@ def ShowEvoShoot():
             session['NameMember'] = Name
             session['Email'] = Email
 
-        return render_template('ShowEvoShootGame.html', NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
+        return render_template('ShowEvoShootGame.html',name = EmailAdmin, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 @app.route("/ShowEvoShoot_TH", methods=['GET','POST'])
 def ShowEvoShoot_TH():
@@ -394,6 +407,7 @@ def ShowEvoShoot_TH():
     else:
         Admin_Subject = db.child('Admin').child(session['Admin']).child('Subject_pro').get()
         ShowMem = db.child('IntroGame').child('ShootGame').get()
+        EmailAdmin = session['EmailAdmin']
         if request.method == 'POST':
             Member = request.form['Username']
             session['Member'] = Member
@@ -403,7 +417,7 @@ def ShowEvoShoot_TH():
             session['NameMember'] = Name
             session['Email'] = Email
 
-        return render_template('ShowEvoShoot_TH.html', NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
+        return render_template('ShowEvoShoot_TH.html',name = EmailAdmin, NAME = session['NameMember'] , email = session['Email'], ShowData = ShowMem ,DataSubject = Admin_Subject)
 
 @app.route("/Evoindex", methods=['GET','POST'])
 def Evoindex():
@@ -411,6 +425,7 @@ def Evoindex():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         if request.method == 'POST':
@@ -421,7 +436,7 @@ def Evoindex():
                 return redirect('/Evopage')
             elif Game_Evo == 'Shoot':
                 return redirect('/Evoshoot')
-        return render_template('evoindex.html',DataSubject = Admin_Subject)
+        return render_template('evoindex.html',DataSubject = Admin_Subject,name = EmailAdmin)
 
 @app.route("/Evoalpha", methods=['GET','POST'])
 def Evoalpha():
@@ -429,15 +444,16 @@ def Evoalpha():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         mainGameAlpha = db.child('IntroGame').child('Alphabet').get()
         if mainGameAlpha.val() == None:
             error = 'ไม่มีผู้เล่น'
-            return render_template('evoalpha.html',DataSubject = Admin_Subject,error = error)
+            return render_template('evoalpha.html',DataSubject = Admin_Subject,error = error,name = EmailAdmin)
         else:
             havedata ='มีผู้เล่น'
-            return render_template('evoalpha.html',DataSubject = Admin_Subject,havedata = havedata,mainGameAlpha = mainGameAlpha)
+            return render_template('evoalpha.html',DataSubject = Admin_Subject,havedata = havedata,mainGameAlpha = mainGameAlpha,name = EmailAdmin)
 
 @app.route("/Evoalpha_TH", methods=['GET','POST'])
 def Evoalpha_TH():
@@ -445,15 +461,16 @@ def Evoalpha_TH():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         mainGameAlpha = db.child('IntroGame').child('Alphabet').get()
         if mainGameAlpha.val() == None:
             error = 'ไม่มีผู้เล่น'
-            return render_template('evoalpha_TH.html',DataSubject = Admin_Subject,error = error)
+            return render_template('evoalpha_TH.html',DataSubject = Admin_Subject,error = error,name = EmailAdmin)
         else:
             havedata ='มีผู้เล่น'
-            return render_template('evoalpha_TH.html',DataSubject = Admin_Subject,havedata = havedata,mainGameAlpha = mainGameAlpha)
+            return render_template('evoalpha_TH.html',DataSubject = Admin_Subject,havedata = havedata,mainGameAlpha = mainGameAlpha,name = EmailAdmin)
 
 
 @app.route("/Evoshoot", methods=['GET','POST'])
@@ -462,30 +479,32 @@ def Evoshoot():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         mainGameShoot= db.child('IntroGame').child('ShootGame').get()
         if mainGameShoot.val() == None:
             error = 'ไม่มีผู้เล่น'
-            return render_template('evoshoot.html',DataSubject = Admin_Subject,error = error)
+            return render_template('evoshoot.html',DataSubject = Admin_Subject,error = error,name = EmailAdmin)
         else:
             havedata ='มีผู้เล่น'
-            return render_template('evoshoot.html',DataSubject = Admin_Subject,havedata = havedata,mainGameShoot = mainGameShoot)
+            return render_template('evoshoot.html',DataSubject = Admin_Subject,havedata = havedata,mainGameShoot = mainGameShoot,name = EmailAdmin)
 @app.route("/Evoshoot_TH", methods=['GET','POST'])
 def Evoshoot_TH():
     if session.get('Admin') == None:
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         mainGameShoot= db.child('IntroGame').child('ShootGame').get()
         if mainGameShoot.val() == None:
             error = 'ไม่มีผู้เล่น'
-            return render_template('evoshoot_TH.html',DataSubject = Admin_Subject,error = error)
+            return render_template('evoshoot_TH.html',DataSubject = Admin_Subject,error = error,name = EmailAdmin)
         else:
             havedata ='มีผู้เล่น'
-            return render_template('evoshoot_TH.html',DataSubject = Admin_Subject,havedata = havedata,mainGameShoot = mainGameShoot)
+            return render_template('evoshoot_TH.html',DataSubject = Admin_Subject,havedata = havedata,mainGameShoot = mainGameShoot,name = EmailAdmin)
 
 @app.route("/Evoindex_TH", methods=['GET','POST'])
 def Evoindex_TH():
@@ -493,6 +512,7 @@ def Evoindex_TH():
         return redirect(url_for('Login'))
     else:
         IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
         Sub = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         if request.method == 'POST':
@@ -503,7 +523,7 @@ def Evoindex_TH():
                 return redirect('/Evopage_TH')
             elif Game_Evo == 'Shoot':
                 return redirect('/Evoshoot_TH')
-        return render_template('evoindex_TH.html',DataSubject = Admin_Subject)
+        return render_template('evoindex_TH.html',DataSubject = Admin_Subject,name = EmailAdmin)
 
 
 @app.route("/DeleteSub_allPage", methods=['GET','POST'])
@@ -573,7 +593,7 @@ def DataChart():
     else:
         for G1 in DataRefGame1.each():
             
-            DatachartGame1.append(G1.val()['score'])
+            DatachartGame1.append(G1.val()['Correct'])
     if DataRefGame2.val() == None:
         DatachartGame2 = ['0']
     else:
@@ -619,46 +639,33 @@ def DataChart():
             for Score_in_Game_1 in time_Score_1.each():
 
                 try:
-                    arrayGame1[posi_arr_1].append(Score_in_Game_1.val()['score'])
+                    arrayGame1[posi_arr_1].append(Score_in_Game_1.val()['Correct'])
                 except:
                     continue
                 posi_arr_1 += 1
 
 
-        ValBeeteew = 10
-        for Data_Game1 in range(len(arrayGame1)):
-            countCheckData_G1 = len(arrayGame1[Data_Game1])
-            if countCheckData_G1 <= 2:
+        # T-mean
+        for CountArray_1 in range(len(arrayGame1)):
+            NumArray_1 = len(arrayGame1[CountArray_1])
+            if NumArray_1 <= 20 :
                 continue
-            else :
-                Xi = (len(arrayGame1[Data_Game1])+1)/2
-                datasort = sorted(arrayGame1[Data_Game1])
+            else:
+                sortArray_G1 = sorted(arrayGame1[CountArray_1])
+                lenData_G1 = sortArray_G1
+                lengthCut_1 = len(lenData_G1)*0.025
+                
+                if "." in str(lengthCut_1):
+                    Onepoint_1 = '%.2f'%(lengthCut_1)
+                    Backpoint = str(Onepoint_1).split(".")[-1]
 
-                if "." in str(Xi):
-                    ValDina = str(Xi).split(".")[-1]
-                    if ValDina == '0':
-                        mid =  datasort[int(Xi-1)]
-                        # print(mid)
-                        # print(datasort)
-                        for test in range(len(datasort)):
-                            # print(datasort[test])
-                            if datasort[test] > (mid-ValBeeteew) and datasort[test] <= (mid+ValBeeteew):
-                                # print(str(datasort[test]) +'อยู่ในช่วง')
-                                continue
-                            else :
-                                arrayGame1[Data_Game1].remove(datasort[test])
-                                # print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
-                elif ValDina == '5':
-                    XiMax = math.ceil(Xi)
-                    Ximin = math.floor(Xi)
-                    median = (datasort[Ximin-1]+datasort[XiMax-1])/2
-                    for Posi in range(len(datasort)):
-                        # print(datasort[Posi])
-                        if datasort[Posi] > (median-ValBeeteew) and datasort[Posi] <= (median+ValBeeteew):
-                            # print(str(datasort[Posi]) +'อยู่ในช่วง')
-                            continue
-                        else :
-                            arrayGame3[Data_Game1].remove(datasort[Posi])
+                    if int(Backpoint) >= 5 :
+                        Cut_G1 = math.ceil(float(lengthCut_1))
+                    else:
+                        Cut_G1 = math.floor(float(lengthCut_1))
+                    for removeData_G1 in range(Cut_G1):
+                        arrayGame1[CountArray_1].remove(sortArray_G1[removeData_G1])
+                        arrayGame1[CountArray_1].remove(sortArray_G1[(removeData_G1+1)*-1])
 
         for AVG in range(len(arrayGame1)):
             AVG_Score = '%.1f'%(sum(arrayGame1[AVG])/len(arrayGame1[AVG]))
@@ -692,41 +699,27 @@ def DataChart():
                     continue
                 posi_arr_2 += 1
 
-        #การหาค่ามัธยฐาน
-        ValBeeteew = 10
-        for Data_Game2 in range(len(arrayGame2)):
-            countCheckData_G2 = len(arrayGame2[Data_Game2])
-            if countCheckData_G2 <= 2:
+        # T-mean
+        for CountArray_2 in range(len(arrayGame2)):
+            NumArray_2 = len(arrayGame2[CountArray_2])
+            if NumArray_2 <= 20 :
                 continue
-            else :
-                Xi = (len(arrayGame3[Data_Game2])+1)/2
-                datasort = sorted(arrayGame3[Data_Game2])
+            else:
+                sortArray_G2 = sorted(arrayGame2[CountArray_2])
+                lenData_G2 = sortArray_G2
+                lengthCut_2 = len(lenData_G2)*0.025
+                
+                if "." in str(lengthCut_2):
+                    Onepoint_2 = '%.2f'%(lengthCut_2)
+                    Backpoint = str(Onepoint_2).split(".")[-1]
 
-                if "." in str(Xi):
-                    ValDina = str(Xi).split(".")[-1]
-                    if ValDina == '0':
-                        mid =  datasort[int(Xi-1)]
-                        # print(mid)
-                        # print(datasort)
-                        for test in range(len(datasort)):
-                            # print(datasort[test])
-                            if datasort[test] > (mid-ValBeeteew) and datasort[test] <= (mid+ValBeeteew):
-                                # print(str(datasort[test]) +'อยู่ในช่วง')
-                                continue
-                            else :
-                                arrayGame2[Data_Game2].remove(datasort[test])
-                                # print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
-                elif ValDina == '5':
-                    XiMax = math.ceil(Xi)
-                    Ximin = math.floor(Xi)
-                    median = (datasort[Ximin-1]+datasort[XiMax-1])/2
-                    for Posi in range(len(datasort)):
-                        # print(datasort[Posi])
-                        if datasort[Posi] > (median-ValBeeteew) and datasort[Posi] <= (median+ValBeeteew):
-                            # print(str(datasort[Posi]) +'อยู่ในช่วง')
-                            continue
-                        else :
-                            arrayGame2[Data_Game2].remove(datasort[Posi])
+                    if int(Backpoint) >= 5 :
+                        Cut_G2 = math.ceil(float(lengthCut_2))
+                    else:
+                        Cut_G2 = math.floor(float(lengthCut_2))
+                    for removeData_G2 in range(Cut_G2):
+                        arrayGame2[CountArray_2].remove(sortArray_G2[removeData_G2])
+                        arrayGame2[CountArray_2].remove(sortArray_G2[(removeData_G2+1)*-1])
 
         for AVG_G2 in range(len(arrayGame2)):
             AVG_Score_G2 = '%.1f'%(sum(arrayGame2[AVG_G2])/len(arrayGame2[AVG_G2]))
@@ -762,44 +755,28 @@ def DataChart():
                     continue
                 posi_arr_3 += 1
 
-
-        # การหาค่ามัธยฐาน
-        ValBeeteew = 10
-        for Data_Game3 in range(len(arrayGame3)):
-            countCheckData_G3 = len(arrayGame3[Data_Game3])
-            if countCheckData_G3 <= 2:
+        # T-mean
+        for CountArray_3 in range(len(arrayGame3)):
+            NumArray_3 = len(arrayGame3[CountArray_3])
+            if NumArray_3 <= 20 :
                 continue
-            else :
-                Xi = (len(arrayGame3[Data_Game3])+1)/2
-                datasort = sorted(arrayGame3[Data_Game3])
+            else:
+                sortArray_G3 = sorted(arrayGame3[CountArray_3])
+                lenData_G3 = sortArray_G3
+                lengthCut_3 = len(lenData_G3)*0.025
+                
+                if "." in str(lengthCut_3):
+                    Onepoint_3 = '%.2f'%(lengthCut_3)
+                    Backpoint = str(Onepoint_3).split(".")[-1]
 
-                if "." in str(Xi):
-                    ValDina = str(Xi).split(".")[-1]
-                    if ValDina == '0':
-                        mid =  datasort[int(Xi-1)]
-                        # print(mid)
-                        # print(datasort)
-                        for test in range(len(datasort)):
-                            # print(datasort[test])
-                            if datasort[test] > (mid-ValBeeteew) and datasort[test] <= (mid+ValBeeteew):
-                                
-                                continue
-                            else :
-                                arrayGame3[Data_Game3].remove(datasort[test])
-                                # print(str(datasort[test]) +'ไม่อยู่ในช่วง'+str(mid-10)+"และ"+str(mid+10))
-                elif ValDina == '5':
-                    XiMax = math.ceil(Xi)
-                    Ximin = math.floor(Xi)
-                    median = (datasort[Ximin-1]+datasort[XiMax-1])/2
-                    for Posi in range(len(datasort)):
-                        # print(datasort[Posi])
-                        if datasort[Posi] > (median-ValBeeteew) and datasort[Posi] <= (median+ValBeeteew):
-                            
-                            continue
-                        else :
-                            arrayGame3[Data_Game3].remove(datasort[Posi])
-
-
+                    if int(Backpoint) >= 5 :
+                        Cut_G3 = math.ceil(float(lengthCut_3))
+                    else:
+                        Cut_G3 = math.floor(float(lengthCut_3))
+                    for removeData_G3 in range(Cut_G3):
+                        arrayGame3[CountArray_3].remove(sortArray_G3[removeData_G3])
+                        arrayGame3[CountArray_3].remove(sortArray_G3[(removeData_G3+1)*-1])
+        
         for AVG_G3 in range(len(arrayGame3)):
             AVG_Score_G3 = '%.1f'%(sum(arrayGame3[AVG_G3])/len(arrayGame3[AVG_G3]))
 
