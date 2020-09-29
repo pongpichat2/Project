@@ -157,6 +157,44 @@
                 return false;
             }
         }
+        function CheckRegister(){
+          var Pass = document.forms["Regis"]["Password"].value;
+          var Con_Pass = document.forms["Regis"]["Con_Pass"].value;
+          var username = document.forms["Regis"]["Username"].value;
+          var email = document.forms["Regis"]["Email"].value;
+          var Subone = document.getElementById('Sub_1').value;
+
+          if(Pass != Con_Pass){
+            alert("รหัสผ่านในการสมัครไม่ตรงกันโปรดตรวจสอบ")
+            document.getElementById("recipient-name-pass").focus();
+            return false;
+          }
+          if (username == "" || username == null) {
+                alert("กรุณากรอก Username ด้วยครับ!! ");
+                document.getElementById("recipient-name-username").focus();
+                return false;
+          }
+          if (Pass == "" || Pass == null) {
+                alert("กรุณากรอก Password ด้วยครับ!! ");
+                document.getElementById("recipient-name-pass").focus();
+                return false;
+          }
+          if (Con_Pass == "" || Con_Pass == null) {
+                alert("กรุณากรอก Confirm Password ด้วยครับ!! ");
+                document.getElementById("recipient-name-Conpass").focus();
+                return false;
+          }
+          if (email== "" || email == null) {
+                alert("กรุณากรอก Email ด้วยครับ!! ");
+                document.getElementById("recipient-name-email").focus();
+                return false;
+          }
+          if (Subone== "" || Subone == null) {
+                alert("กรุณากรอก Subject ด้วยครับ!! ");
+                document.getElementById("Sub_1").focus();
+                return false;
+          }
+        }
 
     </script>
 </head>
@@ -176,6 +214,11 @@
     <div class="alert alert-danger alert-dismissible fade show" style="top: 0; width: 100%; position: absolute;">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Register Username Error ! </strong> {{Usernamerepea}}
+  </div>
+  {% elif Suberror %}
+    <div class="alert alert-danger alert-dismissible fade show" style="top: 0; width: 100%; position: absolute;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Subject Error ! </strong> {{Suberror}}
   </div>
     {% endif %}
 
@@ -203,19 +246,19 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form action="/Register" method="POST">
+                          <form action="/Register" name="Regis" method="POST">
                             
-                              <p>Username : <br><input type="text" class="form-control" id="recipient-name" name="Username"></p>
-                              <p>Password : <br><input type="password" class="form-control" id="recipient-name" name="Password"></p>
-                              <p>Co-Password : <br><input type="password" class="form-control" id="recipient-name" name="Con_Pass"></p>
-                              <p>E-mail : <br><input type="text" class="form-control" id="recipient-name" name="Email" ></p>
+                              <p>Username : <br><input type="text" class="form-control" id="recipient-name-username" name="Username"></p>
+                              <p>Password : <br><input type="password" class="form-control" id="recipient-name-pass" name="Password"></p>
+                              <p>Co-Password : <br><input type="password" class="form-control" id="recipient-name-Conpass" name="Con_Pass"></p>
+                              <p>E-mail : <br><input type="text" class="form-control" id="recipient-name-email" name="Email" ></p>
 
                               <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" class="but-add" onclick="add()">+</button></p>
                               <div id="new_chq"> </div>
                               <input type="hidden" value="1" id="total_chq">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" onclick="return CheckRegister()">Submit</button>
                               </div>
                           </form>
                         </div>

@@ -2,12 +2,12 @@ import numpy as np
 
 
 def Calchoice(Answer):
-    timeText = 0.2
-    Shift = 0.1 #เมื่อมีการ กด Shift
-    timedistance = 0.15 #เวลาของระยะห่างต่อ 1 จุด
-    timeSpacbar = 0.2 #เวลาของ Spacbar
-    timetextnumber = 0.1 #เวลาของตัวเลข
-    timeDuplicate = 0.01 #เวลาของตัวอักษรที่ซ้ำ
+    timeText = 1000
+    Shift = 1000 #เมื่อมีการ กด Shift
+    timedistance = 500 #เวลาของระยะห่างต่อ 1 จุด
+    timeSpacbar = 1000 #เวลาของ Spacbar
+    timetextnumber = 1000 #เวลาของตัวเลข
+    timeDuplicate = 1000 #เวลาของตัวอักษรที่ซ้ำ
     totaltime = 0.0 #เวลาโดยรวม
 
     TextOnShift = [['!','Q','A','Z',], ['@','W','S','X'], ['#','E','D','C'], ['$','R','F','V','%','T','G','B'], 
@@ -83,7 +83,7 @@ def Calchoice(Answer):
                                 break
                             #------------เมื่อตัวก่อนหน้าเป็น spacebar------------#
                             elif text[z-1].isspace():
-                                totaltime += timeSpacbar
+                                totaltime += timeText
                                 break
                             #------------เมื่อตัวก่อนหน้าอยู่ใน Array TextNonShift------------#
                             elif text[z-1] in TextNonShift[Upper]:
@@ -113,7 +113,7 @@ def Calchoice(Answer):
                                 break         
                             #------------เมื่อตัวก่อนหน้าเป็น spacebar------------#
                             elif text[z-1].isspace():
-                                totaltime += timeSpacbar
+                                totaltime += timeText
                                 break
                             #------------เมื่อตัวก่อนหน้าอยู่ใน Array TextOnShift------------#
                             elif text[z-1] in TextOnShift[lower]:
@@ -195,8 +195,8 @@ def Calchoice(Answer):
                                     break
         else:
             countThai = len(text)
-            totaltime += (countThai*0.2)
+            totaltime += (countThai*1500)
     # print(text[z],'เวลาที่ได้ %.4f'%(totaltime),"นาที")
-    timeAvg = ('%.3f'%(totaltime))
+    timeAvg = ('%.3f'%(totaltime/1000))
     return timeAvg
         

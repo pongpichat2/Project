@@ -890,9 +890,9 @@
         var Game3 = document.getElementById('myChart3').getContext('2d');
 
         var ShowData = $.get('/dataChart');
-        
+
         ShowData.done(function(result){
-            
+ 
             new Chart(Game3, {
                 type: 'line',
                 data: {

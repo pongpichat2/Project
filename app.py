@@ -24,8 +24,6 @@ app = Flask(__name__,template_folder='template')
 app.secret_key = "hello"
 
 
-
-
 @app.route("/")
 def Login():
 
@@ -70,21 +68,39 @@ def Register():
 
         CheckMember = db.child('Admin').get().val()
 
+        CheckSubject = db.child('All_Subject').get().val()
             # การเช็คว่า มี Username ซ้ำ
+        
         if Username in CheckMember :
             Usernamerepea = "Already have a user account"
             return render_template('Login.html' , Usernamerepea = Usernamerepea)
+        
         else:
+            
             db.child("Admin").child(Username).set({"Username":Username,"Password":Pass,"Co_Pass": Co_pass,"Email":Email})
 
                 # การบันทึก Subject หลายๆค่า หรือค่าเดียว
             if (len(Sub) == 1 ):
-                db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
+                
+                if Sub[0] in CheckSubject:
+                    Suberror = "Adding Subject Error"
+                    db.child("Admin").child(Username).remove()
+                    return render_template('Login.html' , Suberror = Suberror)
+                else:
+                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
+                    db.child("All_Subject").child(Sub[0]).set({"owner":Username})
             else:
-                for i in range(len(Sub)) :
-                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
-                session['Admin'] = Username
-                return redirect(url_for('Home'))
+                for i in range(len(Sub)):
+                    if Sub[i] in CheckSubject:
+                        Suberror = Sub[i]+" Adding Subject Error please Login"
+                        return render_template('Login.html' , Suberror = Suberror)
+                    else:
+                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
+                        db.child("All_Subject").child(Sub[i]).set({"owner":Username})
+            session['Admin'] = Username
+            session['EmailAdmin'] =Email
+            return redirect(url_for('Home'))
+
 
 
 @app.route("/Home")
@@ -160,7 +176,7 @@ def insertChoice():
         if checkdata == None:
             db.child('Class').child(subject).child("NO1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
             # db.child("Subject").child(subject).child("Quiz").child("NO_1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
-            db.child('Class').child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
+            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
         else:
             countDataQuiz = str(len(db.child('Class').child(subject).get().val())+1)
             db.child('Class').child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
@@ -545,7 +561,11 @@ def AddSub_allPage():
         Subindata = "มีอยู่แล้วในฐานข้อมูล"
         for i in range(len(AddSub)) :
             CheckSubject = db.child('Admin').child(Admin).child("Subject_pro").get()
+            CheckSubjectAll = db.child('Class').get()
             if AddSub[i] in CheckSubject.val():
+                SubError = "วิชา : "+AddSub[i]+" "+Subindata
+                return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, ErrorSub = SubError)
+            if AddSub[i] in CheckSubjectAll.val():
                 SubError = "วิชา : "+AddSub[i]+" "+Subindata
                 return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, ErrorSub = SubError)
             else:
