@@ -812,5 +812,6 @@ def Logout():
     return redirect(url_for('Login'))
 
 if __name__ == "__main__":
+    #asdasd
     app.run(debug=True)
 
