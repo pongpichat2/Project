@@ -631,7 +631,7 @@ def ChangePass_allPage_Admin():
 @app.route("/Register", methods=['GET','POST'])
 def Register():
     if request.method == 'POST':
-
+        EmailAdmin = session['EmailAdmin']
         Username = request.form['Username']
         Pass = request.form['Password']
         Co_pass = request.form['Con_Pass']
@@ -645,7 +645,7 @@ def Register():
         
         if Username in CheckMember :
             Usernamerepea = "Already have a user account"
-            return render_template('Login.html' , Usernamerepea = Usernamerepea)
+            return render_template('AddTeacher.html',name = EmailAdmin, Usernamerepea = Usernamerepea)
         
         else:
             
@@ -657,7 +657,7 @@ def Register():
                 if Sub[0] in CheckSubject:
                     Suberror = "Adding Subject Error"
                     db.child("Admin").child(Username).remove()
-                    # return render_template('Login.html' , Suberror = Suberror)
+                    return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
                 else:
                     db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
                     db.child("All_Subject").child(Sub[0]).set({"owner":Username})
@@ -665,7 +665,7 @@ def Register():
                 for i in range(len(Sub)):
                     if Sub[i] in CheckSubject:
                         Suberror = Sub[i]+" Adding Subject Error please Login"
-                        # return render_template('Login.html' , Suberror = Suberror)
+                        return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
                     else:
                         db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
                         db.child("All_Subject").child(Sub[i]).set({"owner":Username})

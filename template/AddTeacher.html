@@ -20,7 +20,7 @@
     background-image: url('/static/image/G12Wall.jpg');
     background-size: 100% 100%;
     background-position: center;
-    height: 100%;
+    height: 100vh;
     margin: 0;
     /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
     
@@ -29,7 +29,7 @@
     background-color: rgba(255, 255, 255, 0.9);
     margin: 3% 20%;
     width:700px;
-    height: 630px;
+
     border:rgb(0, 0, 0, 0.8) solid 2px;
     border-radius: 20px;
     box-shadow: 0 0 20px
@@ -76,6 +76,92 @@
 .Select-Langua select{
   width:45px;
     }
+  .AddTeacher {
+    margin-left: 35px;
+  }
+  .AddTeacher p{
+    font-size: 20px;
+    font-family: 'Odibee Sans', cursive;
+  }
+  .AddTeacher input[type="text"], input[type="password"], input[type="email"]{
+    width: 90%;
+    text-align: center;
+    border: 2px solid black;
+    font-family: 'Odibee Sans', cursive;
+    transition: 0.8s;
+  }
+  .AddTeacher input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus{
+    height: 40px;
+    font-size: 25px;
+    box-shadow: 0 0 15px green;
+  }
+  .AddTeacher .but-add{
+          border: black 2px solid;
+          font-weight: bold;
+          background: rgba(63, 63, 206, 0.658);
+          margin-left: 10px;
+          transition: 0.8s;
+        }
+        .AddTeacher .but-add:hover{
+          border-radius: 10px;
+          background: rgb(9, 99, 24);
+        }
+        .AddTeacher .but-Delete{
+          border: black 2px solid;
+          font-weight: bold;
+          background: rgba(255, 0, 34, 0.658);
+          margin-left: 10px;
+          margin-top: 10px;
+          transition: 0.8s;
+        }
+        .AddTeacher .but-Delete:hover{
+          background: brown;
+          border-radius: 10px;
+        }
+        .AddTeacher #new_chq .Subject-more{
+          width: 150px;
+          margin-left: 15px;
+        }
+        .AddTeacher .container-but{
+          margin-top: 20px;
+          margin-left: 200px;
+        }
+        .AddTeacher .container-but .but-Submit{
+          background-color: white;
+          width: 120px;
+          height: 50px;
+          border: rgb(40, 133, 21) solid 1.5px;
+          color: rgb(28, 168, 0);
+          transition: 0.8s;
+          border-radius: 25px;
+          font-size: 20px;
+          font-weight: bold;
+          font-family: 'Odibee Sans', cursive;
+        }
+        .AddTeacher .container-but .but-Submit:hover{
+          background-color: rgba(12, 173, 52, 0.726);
+          border: rgb(59, 190, 33) solid 1.5px;
+          color: rgb(255, 255, 255);
+        }
+        .AddTeacher .container-but .BTReset{
+          background-color: white;
+          width: 120px;
+          height: 50px;
+          border: rgb(236, 69, 69) solid 1.5px;
+          color: rgb(248, 0, 0);
+          transition: 0.8s;
+          border-radius: 25px;
+          font-size: 20px;
+          font-weight: bold;
+          font-family: 'Odibee Sans', cursive;
+        }
+        .AddTeacher .container-but .BTReset:hover{
+          background-color: rgba(255, 0, 0, 0.726);
+          border: rgba(255, 0, 0, 0.726) solid 1.5px;
+          color: rgb(255, 255, 255);
+        }
+
+
 </style>
 <script>
   $(document).ready(function(){
@@ -83,7 +169,7 @@
       var langua = document.getElementById('select-langua-Op').value;
 
       if(langua == 'TH'){
-        window.location.href = "/Addchoice_TH";
+        window.location.href = "";
       }
     });
     
@@ -92,7 +178,7 @@
   var i=1;
     function add(){
         i++;
-        var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]'  required><button type='button' class='but-Delete' onclick='remove();' id='Subbut_"+i+"'>x</button>";
+        var new_input="<input type='text' class='Subject-more' id='Sub_"+i+"' name='Sub[]' placeholder='Please enter Subject' required ><button type='button' class='but-Delete' onclick='remove();' id='Subbut_"+i+"'>x</button>";
         $('#new_chq').append(new_input);
         $('#total_chq').val(i)
     }
@@ -117,115 +203,56 @@
             document.getElementById("recipient-name-pass").focus();
             return false;
           }
-          if (username == "" || username == null) {
+          else if (username == "" || username == null) {
                 alert("กรุณากรอก Username ด้วยครับ!! ");
                 document.getElementById("recipient-name-username").focus();
                 return false;
           }
-          if (Pass == "" || Pass == null) {
+          else if (Pass == "" || Pass == null) {
                 alert("กรุณากรอก Password ด้วยครับ!! ");
                 document.getElementById("recipient-name-pass").focus();
                 return false;
           }
-          if (Con_Pass == "" || Con_Pass == null) {
+          else if (Con_Pass == "" || Con_Pass == null) {
                 alert("กรุณากรอก Confirm Password ด้วยครับ!! ");
                 document.getElementById("recipient-name-Conpass").focus();
                 return false;
           }
-          if (email== "" || email == null) {
+          else if (email== "" || email == null) {
                 alert("กรุณากรอก Email ด้วยครับ!! ");
                 document.getElementById("recipient-name-email").focus();
                 return false;
           }
-          if (Subone== "" || Subone == null) {
+          else if (Subone== "" || Subone == null) {
                 alert("กรุณากรอก Subject ด้วยครับ!! ");
                 document.getElementById("Sub_1").focus();
                 return false;
           }
-          swal({
+          else{
+            swal({
             title: "Add Teacher Success!",
             text: "You clicked the button!",
             icon: "success",
+            });
 
-          });
+          }
         }
-</script><script>
-  $(document).ready(function(){
-    $('.select-langua-Op').change(function(){
-      var langua = document.getElementById('select-langua-Op').value;
+    function Co_Delete(){
 
-      if(langua == 'TH'){
-        window.location.href = "/Addchoice_TH";
-      }
-    });
-    
-  
-  });
-  var i=1;
-    function add(){
-        i++;
-        var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]'  required><button type='button' class='but-Delete' onclick='remove();' id='Subbut_"+i+"'>x</button>";
-        $('#new_chq').append(new_input);
-        $('#total_chq').val(i)
+    return confirm("คุณต้องการลบวิชาใช่หรือไม่ ?");
     }
-    function remove(){
-        var last_chq_no = $('#total_chq').val();
-        if(last_chq_no>0){
-        $('#Sub_'+last_chq_no).remove();
-        $('#Subbut_'+last_chq_no).remove();
-        $('#br_'+last_chq_no).remove();
-        $('#total_chq').val(last_chq_no-1);
-        }
-    }
-    function CheckRegister(){
-          var Pass = document.forms["Regis"]["Password"].value;
-          var Con_Pass = document.forms["Regis"]["Con_Pass"].value;
-          var username = document.forms["Regis"]["Username"].value;
-          var email = document.forms["Regis"]["Email"].value;
-          var Subone = document.getElementById('Sub_1').value;
 
-          if(Pass != Con_Pass){
-            alert("รหัสผ่านในการสมัครไม่ตรงกันโปรดตรวจสอบ")
-            
-            document.getElementById("recipient-name-pass").focus();
+    function Co_Pass(){
+      var Pass_Af = document.getElementById('Pass_After').value;
+      var Pass_Co = document.getElementById('CoPass_After').value;
+        if(Pass_Af != Pass_Co){
+            alert("โปรดเช็ครหัสผ่านใหม่ไม่เข้ากันโปรดเช็ค !!")
             return false;
-          }
-          if (username == "" || username == null) {
-                alert("กรุณากรอก Username ด้วยครับ!! ");
-                
-                document.getElementById("recipient-name-username").focus();
-                return false;
-          }
-          if (Pass == "" || Pass == null) {
-                alert("กรุณากรอก Password ด้วยครับ!! ");
-                
-                document.getElementById("recipient-name-pass").focus();
-                return false;
-          }
-          if (Con_Pass == "" || Con_Pass == null) {
-                alert("กรุณากรอก Confirm Password ด้วยครับ!! ");
-                
-                document.getElementById("recipient-name-Conpass").focus();
-              return false;
-          }
-          if (email== "" || email == null) {
-                alert("กรุณากรอก Email ด้วยครับ!! ");
-                document.getElementById("recipient-name-email").focus();
-              return false;
-          }
-          if (Subone== "" || Subone == null) {
-                alert("กรุณากรอก Subject ด้วยครับ!! ");
-                document.getElementById("Sub_1").focus();
-              return false;
-          }
-          swal({
-          title: "Add Teacher Success!",
-          text: "You clicked the button!",
-          icon: "success",
-
-        });
         }
+
+    }
 </script>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -307,6 +334,17 @@
         </div>
       </div>
     </div>
+    {% if Usernamerepea %}
+    <div class="alert alert-danger alert-dismissible fade show" style="top: 0; width: 100%; position: absolute;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Add Member Error ! </strong>  There is a professor already in the system
+  </div>
+  {% elif Suberror %}
+    <div class="alert alert-danger alert-dismissible fade show" style="top: 0; width: 100%; position: absolute;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Subject Error ! </strong> {{Suberror}}
+  </div>
+  {% endif %}
 
     <div class="container">
              
@@ -316,23 +354,24 @@
                 <h1 style="text-align: center; font-family: 'Odibee Sans', cursive; font-size: 45px; margin: 10px;"> Add Teacher</h1>
             </div>
             
-            <div class="AddQuiz">
+            <div class="AddTeacher">
                 <!-- <form action="" method="POST" name="AddTeacher" > -->
 
                     <form action="/Register" name="Regis" method="POST">
                             
-                        <p>Username : <br><input type="text"  name="Username" id="recipient-name-username" pattern="[A-Z,a-z,0-9]{8,}" title="Username is 8 characters or more."></p>
-                        <p>Password : <br><input type="password" name="Password" id="recipient-name-pass" pattern="[A-Z,a-z,0-9]{8,}" title="Password is 8 characters or more."></p>
-                        <p>Co-Password : <br><input type="password" name="Con_Pass" id="recipient-name-Conpass"></p>
-                        <p>E-mail : <br><input type="email"  name="Email" id="recipient-name-email"></p>
+                        <p>Username : <br><input type="text"  name="Username" id="recipient-name-username" placeholder="Please enter Username" pattern="[A-Z,a-z,0-9]{8,}" title="Username is 8 characters or more."></p>
+                        <p>Password : <br><input type="password" name="Password" id="recipient-name-pass" placeholder="Please enter Password" pattern="[A-Z,a-z,0-9]{8,}" title="Password is 8 characters or more."></p>
+                        <p>Co-Password : <br><input type="password" name="Con_Pass" id="recipient-name-Conpass" placeholder="Please enter Co-Password"></p>
+                        <p>E-mail : <br><input type="email"  name="Email" id="recipient-name-email" placeholder="Please enter E-mail"></p>
 
-                        <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" class="but-add" onclick="add()">+</button></p>
+                        <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]" placeholder="Please enter Subject"> <button type="button" class="but-add" onclick="add()">+</button></p>
                         <div id="new_chq"> </div>
                         <input type="hidden" value="1" id="total_chq">
                       
-                          <button type="submit" onclick="return CheckRegister()">Submit</button>
+                        <div class="container-but">
+                          <button type="submit" class="but-Submit" onclick="return CheckRegister()">Submit</button>
                           <button type="reset" class="BTReset">Reset</button>
-                        
+                        </div>
                     </form>
 
                 <!-- </form> -->
