@@ -7,7 +7,7 @@ def Calchoice(Answer):
     timedistance = 500 #เวลาของระยะห่างต่อ 1 จุด
     timeSpacbar = 1000 #เวลาของ Spacbar
     timetextnumber = 1000 #เวลาของตัวเลข
-    timeDuplicate = 1000 #เวลาของตัวอักษรที่ซ้ำ
+    timeDuplicate = 200 #เวลาของตัวอักษรที่ซ้ำ
     totaltime = 0.0 #เวลาโดยรวม
 
     TextOnShift = [['!','Q','A','Z',], ['@','W','S','X'], ['#','E','D','C'], ['$','R','F','V','%','T','G','B'], 

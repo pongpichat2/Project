@@ -15,13 +15,17 @@
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
 
     <style>
         body{
           background-size: 100% 100%;
           background-position: center;
-          height: 130vh;
+          height: 150vh;
           margin: 0 0;
           background-image: url('/static/image/G4Wall.png');
         }
@@ -29,7 +33,7 @@
           color: white;
           text-align: center;
           width: 200px;
-          height: 40px;
+          height: 25px;
           font-size: 20px;
           background: rgba(219, 30, 172, 0.93);
           border-collapse: collapse;
@@ -61,27 +65,45 @@
           background:linear-gradient(135deg,  rgb(36, 125, 226) 30%, rgb(36, 125, 226));
         }
         .ShowStatus{
-            margin: 3% 3%;
-            width: 1300px;
+            margin: 10px 23%;
+
             /* background: rgba(160, 75, 75, 0.527); */
             position: absolute;
             /* border: black solid 2px; */
         }
         .title-text-Name{
-          background: rgba(139, 139, 139, 0.781);
+          background: rgba(168, 168, 168, 0.466);
           position: absolute;
           text-align: center;
-          margin-left:550px;
-          width: 400px;
-          height: 120px;
+          font-size: 28px;
+          margin-left:900px;
+
+          height: 150px;
           border: 2px solid black;
           border-radius: 20px;
           
         }
+        .ShowName-Mem{
+          box-shadow: 0 0 15px black;
+          margin-top: 20px;
+          margin-left: 20px;
+          width: 600px;
+          border: black 2px solid;
+          background: rgba(255, 255, 255, 0.541);
+        }
         .container-table{
           margin-top: 20px;
-          margin-left: 570px;
+          margin-left: 20px;
+          width: 90%;
+          
+        }.ShowStatus{
+            margin: 10px 23%;
+
+            /* background: rgba(160, 75, 75, 0.527); */
+            position: absolute;
+            /* border: black solid 2px; */
         }
+        
         .Show-chart{
           margin-top: 150px;
         }
@@ -791,7 +813,7 @@
                     <input type="hidden" value="1" id="total_chq">
                   <div class="modal-footer" >
                       <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
-                      <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
+                      <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;" onclick="return btu_Success();">เพิ่ม</button>
                   </div>
               </form>
               </div>
@@ -839,65 +861,61 @@
       </div>
 
     <!-- รายชื่อ Member ที่อยู่ในรายวิชา -->
+    <div class="ShowData">
+      <div class="title-text-Name">
+        <h2>{{SubName}}</h2>
+        <p>E-mail : {{email}} <br> Name : {{NAME}} </p>
+      </div>
+
+      <div class="ShowStatus">
+ 
+        <div class="Show-chart">
+
+            <div class="container-chart3">
+              <h5>Adventures</h5>
+              <div class="chart-container3" style="margin-top: 40px;">
+                  <canvas id="myChart3"></canvas>
+                </div>
+            </div>
+  
+        </div>
+    </div>
+
     <div class="ShowName-Mem">
       <div class="container-table">
-        <table class="table-ShowName-Mem">
+        <table class="table-ShowName-Mem" id="example">
             <thead>
                 <tr>
                     <td> Email </td>
-                    <td> ชื่อ </td>
+                    <td> Name </td>
+                    <td> Action </td>
                 </tr>
             </thead>
             <tbody>
                 {% for Member in ShowData.each() %}
-                <form action="/ShowEvo_TH" method="POST">
+                
                     <tr>
-                        <td class="data"><input type="text" value="{% print(Member.val()['Email'])%}" name="email" readonly></td>
-                        <td class="data"><input type="text" value="{%print(Member.val()['Name'])%}" name="Name" readonly></td>
-                        <td ><button type="submit" value="{%print(Member.key())%}" name="Username">ดู <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
-                    </tr>
-                </form>
+                      <form action="/ShowEvo" method="POST">
+                        {% if (Member.val()['Email'] == email)%}
+                        <td class="data" style="background: rosybrown;">{% print(Member.val()['Email'])%}</td>
+                        <td class="data" style="background: rosybrown;">{%print(Member.val()['Name'])%}</td>
+                        <td class="data" style="width: 100px; text-align: center; background: rosybrown;"><button type="submit" value="{%print(Member.key())%}" name="Username">View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                        {% else %}
+                        <td class="data">{% print(Member.val()['Email'])%}</td>
+                        <td class="data">{%print(Member.val()['Name'])%}</td>
+                        <td class="data" style="width: 100px; text-align: center;"><button type="submit" value="{%print(Member.key())%}" name="Username">View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                        {% endif %}
+                      </form>
+                      </tr>
+                
 
                 {% endfor %}
             </tbody>
         </table>
       </div>
     </div>
-
-    <form action="/Development" method="POST">
-        
-    <div class="ShowStatus">
-      <div class="title-text-Name">
-        <h2>{{SubName}}</h2>
-        <p>E-mail : {{email}} <br> ชื่อ : {{NAME}} </p>
-      </div>
-
-    </form>
-
-      <div class="Show-chart">
-          <!-- <div class="container-chartOne">
-            <h5>Type the Alphabet</h5>
-            <div class="chart-container1" style="margin-top: 40px;">
-                <canvas id="myChart1"></canvas>
-            </div>
-          </div>
-
-          <div class="container-charttwo">
-            <h5>Shoot Word</h5>
-            <div class="chart-container2" style="margin-top: 40px;">
-                <canvas id="myChart2"></canvas>
-            </div>
-          </div> -->
-
-          <div class="container-chart3">
-            <h5>Adventures</h5>
-            <div class="chart-container3" style="margin-top: 40px;">
-                <canvas id="myChart3"></canvas>
-              </div>
-          </div>
-
-      </div>
   </div>
+
 
     <script>
 
@@ -1053,13 +1071,13 @@
   $(document).ready(function(){
     
       $(".Box-Animation").show();
-      $(".ShowStatus").hide();
+      $(".ShowData").hide();
       setTimeout(function(){
         $(".But-edit").addClass("Success");
 
       }, 3700);
       setTimeout(function(){
-        $(".ShowStatus").show();
+        $(".ShowData").show();
         $(".Box-Animation").hide();
         
       }, 4000)
@@ -1072,6 +1090,28 @@
       }
     });
   });
+  $(document).ready(function(){
+    $('#example').DataTable();
+    // $('#ShowDetil').DataTable();
+    
+  });
+  function btu_Success(){
+    var Sub = document.getElementById('Sub_1').value;
+    if(Sub == "" || Sub == null){
+      alert("กรุณากรอกวิชาที่ต้องการเพิ่มด้วยครับ !!")
+      return false;
+
+      
+    }
+    swal({
+      title: "Add Subject Success!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "OK!",
+    });
+ 
+    
+  }
 
    
 

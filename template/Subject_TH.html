@@ -13,7 +13,9 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/AddSub.css') }}">
 
@@ -82,16 +84,16 @@
         }
         .Show-Detil-Quiz{
           /* border: 2px solid black; */
-          width: 1300px;
+          width: 1500px;
           margin-top: 30px ;
-          margin-left: 150px ;
+          margin-left: 50px ;
           font-family: 'Sarabun', sans-serif;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz thead th{
           text-align: center;
           border: 2px solid black;
           background: rgba(78, 150, 78, 0.905);
-          height: 30px;
+          height: 25px;
           font-size: 20px;
           font-family: 'Sarabun', sans-serif;
         }
@@ -106,7 +108,7 @@
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']{
           width: 120px;
-          height: 35px;
+          height: 25px;
           text-align: center;
           border-collapse: collapse;
           background: none;
@@ -114,12 +116,12 @@
           transition: 0.8s;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']:hover{
-          width: 180px;
+
           font-size: 18px;
           color: white;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']:focus{
-          width: 200px;
+
           font-size: 18px;
           color: white;
           background: rgba(44, 43, 43, 0.968);
@@ -470,6 +472,12 @@
     });
 
   });
+  $(document).ready(function(){
+    $('#example').DataTable();
+    // $('#ShowDetil').DataTable();
+    
+  });
+
 
 
     </script>
@@ -602,11 +610,12 @@
           </div>
         </div>
       </div>
-      <table class="Select-Sub">
+      <table class="Select-Sub" >
           <thead>
               <tr>
                   <th class="title-Select-Sub">ชื่อรายวิชา</th>
                   <th class="title-Select-Sub">จำนวนข้อ</th>
+                  <th class="title-Select-Sub">Action</th>
               </tr>
           </thead>
           <tbody>
@@ -615,7 +624,7 @@
               <tr>
                   <td class="detil-Select-Sub"> <input type="text" value="{%print(k.key())%}" name="Subname" readonly></td>
                   <td class="detil-Select-Sub"> {% print(k.val()['DataNum']) %}</td>
-                  <td> <button type="Submit" >View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                  <td class="detil-Select-Sub"> <button type="Submit" >View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
               </tr>
               </form>
               {% endfor %}
@@ -631,10 +640,11 @@
         {% elif haveData %}
         <div class="Show-Detil-Quiz">
               <h1 style="margin-left: 500px; font-weight: bold;">{{Headtext}}</h1>
-              <table class="table-Show-Detil-Quiz">
+              <div style="width: 90%;">
+              <table class="table-Show-Detil-Quiz" id="example">
                   <thead>
                   <tr>
-                  
+                      <th>NO.</th>
                       <th >โจทย์ ?</th>
                       <th> ตัวเลือกที่ 1</th>
                       <th >ตัวเลือกที่ 2</th>
@@ -642,6 +652,7 @@
                       <th >ตัวเลือกที่ 4</th>
                       <th style="color: red;">คำตอบก่อนหน้า</th>
                       <th>คำตอบที่แก้ไข</th>
+                      <th>Action</th>
 
                   </tr>
               </thead>
@@ -650,6 +661,7 @@
 
                   <form action="/Sub_Update" method="POST">
                       <tr>
+                        <td>{%print(k.val()['ID'])%}</td>
                           <td class="No" style="display: none;"><input type="text" value="{%print(k.val()['ID'])%}" readonly name="NO_Sub"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
@@ -659,8 +671,11 @@
                           <td class=""><input type="text" value="{%print(k.val()['ans'])%}" readonly style="color: red; text-align: center; border: none; background: none;"></td>
                           <td class="Data" style="font-size: 10px; font-weight: bold;"><input type="radio" id="Answer" name="Answer" value="1">ตัวเลือกที่ 1 <input type="radio" id="Answer" name="Answer" value="2">
                             ตัวเลือกที่ 2<input type="radio" name="Answer" id="Answer" value="3">ตัวเลือกที่ 3<input type="radio" name="Answer" id="Answer" value="4">ตัวเลือกที่ 4</td>
-                          <td style="border: none;  background: none;" ><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">แก้ไข <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button></td>
-                          <td style="border: none; background: none;" > <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">ลบ<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
+                          <td class="Data" >
+                            <button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">แก้ไข <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button>
+                            <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">ลบ<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button>
+                          </td>
+                         
                       </tr>
                   </form>
 
@@ -671,6 +686,8 @@
               
           </table>
         </div>
+        </div>
+      
         {% else %}
         <div class="Show-Quiz">
             <h1 style="text-align: center; margin-top: 150px; font-size: 60px;font-weight: bold; color: white;" >กรุณาเลือกรายวิชาที่ต้องการแสดงคำถาม .</h1>

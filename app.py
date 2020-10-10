@@ -43,9 +43,12 @@ def CheckLogin():
             if ref.val()['Password'] == Password :
                 session['Admin'] = Username
                 session['EmailAdmin'] = ref.val()['Email']
-                    # print(session['User'])
-                    # print('Go to Page Home')
-                return redirect(url_for("Home"))
+                Status = ref.val()['Status']
+                if Status == 'teacher':
+
+                    return redirect(url_for("Home"))
+                else:
+                    return redirect(url_for("HomeAdmin"))
             else:
                 ErrorPass = "Password Error check password please !"
                 return render_template('Login.html' , ErrorPass = ErrorPass)
@@ -53,54 +56,6 @@ def CheckLogin():
             ErrorUsername = "Username Error check Username please !"
             return render_template('Login.html' , ErrorUser = ErrorUsername)
     return redirect(url_for('Login'))
-
-
-
-@app.route("/Register", methods=['GET','POST'])
-def Register():
-    if request.method == 'POST':
-
-        Username = request.form['Username']
-        Pass = request.form['Password']
-        Co_pass = request.form['Con_Pass']
-        Email = request.form['Email']
-        Sub = request.form.getlist('Sub[]')
-
-        CheckMember = db.child('Admin').get().val()
-
-        CheckSubject = db.child('All_Subject').get().val()
-            # การเช็คว่า มี Username ซ้ำ
-        
-        if Username in CheckMember :
-            Usernamerepea = "Already have a user account"
-            return render_template('Login.html' , Usernamerepea = Usernamerepea)
-        
-        else:
-            
-            db.child("Admin").child(Username).set({"Username":Username,"Password":Pass,"Co_Pass": Co_pass,"Email":Email})
-
-                # การบันทึก Subject หลายๆค่า หรือค่าเดียว
-            if (len(Sub) == 1 ):
-                
-                if Sub[0] in CheckSubject:
-                    Suberror = "Adding Subject Error"
-                    db.child("Admin").child(Username).remove()
-                    return render_template('Login.html' , Suberror = Suberror)
-                else:
-                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
-                    db.child("All_Subject").child(Sub[0]).set({"owner":Username})
-            else:
-                for i in range(len(Sub)):
-                    if Sub[i] in CheckSubject:
-                        Suberror = Sub[i]+" Adding Subject Error please Login"
-                        return render_template('Login.html' , Suberror = Suberror)
-                    else:
-                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
-                        db.child("All_Subject").child(Sub[i]).set({"owner":Username})
-            session['Admin'] = Username
-            session['EmailAdmin'] =Email
-            return redirect(url_for('Home'))
-
 
 
 @app.route("/Home")
@@ -112,6 +67,16 @@ def Home():
         EmailAdmin = session['EmailAdmin']
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
         return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject)
+
+@app.route("/HomeAdmin")
+def HomeAdmin():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
+        Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
+        return render_template('HomeAdmin.html',name = EmailAdmin ,DataSubject = Admin_Subject)
 
 @app.route("/Home_TH")
 def Home_TH():
@@ -182,6 +147,45 @@ def insertChoice():
             db.child('Class').child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
             db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
         return redirect(url_for('hello'))
+
+# Insert คำถามลงใน Database #
+@app.route("/insertChoice_TH", methods=['GET','POST'])
+def insertChoice_TH():
+    user = session['Admin']
+
+    if request.method == "POST":
+        subject = request.form['Subject']
+        Propo = request.form['Proposition']
+        choice1 = request.form['Ch1']
+        choice2 = request.form['Ch2']
+        choice3 = request.form['Ch3']
+        choice4 = request.form['Ch4']
+        Answer = request.form['Answer']
+
+        if Answer == 'Answer1':
+            Answer = choice1
+        elif Answer == 'Answer2':
+            Answer = choice2
+        elif Answer == 'Answer3':
+            Answer = choice3
+        elif Answer == 'Answer4':
+            Answer = choice4
+
+        Avgtime = Cal.Calchoice(Answer)
+        
+        checkdata = db.child('Class').child(subject).get().val()
+        # checkdata = db.child("Subject").child(subject).child("Quiz").get().val()
+        
+        if checkdata == None:
+            db.child('Class').child(subject).child("NO1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
+            # db.child("Subject").child(subject).child("Quiz").child("NO_1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
+            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
+        else:
+            countDataQuiz = str(len(db.child('Class').child(subject).get().val())+1)
+            db.child('Class').child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
+            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
+        return redirect(url_for('Addchoice_TH'))
+
 
 @app.route("/Subject", methods=['GET','POST'])
 def Subject():
@@ -555,6 +559,7 @@ def DeleteSub_allPage():
 @app.route("/AddSub_allPage", methods=['GET','POST'])
 def AddSub_allPage():
     Admin = session['Admin']
+    EmailAdmin = session['EmailAdmin']
     Admin_Subject = db.child('Admin').child(Admin).child('Subject_pro').get()
     if request.method == 'POST':
         AddSub = request.form.getlist('Sub[]')
@@ -564,10 +569,10 @@ def AddSub_allPage():
             CheckSubjectAll = db.child('Class').get()
             if AddSub[i] in CheckSubject.val():
                 SubError = "วิชา : "+AddSub[i]+" "+Subindata
-                return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, ErrorSub = SubError)
+                return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, ErrorSub = SubError)
             if AddSub[i] in CheckSubjectAll.val():
                 SubError = "วิชา : "+AddSub[i]+" "+Subindata
-                return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, ErrorSub = SubError)
+                return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, ErrorSub = SubError)
             else:
                 db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0"})
 
@@ -576,6 +581,7 @@ def AddSub_allPage():
 @app.route("/ChangePass_allPage", methods=['GET','POST'])
 def ChangePass_allPage():
     Admin = session['Admin']
+    EmailAdmin = session['EmailAdmin']
     Admin_Subject = db.child('Admin').child(Admin).child('Subject_pro').get()
     if request.method == 'POST':
         Pass_Be = request.form['Pass_Before']
@@ -585,58 +591,104 @@ def ChangePass_allPage():
         if Data.val()['Password'] == Pass_Be:
             db.child('Admin').child(Admin).update({"Password":Pass_Af,"Co_Pass":Pass_co})
             SuccessPass = "Success"
-            return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, SuccessPass = SuccessPass)
+            return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, SuccessPass = SuccessPass)
         else:
             ChangeError = "รหัสผ่านผิด"
-            return render_template('Home.html',name = Admin ,DataSubject = Admin_Subject, Error = ChangeError)
+            return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, Error = ChangeError)
 
     return redirect(url_for('Home'))
 
-@app.route("/dataChart")
-def DataChart():
+@app.route("/AddTeacher", methods=['GET','POST'])
+def AddTeacher():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
+
+        return render_template('AddTeacher.html',name = EmailAdmin)
+
+@app.route("/ChangePass_allPage_Admin", methods=['GET','POST'])
+def ChangePass_allPage_Admin():
+    Admin = session['Admin']
+    EmailAdmin = session['EmailAdmin']
+    Admin_Subject = db.child('Admin').child(Admin).child('Subject_pro').get()
+    if request.method == 'POST':
+        Pass_Be = request.form['Pass_Before']
+        Pass_Af = request.form['Pass_After'] 
+        Pass_co = request.form['CoPass_After']
+        Data = db.child('Admin').child(Admin).get()
+        if Data.val()['Password'] == Pass_Be:
+            db.child('Admin').child(Admin).update({"Password":Pass_Af,"Co_Pass":Pass_co})
+            SuccessPass = "Success"
+            return render_template('HomeAdmin.html',name = EmailAdmin ,DataSubject = Admin_Subject, SuccessPass = SuccessPass)
+        else:
+            ChangeError = "รหัสผ่านผิด"
+            return render_template('HomeAdmin.html',name = EmailAdmin ,DataSubject = Admin_Subject, Error = ChangeError)
+
+    return redirect(url_for('HomeAdmin'))
+
+@app.route("/Register", methods=['GET','POST'])
+def Register():
+    if request.method == 'POST':
+
+        Username = request.form['Username']
+        Pass = request.form['Password']
+        Co_pass = request.form['Con_Pass']
+        Email = request.form['Email']
+        Sub = request.form.getlist('Sub[]')
+
+        CheckMember = db.child('Admin').get().val()
+
+        CheckSubject = db.child('All_Subject').get().val()
+            # การเช็คว่า มี Username ซ้ำ
+        
+        if Username in CheckMember :
+            Usernamerepea = "Already have a user account"
+            return render_template('Login.html' , Usernamerepea = Usernamerepea)
+        
+        else:
+            
+            db.child("Admin").child(Username).set({"Username":Username,"Password":Pass,"Co_Pass": Co_pass,"Email":Email,"Status":"teacher"})
+
+                # การบันทึก Subject หลายๆค่า หรือค่าเดียว
+            if (len(Sub) == 1 ):
+                
+                if Sub[0] in CheckSubject:
+                    Suberror = "Adding Subject Error"
+                    db.child("Admin").child(Username).remove()
+                    # return render_template('Login.html' , Suberror = Suberror)
+                else:
+                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
+                    db.child("All_Subject").child(Sub[0]).set({"owner":Username})
+            else:
+                for i in range(len(Sub)):
+                    if Sub[i] in CheckSubject:
+                        Suberror = Sub[i]+" Adding Subject Error please Login"
+                        # return render_template('Login.html' , Suberror = Suberror)
+                    else:
+                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
+                        db.child("All_Subject").child(Sub[i]).set({"owner":Username})
+
+            # return redirect(url_for('Home'))
+    return redirect(url_for('AddTeacher'))
+
+@app.route("/DataChart_GameAlpha")
+def DataChart_GameAlpha():
     Member = session['Member']
-
-    SubjectRef = session['SubjectRef']
     DataRefGame1 = db.child('IntroGame').child('Alphabet').child(Member).child('score').get()
-    DataRefGame2 = db.child('IntroGame').child('ShootGame').child(Member).child('score').get()
-    DataRefGame3 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('AdventuresGame').get()
-
-        # Chart Member main 
+            # Chart Member main 
     DatachartGame1 = ['0']
-    DatachartGame2 = ['0']
-    DatachartGame3 = ['0']
-
-    # Sub_NameMem = db.child('Subject').child(SubjectRef).child('Member').child(Member).get()
-    # NameMember = Sub_NameMem.val()['Name']
+    arrayGame1 = []
+    AVG_Array = ['0',]
+    labels_G1 = ['0','1','2']
     if DataRefGame1.val() == None:
         DatachartGame1 = ['0']
     else:
         for G1 in DataRefGame1.each():
             
             DatachartGame1.append(G1.val()['Correct'])
-    if DataRefGame2.val() == None:
-        DatachartGame2 = ['0']
-    else:
-        for G2 in DataRefGame2.each():
-            DatachartGame2.append(G2.val()['score'])
-    if DataRefGame3.val() == None:
-        DatachartGame3 = ['0']
-    else:
-        for G3 in DataRefGame3.each():
-            
-            DatachartGame3.append(G3.val()['score'])
-
-    arrayGame1 = []
-    AVG_Array = ['0',]
-    arrayGame2 = []
-    AVG_Array2 = ['0',]
-    arrayGame3 = []
-    AVG_Array3 = ['0',]
-
-    labels_G1 = ['0','1','2']
-    labels_G2 = ['0','1','2']
-    labels_G3 = ['0','1','2']
-
+    
     # การหา AVG ของเกมที่1
     # คนที่ส่งเข้ามา เพื่อที่หาจำนวนครั้งในการเล่น
     if DataRefGame1.val() == None:
@@ -668,7 +720,7 @@ def DataChart():
         # T-mean
         for CountArray_1 in range(len(arrayGame1)):
             NumArray_1 = len(arrayGame1[CountArray_1])
-            if NumArray_1 <= 20 :
+            if NumArray_1 < 20 :
                 continue
             else:
                 sortArray_G1 = sorted(arrayGame1[CountArray_1])
@@ -683,15 +735,36 @@ def DataChart():
                         Cut_G1 = math.ceil(float(lengthCut_1))
                     else:
                         Cut_G1 = math.floor(float(lengthCut_1))
-                    for removeData_G1 in range(Cut_G1):
-                        arrayGame1[CountArray_1].remove(sortArray_G1[removeData_G1])
-                        arrayGame1[CountArray_1].remove(sortArray_G1[(removeData_G1+1)*-1])
+                    
+                    if Cut_G1 == 0:
+                        continue
+                    else:
+                        for removeData_G1 in range(Cut_G1):
+                            arrayGame1[CountArray_1].remove(sortArray_G1[removeData_G1])
+                            arrayGame1[CountArray_1].remove(sortArray_G1[(removeData_G1+1)*-1])
 
         for AVG in range(len(arrayGame1)):
             AVG_Score = '%.1f'%(sum(arrayGame1[AVG])/len(arrayGame1[AVG]))
     
             AVG_Array.append(AVG_Score)
 
+    return jsonify({'ChartDataGame1':DatachartGame1,'AVGGame1':AVG_Array,'Label_G1':labels_G1})
+
+@app.route("/DataChart_GameShoot")
+def DataChart_GameShoot():
+    Member = session['Member']
+    DataRefGame2 = db.child('IntroGame').child('ShootGame').child(Member).child('score').get()
+    DatachartGame2 = ['0']
+    arrayGame2 = []
+    AVG_Array2 = ['0',]
+    labels_G2 = ['0','1','2']
+
+    if DataRefGame2.val() == None:
+        DatachartGame2 = ['0']
+    else:
+        for G2 in DataRefGame2.each():
+            DatachartGame2.append(G2.val()['score'])
+    
     if DataRefGame2.val() == None:
         AVG_Array2 = ['0']
     else:
@@ -737,17 +810,43 @@ def DataChart():
                         Cut_G2 = math.ceil(float(lengthCut_2))
                     else:
                         Cut_G2 = math.floor(float(lengthCut_2))
-                    for removeData_G2 in range(Cut_G2):
-                        arrayGame2[CountArray_2].remove(sortArray_G2[removeData_G2])
-                        arrayGame2[CountArray_2].remove(sortArray_G2[(removeData_G2+1)*-1])
+                    if Cut_G2 == 0:
+                        continue
+                    else:
+                        for removeData_G2 in range(Cut_G2):
+                            arrayGame2[CountArray_2].remove(sortArray_G2[removeData_G2])
+                            arrayGame2[CountArray_2].remove(sortArray_G2[(removeData_G2+1)*-1])
 
         for AVG_G2 in range(len(arrayGame2)):
             AVG_Score_G2 = '%.1f'%(sum(arrayGame2[AVG_G2])/len(arrayGame2[AVG_G2]))
 
             AVG_Array2.append(AVG_Score_G2)
+        
+    return jsonify({'ChartDataGame2':DatachartGame2,'AVGGame2':AVG_Array2,'Label_G2':labels_G2})
+
+@app.route("/dataChart")
+def DataChart():
+    Member = session['Member']
+
+    SubjectRef = session['SubjectRef']
+
+    DataRefGame3 = db.child('Subject').child(SubjectRef).child('Member').child(Member).child('AdventuresGame').get()
+
+    DatachartGame3 = ['0']
 
 
-    # การหาคนที่ 3
+    if DataRefGame3.val() == None:
+        DatachartGame3 = ['0']
+    else:
+        for G3 in DataRefGame3.each():
+            
+            DatachartGame3.append(G3.val()['score'])
+
+    arrayGame3 = []
+    AVG_Array3 = ['0',]
+
+    labels_G3 = ['0','1','2']
+
 
     if DataRefGame3.val() == None:
         AVG_Array3 = ['0']
@@ -793,9 +892,13 @@ def DataChart():
                         Cut_G3 = math.ceil(float(lengthCut_3))
                     else:
                         Cut_G3 = math.floor(float(lengthCut_3))
-                    for removeData_G3 in range(Cut_G3):
-                        arrayGame3[CountArray_3].remove(sortArray_G3[removeData_G3])
-                        arrayGame3[CountArray_3].remove(sortArray_G3[(removeData_G3+1)*-1])
+                    
+                    if Cut_G3 == 0 :
+                        continue
+                    else:
+                        for removeData_G3 in range(Cut_G3):
+                            arrayGame3[CountArray_3].remove(sortArray_G3[removeData_G3])
+                            arrayGame3[CountArray_3].remove(sortArray_G3[(removeData_G3+1)*-1])
         
         for AVG_G3 in range(len(arrayGame3)):
             AVG_Score_G3 = '%.1f'%(sum(arrayGame3[AVG_G3])/len(arrayGame3[AVG_G3]))
@@ -803,8 +906,7 @@ def DataChart():
             AVG_Array3.append(AVG_Score_G3)
 
 
-    return jsonify({'ChartDataGame1':DatachartGame1,'ChartDataGame2':DatachartGame2,'ChartDataGame3':DatachartGame3,'AVGGame1':AVG_Array,'AVGGame2':AVG_Array2,'AVGGame3':AVG_Array3
-    ,'Label_G3':labels_G3,'Label_G2':labels_G2,'Label_G1':labels_G1})
+    return jsonify({'ChartDataGame3':DatachartGame3,'AVGGame3':AVG_Array3,'Label_G3':labels_G3})
 
 @app.route("/Logout")
 def Logout():

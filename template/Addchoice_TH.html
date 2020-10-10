@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 <style>
@@ -441,7 +442,13 @@ function checkdata(){
         alert("กรุณากรอกข้อมูล ANSWER ด้วยครับ !! ");
         return false;
     }
-
+    swal({
+      title: "Add Choice Success!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "Aww yiss!",
+    });
+  }
     var i=1;
     function add(){
     i++;
@@ -471,7 +478,24 @@ function checkdata(){
         }
 
   }
-}
+  function btu_Success(){
+    var Sub = document.getElementById('Sub_1').value;
+    if(Sub == "" || Sub == null){
+      alert("กรุณากรอกวิชาที่ต้องการเพิ่มด้วยครับ !!")
+      return false;
+
+      
+    }
+    swal({
+      title: "Add Subject Success!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "OK!",
+    });
+ 
+    
+  }
+
 $(document).ready(function(){
     $(".BTSubmit").click(function(){
       $(".Box-Animation").show();
@@ -558,7 +582,7 @@ $(document).ready(function(){
                   <input type="hidden" value="1" id="total_chq">
                 <div class="modal-footer" >
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;" onclick="return btu_Success();">เพิ่ม</button>
                 </div>
             </form>
             </div>
@@ -620,7 +644,7 @@ $(document).ready(function(){
             </div>
             
             <div class="AddQuiz">
-                <form action="{{ url_for('insertChoice') }}" method="POST" name="AddChoice" >
+                <form action="/insertChoice_TH" method="POST" name="AddChoice" >
                     <p style="font-weight: bold;">ชื่อรายวิชา : <br> <select name="Subject" id="Subject" class="Select">
                         {% for Sub in data.each() %}
                         <option value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>

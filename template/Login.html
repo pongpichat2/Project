@@ -157,44 +157,7 @@
                 return false;
             }
         }
-        function CheckRegister(){
-          var Pass = document.forms["Regis"]["Password"].value;
-          var Con_Pass = document.forms["Regis"]["Con_Pass"].value;
-          var username = document.forms["Regis"]["Username"].value;
-          var email = document.forms["Regis"]["Email"].value;
-          var Subone = document.getElementById('Sub_1').value;
-
-          if(Pass != Con_Pass){
-            alert("รหัสผ่านในการสมัครไม่ตรงกันโปรดตรวจสอบ")
-            document.getElementById("recipient-name-pass").focus();
-            return false;
-          }
-          if (username == "" || username == null) {
-                alert("กรุณากรอก Username ด้วยครับ!! ");
-                document.getElementById("recipient-name-username").focus();
-                return false;
-          }
-          if (Pass == "" || Pass == null) {
-                alert("กรุณากรอก Password ด้วยครับ!! ");
-                document.getElementById("recipient-name-pass").focus();
-                return false;
-          }
-          if (Con_Pass == "" || Con_Pass == null) {
-                alert("กรุณากรอก Confirm Password ด้วยครับ!! ");
-                document.getElementById("recipient-name-Conpass").focus();
-                return false;
-          }
-          if (email== "" || email == null) {
-                alert("กรุณากรอก Email ด้วยครับ!! ");
-                document.getElementById("recipient-name-email").focus();
-                return false;
-          }
-          if (Subone== "" || Subone == null) {
-                alert("กรุณากรอก Subject ด้วยครับ!! ");
-                document.getElementById("Sub_1").focus();
-                return false;
-          }
-        }
+        
 
     </script>
 </head>
@@ -248,7 +211,7 @@
                         <div class="modal-body">
                           <form action="/Register" name="Regis" method="POST">
                             
-                              <p>Username : <br><input type="text" class="form-control" id="recipient-name-username" name="Username"></p>
+                              <p>Username : <br><input type="text" class="form-control" id="recipient-name-username" name="Username" ></p>
                               <p>Password : <br><input type="password" class="form-control" id="recipient-name-pass" name="Password"></p>
                               <p>Co-Password : <br><input type="password" class="form-control" id="recipient-name-Conpass" name="Con_Pass"></p>
                               <p>E-mail : <br><input type="text" class="form-control" id="recipient-name-email" name="Email" ></p>
@@ -273,7 +236,7 @@
     var i=1;
     function add(){
     i++;
-    var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]' ><button type='button' class='but-Delete' onclick='remove();' id='Subbut_"+i+"'>x</button><br id = 'br_"+i+"'>";
+    var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]'  required><button type='button' class='but-Delete' onclick='remove();' id='Subbut_"+i+"'>x</button><br id = 'br_"+i+"'>";
     $('#new_chq').append(new_input);
     $('#total_chq').val(i)
   }

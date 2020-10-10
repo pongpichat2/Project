@@ -13,6 +13,11 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/AddSub.css') }}">
@@ -23,56 +28,67 @@
             
           background-size: 100% 100%;
           background-position: center;
-          height: 120vh;
+          height: 100vh;
           margin: 0 0;
             /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
             background-image: url("/static/image/G13Wall.jpg");
         }
-        .Select-Sub{
+        .table-Show-sub{
           font-family: 'Odibee Sans', cursive;
           /* position: fixed; */
+
           margin-top: 10px;
-          margin-left: 15px;
+
         }
-        .Select-Sub thead .title-Select-Sub{
+        .table-Show-sub thead .title-Select-Sub{
           border-collapse: collapse;
-          width: 130px;
-          height: 45px;
-          font-size: 25px;
+          width: 100px;
+          height: 25px;
+          font-size: 20px;
           border: 2px solid black;
           color: rgb(255, 255, 255);
           text-align: center;
           background-color: rgba(46, 43, 43, 0.637);
         }
-        .Select-Sub tbody .detil-Select-Sub{
+        .table-Show-sub tbody .detil-Select-Sub{
+          width: 100px;
+          height: 25px;
           font-family: 'Odibee Sans', cursive;
           text-align: center;
           border: 2px solid black;
           background: rgba(255, 255, 255, 0.637);
-          font-size: 20px;
+          font-size: 16px;
         }
-        .Select-Sub tbody .detil-Select-Sub input[type='text']{
+        .table-Show-sub tbody .detil-Select-Sub input[type='text']{
           font-family: 'Odibee Sans', cursive;
           text-align: center;
           border-collapse: collapse;
           background: none;
           border: none;
         }
-        .Select-Sub tbody button{
+        .table-Show-sub tbody button{
           background:linear-gradient(135deg, rgb(255, 255, 255) 30%, rgb(36, 125, 226));
-          margin-left:2px ;
+
           border: 2px solid black;
           border-radius: 15px;
           transition: 0.5s;
         }
-        .Select-Sub tbody button:hover{
+        .table-Show-sub tbody button:hover{
           box-shadow: black 1px 1px ;
           background:linear-gradient(135deg,  rgb(36, 125, 226) 30%, rgb(36, 125, 226));
+        }
+        .container-table{
+          background: rgba(216, 216, 216, 0.555);
+          box-shadow: 0 0 15px black;
+          border: 2px solid black;
+          width: 550px;
+          margin-top: 20px;
+          margin-left: 450px;
         }
         .Show-Quiz{
           font-family: 'Odibee Sans', cursive;
           background: rgba(44, 44, 44, 0.801);
-          margin-top: 50px ;
+          margin-top: 20px ;
           margin-left: 300px ;
           position: static;
           width: 900px;
@@ -82,22 +98,22 @@
         }
         .Show-Detil-Quiz{
           /* border: 2px solid black; */
-          width: 1300px;
-          margin-top: 30px ;
-          margin-left: 200px ;
+          width: 1400px;
+          margin-left: 50px;
+          margin-top: 20px ;
           font-family: 'Odibee Sans', cursive;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz thead th{
           text-align: center;
           border: 2px solid black;
           background: rgba(78, 150, 78, 0.705);
-          height: 30px;
-          font-size: 20px;
+
+          /* font-size: 18px; */
           font-family: 'Odibee Sans', cursive;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .No input[type='text']{
           font-family: 'Odibee Sans', cursive;
-          width: 50px;
+
           text-align: center;
           border-collapse: collapse;
           background: none;
@@ -114,12 +130,11 @@
           transition: 0.8s;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']:hover{
-          width: 200px;
-          font-size: 18px;
+
           color: white;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']:focus{
-          width: 200px;
+          /* width: 200px; */
           font-size: 18px;
           color: white;
           background: rgba(44, 43, 43, 0.568);
@@ -400,7 +415,7 @@ box-shadow: 0 0 15px black;
 
     </style>
     <script>
-
+      
     var i=1;
     function add(){
     i++;
@@ -441,21 +456,42 @@ box-shadow: 0 0 15px black;
   }
 
   $(document).ready(function(){
+    
+    
     $(".But-edit").click(function(){
+      swal({
+        title: "Edit Choice Success!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "Aww yiss!",
+      });
+      $(".container-table").hide();
       $(".Box-Animation").show();
       setTimeout(function(){
         $(".But-edit").addClass("Success");
       }, 3700);
       setTimeout(function(){
+        $(".container-table").show();
         $(".Box-Animation").hide();
       }, 2000)
     });
+
     $(".But-delete").click(function(){
+      swal({
+        title: "Delete Choice Success!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "Aww yiss!",
+      });
+      $(".container-table").hide();
       $(".Box-Animation").show();
+
       setTimeout(function(){
         $(".But-delete").addClass("Success");
       }, 3700);
       setTimeout(function(){
+        
+        $(".container-table").show();
         $(".Box-Animation").hide();
       }, 2000)
     });
@@ -470,6 +506,31 @@ box-shadow: 0 0 15px black;
     });
 
   });
+  $(document).ready(function(){
+    $('#example').DataTable();
+    $('#ShowDetil').DataTable();
+    
+  });
+
+  function btu_Success(){
+    var Sub = document.getElementById('Sub_1').value;
+    if(Sub == "" || Sub == null){
+      alert("กรุณากรอกวิชาที่ต้องการเพิ่มด้วยครับ !!")
+      return false;
+
+      
+    }
+    swal({
+      title: "Add Subject Success!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "OK!",
+    });
+ 
+    
+  }
+
+
 
     </script>
     
@@ -545,7 +606,7 @@ box-shadow: 0 0 15px black;
                   <input type="hidden" value="1" id="total_chq">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">Submit</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" onclick="return btu_Success();">Submit</button>
                 </div>
             </form>
             </div>
@@ -599,25 +660,30 @@ box-shadow: 0 0 15px black;
           </div>
         </div>
       </div>
-      <table class="Select-Sub">
-          <thead>
-              <tr>
-                  <th class="title-Select-Sub">Subject Name</th>
-                  <th class="title-Select-Sub">Number / item</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for k in data.each() %}
-              <form action="/Subject" method="POST">
-              <tr>
-                  <td class="detil-Select-Sub"> <input type="text" value="{%print(k.key())%}" name="Subname" readonly></td>
-                  <td class="detil-Select-Sub"> {% print(k.val()['DataNum']) %}</td>
-                  <td> <button type="Submit" >View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
-              </tr>
-              </form>
-              {% endfor %}
-          </tbody>
-      </table>
+      <div class="container-table">
+        <table class="table-Show-sub" id="example">
+            <thead>
+                <tr>
+                    <th class="title-Select-Sub">Subject Name</th>
+                    <th class="title-Select-Sub">Number / item</th>
+                    <th class="title-Select-Sub">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for k in data.each() %}
+                
+                <tr>
+                <form action="/Subject" method="POST">
+                    <td class="detil-Select-Sub">{%print(k.key())%}</td>
+                    <td class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
+                    <td class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                </form>
+                  </tr>
+                
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
 
       <!-- โชว์ข้อมูล คำถามในแต่ละรายวิชา -->
       
@@ -626,9 +692,10 @@ box-shadow: 0 0 15px black;
             <h1 style="text-align: center; margin-top: 150px ;font-size: 60px;font-weight: bold;color: red;">There are no questions in this course yet.</h1>
         </div>
         {% elif haveData %}
+        
         <div class="Show-Detil-Quiz">
-              <h1 style="margin-left: 500px ;">{{Headtext}}</h1>
-              <table class="table-Show-Detil-Quiz">
+             <h1 style="margin-left: 650px ;">{{Headtext}}</h1>
+              <table class="table-Show-Detil-Quiz" id="ShowDetil">
                   <thead>
                   <tr>
                       <!-- <th>No.</th> -->
@@ -639,14 +706,14 @@ box-shadow: 0 0 15px black;
                       <th >Choice 4</th>
                       <th style="color: red;">Answer(Before)</th>
                       <th>Answer(After)</th>
+                      <th>Action</th>
 
                   </tr>
               </thead>
               <tbody>
                   {% for k in Show.each() %}
-
-                  <form action="/Sub_Update" method="POST">
                       <tr>
+                        <form action="/Sub_Update" method="POST">
                           <td class="No" style="display: none;"><input type="text" value="{%print(k.val()['ID'])%}"  readonly name="NO_Sub"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
@@ -656,14 +723,12 @@ box-shadow: 0 0 15px black;
                           <td class=""><input type="text" value="{%print(k.val()['ans'])%}" readonly style="color: red; text-align: center; border: none; background: none;"></td>
                           <td class="Data"><input type="radio" id="Answer" name="Answer" value="1">Choice1 <input type="radio" id="Answer" name="Answer" value="2">
                             Choice2<input type="radio" name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
-                          <td style="border: none;  background: none;" ><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button></td>
-                          <td style="border: none; background: none;" > <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
+                          <td class="Data"><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button>
+                            <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
+                          </form>
                       </tr>
-                  </form>
-
                   {% endfor %}
-                  
-                  
+
               </tbody>
               
           </table>
@@ -679,4 +744,5 @@ box-shadow: 0 0 15px black;
         
 
 </body>
+
 </html>

@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Home Page</title>
 </head>
 <style>
@@ -250,7 +251,7 @@
                   <input type="hidden" value="1" id="total_chq">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary">ADD</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" onclick="return btu_Success();">ADD</button>
                 </div>
             </form>
             </div>
@@ -361,6 +362,12 @@
   function Co_Delete(){
 
     return confirm("คุณต้องการลบวิชาใช่หรือไม่ ?");
+
+    swal({
+      title: "Delete Success!",
+      text: "You clicked the button!",
+      icon: "success",
+    });
   }
   function Co_Pass(){
       var Pass_Af = document.getElementById('Pass_After').value;
@@ -370,6 +377,22 @@
             return false;
         }
 
+  }
+  function btu_Success(){
+    var Sub = document.getElementById('Sub_1').value;
+    if(Sub == "" || Sub == null){
+      alert("กรุณากรอกวิชาที่ต้องการเพิ่มด้วยครับ !!")
+      return false;
+
+      
+    }
+    swal({
+      title: "Add Subject Success!",
+      text: "You clicked the button!",
+      icon: "success",
+
+    });
+    
   }
 
   $(document).ready(function(){

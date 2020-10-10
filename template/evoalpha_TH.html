@@ -12,13 +12,19 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Evolution</title>
 </head>
 <style>
   body{
     background-size: 100% 100%;
     background-position: center;
-    height: 110vh;
+    height: 100%;
     margin: 0 0;
     background-image: url('/static/image/G2Wall.png');
     /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
@@ -187,14 +193,14 @@
   }
   .Container-Show{
 
-    width: 580px;
-    background: rgba(255, 255, 255, 0.75);
+width: 950px;
+background: rgba(255, 255, 255, 0.75);
 
-    margin: 200px 450px;
-    border: black 2px solid;
-    border-radius: 15px;
-    box-shadow: 0 0 15px black;
-  }
+margin: 200px 300px;
+border: black 2px solid;
+border-radius: 15px;
+box-shadow: 0 0 15px black;
+}
   .Select-Langua{
       margin-top: 5px;
       margin-left: 20px;
@@ -270,6 +276,11 @@
         }
 
   }
+  $(document).ready(function(){
+    $('#example').DataTable();
+    // $('#ShowDetil').DataTable();
+    
+  });
 
 </script>
 <body>
@@ -343,7 +354,7 @@
                     <input type="hidden" value="1" id="total_chq">
                   <div class="modal-footer" >
                       <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
-                      <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
+                      <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;" onclick="return btu_Success();">เพิ่ม</button>
                   </div>
               </form>
               </div>
@@ -418,22 +429,25 @@
         <div class="Container-table-ShowMem">
         {% if havedata %}
         <div class="Container-table-ShowMem-inside">
-            <table class="table-Show-Mem">
+            <table class="table-Show-Mem" id="example">
                 <thead>
                     <tr>
                         <td class="title-table"> E-mail </td>
                         <td class="title-table"> ชื่อ </td>
+                        <td class="title-table"> Action </td>
                     </tr>
                 </thead>
                 <tbody>
                 {% for MemberAlpha in mainGameAlpha.each() %}
-                <form action="/ShowEvoAlpha_TH" method="POST">
+                
                     <tr>
-                        <td class="data"><input type="text" style="border: none; background: none; text-align: center;width: 220px;" value="{% print(MemberAlpha.val()['Email'])%}" name="email" readonly></td>
-                        <td class="data"><input type="text" style="border: none; background: none; text-align: center;" value="{%print(MemberAlpha.val()['Name'])%}" name="Name" readonly></td>
-                        <td ><button type="submit" value="{%print(MemberAlpha.key())%}" name="Username">ดู <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                      <form action="/ShowEvoAlpha_TH" method="POST">
+                        <td class="data">{% print(MemberAlpha.val()['Email'])%}</td>
+                        <td class="data">{%print(MemberAlpha.val()['Name'])%}</td>
+                        <td class="data"><button type="submit" value="{%print(MemberAlpha.key())%}" name="Username">ดู <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                     </form>
                     </tr>
-                </form>
+               
 
                 {% endfor %}
 
@@ -461,5 +475,22 @@
     });
 
   });
+  function btu_Success(){
+    var Sub = document.getElementById('Sub_1').value;
+    if(Sub == "" || Sub == null){
+      alert("กรุณากรอกวิชาที่ต้องการเพิ่มด้วยครับ !!")
+      return false;
+
+      
+    }
+    swal({
+      title: "Add Subject Success!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "OK!",
+    });
+ 
+    
+  }
 </script>
 </html>

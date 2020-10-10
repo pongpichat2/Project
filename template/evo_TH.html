@@ -12,13 +12,18 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Evolution</title>
 </head>
 <style>
   body{
     background-size: cover;
     background-position: center;
-    height: 110vh;
+    height: 100%;
     margin: 0 0;
     background-image: url('/static/image/G4Wall.png');
     /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
@@ -72,7 +77,7 @@
   .Container-table-ShowMem{
     font-family: 'Odibee Sans', cursive;
     text-align: center;
-
+    width: 90%;
     /* border: black solid 2px; */
   }
   .Select-Langua{
@@ -194,7 +199,7 @@
     background-color: rgba(179, 175, 175, 0.514);
     }
     .Container-Show{
-      width: 630px;
+      width: 650px;
       background: rgba(255, 255, 255, 0.75);
  
       margin: 50px 450px;
@@ -276,6 +281,11 @@
         }
 
   }
+  $(document).ready(function(){
+    $('#example').DataTable();
+    // $('#ShowDetil').DataTable();
+    
+  });
 
 </script>
 <body>
@@ -349,7 +359,7 @@
                   <input type="hidden" value="1" id="total_chq">
                 <div class="modal-footer" >
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-family: 'Sarabun', sans-serif;">ปิด</button>
-                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;">เพิ่ม</button>
+                    <button type="submit" name= "Add_FormSub" value="recordData" class="btn btn-primary" style="font-family: 'Sarabun', sans-serif;" onclick="return btu_Success();">เพิ่ม</button>
                 </div>
             </form>
             </div>
@@ -428,27 +438,30 @@
     {% if  ShowData %}
     <div class="Container-Show" >
       <div class="Container-table-ShowMem">
-      <p style="font-family: 'Sarabun', sans-serif; font-weight: bold;">รายชื่อสมาชิกในรายวิชา : {{SubjectName}}</p>
+      <p style="font-family: 'Sarabun', sans-serif; font-weight: bold;margin-left: 60px;">รายชื่อสมาชิกในรายวิชา : {{SubjectName}}</p>
 
         <div class="Container-table-ShowMem-inside">
-          <table class="table-Show-Mem">
+          <table class="table-Show-Mem" id="example">
               <thead>
                   <tr>
                       <td class="title-table" style="font-family: 'Sarabun', sans-serif;"> E-mail </td>
                       <td class="title-table" style="font-family: 'Sarabun', sans-serif;"> ชื่อ </td>
+                      <td class="title-table" style="font-family: 'Sarabun', sans-serif;"> Action</td>
                   </tr>
               </thead>
               <tbody>
 
                   {% for Sub in ShowData.each() %}
-                  <form action="/ShowEvo_TH" method="POST">
+                  
 
                   <tr>
-                      <td class="data"><input style="border: none; background: none; text-align: center;" type="text" value="{% print(Sub.val()['Email'])%}" name="email" readonly></td>
-                      <td class="data"><input style="border: none; background: none;text-align: center;" type="text" value="{%print(Sub.val()['Name'])%}" name="Name" readonly></td>
-                      <td><button  type="submit" name="Username" id="" value="{%print(Sub.key())%}" value="View" style="font-family: 'Sarabun', sans-serif;font-weight: bold;" >ดู <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
-                  </tr>
+                    <form action="/ShowEvo_TH" method="POST">
+                    <td class="data">{%print(Sub.val()['Email'])%}</td>
+                    <td class="data">{%print(Sub.val()['Name'])%}</td>
+                      <td class="data"><button  type="submit" name="Username" id="" value="{%print(Sub.key())%}" value="View" style="font-family: 'Sarabun', sans-serif;font-weight: bold;" >ดู <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
                   </form>
+                </tr>
+                  
                   {% endfor %}
                   
               </tbody>
@@ -486,5 +499,22 @@
       });
   
     });
+    function btu_Success(){
+    var Sub = document.getElementById('Sub_1').value;
+    if(Sub == "" || Sub == null){
+      alert("กรุณากรอกวิชาที่ต้องการเพิ่มด้วยครับ !!")
+      return false;
+
+      
+    }
+    swal({
+      title: "Add Subject Success!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "OK!",
+    });
+ 
+    
+  }
   </script>
 </html>
