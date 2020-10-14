@@ -1,4 +1,5 @@
 import numpy as np
+
 def Calchoice():
     timeText = 1000
     Shift = 1000 #เมื่อมีการ กด Shift
