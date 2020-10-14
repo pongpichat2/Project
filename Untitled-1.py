@@ -277,6 +277,7 @@ def test():
             totaltime += timeDuplicate
         else:
             if(text[Z] in All_Alphabet_Shift):
+                # ตัวถัดไปเป็นตัวพิมพ์ใหญ่เหมือนกัน
                 if (text[Z] in All_Alphabet_Shift) and (text[Z-1] in All_Alphabet_Shift):
                     # เมื่อ text[z] และ text[z-1] อยู่ฝั่งซ้ายเหมือนกัน
                     if(text[Z] in KeyBroad_LeftShift) and (text[Z-1] in KeyBroad_LeftShift):
@@ -637,7 +638,7 @@ def test():
                 elif (text[Z-1] in All_Alphabet_NoShift) and (text[Z] in All_Alphabet_Shift):
                         # กรณี Z-1 อยู่ฝั่นซ้าย แล้วตัว Z เป็นตัวพิมพ์ใหญ่ฝั่งซ้ายเหมือนกัน
                         if(text[Z-1] in KeyBroad_LeftNoShift) and (text[Z] in KeyBroad_LeftShift):
-                            # กรณี Z-1 อยู่ฝั่นซ้าย แล้วตัว Z เป็นตัวพิมพ์ใหญ่ฝั่งซ้าย ใช้นิ้วเดียวกันกด ก น กล
+                            # กรณี Z-1 อยู่ฝั่งซ้าย แล้วตัว Z เป็นตัวพิมพ์ใหญ่ฝั่งซ้าย ใช้นิ้วเดียวกันกด ก น กล
                             if(text[Z-1] in KeyBroad_Left_lrm_NoShift) and (text[Z] in KeyBroad_Left_LRM_Shift):
 
                                 for Posi_Z1_NoShift in range(len(KeyBroad_Left_NoShift)):
@@ -659,17 +660,211 @@ def test():
                                 else:
                                     dis = abs(KeyBroad_Left_Shift[Posi_Z_Shift].index(text[Z]) - KeyBroad_Left_Shift[Posi_Z_Shift].index(KeyBroad_Left_Shift[Posi_Z_Shift][2]))
                                     totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                            # กรณี Z-1 อยู่ฝั่งซ้าย แล้วตัว Z เป็นตัวพิมพ์ใหญ่ฝั่งซ้าย ใช้นิ้วเดียวกันกด ชี้
+                            elif(text[Z-1] in KeyBroad_Left_index_NoShift) and (text[Z] in KeyBroad_Left_Index_Shift):
+                                for Posi_Z1_NoShift in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                    if text[Z-1] in KeyBroad_Left_Indexfinger_NoShift[Posi_Z1_NoShift]:
+                                        Posi_Z1_No_Shift = Posi_Z1_NoShift
+                                        break
+                                for Posi_Z_Shift in range(len(KeyBroad_Left_Indexfinger_Shift)):
+                                    if(text[Z] in KeyBroad_Left_Indexfinger_Shift[Posi_Z_Shift]):
+                                        Posi_Z_Shift = Posi_Z_Shift
+                                        break
+ 
+                                if Posi_Z_Shift == Posi_Z1_No_Shift:
+                                    position = Posi_Z1_No_Shift
+                                    dis = abs(KeyBroad_Left_Indexfinger_NoShift[position].index(text[Z-1]) - KeyBroad_Left_Indexfinger_Shift[position].index(text[Z]))
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                else:
+                                    dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_Z1_No_Shift].index(text[Z-1]) - KeyBroad_Left_Indexfinger_Shift[Posi_Z_Shift].index(text[Z]))+1
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                            # ฝั่งซ้ายเหมือนกันแต่ คนละนิ้ว
+                            else:
+                                if(text[Z] in KeyBroad_Left_LRM_Shift):
+                                    for Posi_Z_Shift in range(len(KeyBroad_Left_Shift)):
+                                        if(text[Z] in KeyBroad_Left_Shift[Posi_Z_Shift]):
+                                            Posi_Z_Shift = Posi_Z_Shift
+                                            break
+                                    if text[Z] == KeyBroad_Left_Shift[Posi_Z_Shift][2]:
+                                        totaltime += timeText+(2*timedistance)
+                                        # print(totaltime)
+                                    else:
+                                        dis = abs(KeyBroad_Left_Shift[Posi_Z_Shift].index(text[Z]) - KeyBroad_Left_Shift[Posi_Z_Shift].index(KeyBroad_Left_Shift[Posi_Z_Shift][2])) 
+                                        totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                elif text[Z] in KeyBroad_Left_Index_Shift:
+                                    # หา ตน ของนิ้วชี้ที่กด เนื่องจาก นิ้วชิ้วต้องกด 2 colume
+                                    for posi_text0_indexfinger in range(len(KeyBroad_Left_Indexfinger_Shift)):
 
+                                        if text[Z] in KeyBroad_Left_Indexfinger_Shift[posi_text0_indexfinger]:
+                                            Posi_indexfinger = posi_text0_indexfinger
+                                            # print(Posi_indexfinger)
+                                            break
+             
+                                    if Posi_indexfinger == 0:
+                                        if text[Z] == 'F':
+                                            totaltime += timeText+(2*timedistance)
+                                            # print(totaltime)
+                                        else:
+                                            dis = abs(KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) - KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index('F'))
+                                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
 
+                                    else:
+    
+                                        if KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) == KeyBroad_Left_Indexfinger_Shift[0].index('F'):
+                                            totaltime += timeText+(1*timedistance)+(2*timedistance)
+                                        else:
+                                            dis = abs(KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) - KeyBroad_Left_Indexfinger_Shift[0].index('F'))+1
+                                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                        # กรณี Z-1 อยู่ฝั่งขวา แล้วตัว Z เป็นตัวพิมพ์ใหญ่ฝั่งขวาเหมือนกัน
+                        elif(text[Z-1] in KeyBroad_RigthNoShift) and (text[Z] in KeyBroad_RigthShift):
+                            # กรณีที่เป็นนิ้วชี้ข้างขวาทั้งคู่
+                            if(text[Z-1] in KeyBroad_Rigth_index_NoShift) and (text[Z] in KeyBroad_Rigth_index_Shift):
+                                for Posi_Z1_NoShift in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                    if text[Z-1] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Z1_NoShift]:
+                                        Posi_Z1_No_Shift = Posi_Z1_NoShift
+                                        break
+                                for Posi_Z_Shift in range(len(KeyBroad_Rigth_Indexfinger_Shift)):
+                                    if(text[Z] in KeyBroad_Rigth_Indexfinger_Shift[Posi_Z_Shift]):
+                                        Posi_Z_Shift = Posi_Z_Shift
+                                        break
+                                if Posi_Z_Shift == Posi_Z1_No_Shift:
+                                    position = Posi_Z1_No_Shift
+                                    dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[position].index(text[Z-1]) - KeyBroad_Rigth_Indexfinger_Shift[position].index(text[Z]))
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                else:
+                                    dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_Z1_No_Shift].index(text[Z-1]) - KeyBroad_Rigth_Indexfinger_Shift[Posi_Z_Shift].index(text[Z]))+1
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                            # กรณีที่เป็นนิ้วกลางและนางข้างขวาทั้งคู่
+                            elif (text[Z-1] in KeyBroad_Rigth_mr_NoShift) and (text[Z] in KeyBroad_Rigth_MR_Shift):
 
+                                for Posi_Z1_NoShift in range(len(KeyBroad_Rigth_NoShift)):
+                                    if text[Z-1] in KeyBroad_Rigth_NoShift[Posi_Z1_NoShift]:
+                                        Posi_Z1_No_Shift = Posi_Z1_NoShift
+                                        break
+                                for Posi_Z_Shift in range(len(KeyBroad_Rigth_Shift)):
+                                    if(text[Z] in KeyBroad_Rigth_Shift[Posi_Z_Shift]):
+                                        Posi_Z_Shift = Posi_Z_Shift
+                                        break
+                                if Posi_Z1_No_Shift == Posi_Z_Shift:
+                                    position = Posi_Z_Shift
+                                    dis = abs(KeyBroad_Rigth_NoShift[position].index(text[Z-1]) - KeyBroad_Rigth_Shift[position].index(text[Z]))
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                else:
+                                    dis = abs(KeyBroad_Rigth_Shift[Posi_Z_Shift].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_Z_Shift].index(KeyBroad_Rigth_Shift[Posi_Z_Shift][2]))
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                            # กรณีที่เป็นนิ้วก้อยข้างขวาทั้งคู่
+                            elif (text[Z-1] in KeyBroad_Rigth_little_NoShift) and (text[Z] in KeyBroad_Rigth_Little_Shift):
+                                for Posi_Z1_NoShift in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                    if text[Z-1] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Z1_NoShift]:
+                                        Posi_Z1_No_Shift = Posi_Z1_NoShift
+                                        break
+                                for Posi_Z_Shift in range(len(KeyBroad_Rigth_Littlefinger_Shift)):
+                                    if(text[Z] in KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_Shift]):
+                                        Posi_Z_Shift = Posi_Z_Shift
+                                        break
+                                if Posi_Z1_NoShift == Posi_Z_Shift:
+                                    position = Posi_Z_Shift
+                                    dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[position].index(text[Z-1]) - KeyBroad_Rigth_Littlefinger_Shift[position].index(text[Z]))
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                else:
+                                    distanceColume = abs(Posi_Z1_NoShift - Posi_Z_Shift)
+                                    dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_Z1_No_Shift].index(text[Z-1]) - KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_Shift].index(text[Z]))+distanceColume
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                            # คนละนิ้วข้างขวา
+                            else:
+                                #นิ้วชี้ฝั่งขวา on shift
+                                if text[Z] in KeyBroad_Rigth_index_Shift:
+                                    # หา ตน ของนิ้วชี้ที่กด เนื่องจาก นิ้วชิ้วต้องกด 2 colume
+                                    for posi_text0_indexfinger in range(len(KeyBroad_Rigth_Indexfinger_Shift)):
 
+                                        if text[Z] in KeyBroad_Rigth_Indexfinger_Shift[posi_text0_indexfinger]:
+                                            Posi_indexfinger = posi_text0_indexfinger
+                                            # print(Posi_indexfinger)
+                                            break
+                                    if Posi_indexfinger == 0:
+                                        if text[Z] == 'J':
+                                            # (2*timedistance) ได้จากระยะห่างจากนิ้วก้อยซ้ายไปกด Shift
+                                            totaltime += timeText+(2*timedistance)
+                                        else:
+                                            dis = abs(KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index('J'))
+                                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                    else:
+                                        # เมื่อ text[Z] == J ระยะห่างจาก J ถึง H เท่ากัน 1 Dis รวมกับ นิ้วก้อยซ้ายกดShif
+                                        if KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) == KeyBroad_Rigth_Indexfinger_Shift[0].index('J'):
+                                            totaltime += timeText+(1*timedistance)+(2*timedistance)
+                                        else:
+                                            dis = abs(KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[0].index('J'))+1
+                                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                # นิ้วกลาง นาง
+                                elif text[Z] in KeyBroad_Rigth_MR_Shift:
+                                    for posi_text0 in range(len(KeyBroad_Rigth_Shift)):
+                                        if text[Z] in KeyBroad_Rigth_Shift[posi_text0]:
+                                            Posi_finger = posi_text0
+                                            break
+                                    if text[Z] == KeyBroad_Rigth_Shift[Posi_finger][2]:
+                                        totaltime += timeText+(2*timedistance)
+                                    else:
+                                        dis = abs(KeyBroad_Rigth_Shift[Posi_finger].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_finger].index(KeyBroad_Rigth_Shift[Posi_finger][2])) 
+                                        totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                elif(text[Z] in KeyBroad_Rigth_Little_Shift):
+                                    for Posi_Z in range(len(KeyBroad_Rigth_Littlefinger_Shift)):
+                                        if text[Z] in KeyBroad_Rigth_Littlefinger_Shift[Posi_Z]:
+                                            Posi_Z_current = Posi_Z
+                                            break
+                                    if(Posi_Z_current == 0):
+                                        dis = abs(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current].index(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current][2]))
+                                        totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                    else:
+                                        distanceColume = abs(Posi_Z_current-0)
+                                        dis = abs(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index(KeyBroad_Rigth_Littlefinger_Shift[0][2]))+distanceColume
+                                        totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                        # กรณีที่ Z-1 ตัวเล็กซ้ายเปลี่ยนเป็น Z ย้ายมากดฝั่งขวา
+                        elif (text[Z-1] in KeyBroad_LeftNoShift) and (text[Z] in KeyBroad_RigthShift):
+                            # กรณีที่ Z-1 ใช้นิ้วก้อยกด และ Z ต้องใช้นิ้วก้อยฝั่งขวา
+                            if(text[Z-1] in concat__Left_NoShift_Switch) and (text[Z] in KeyBroad_Rigth_Little_Shift):
+                                for Posi_Z_current_swicth in range(len(KeyBroad_Rigth_Littlefinger_Shift)):
+                                    if text[Z] in KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current_swicth]:
+                                        Posi_Z_current = Posi_Z_current_swicth
+                                        break
+                                Dis_Z = abs(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index(KeyBroad_Rigth_Littlefinger_Shift[0][2]))+Posi_Z_current
+                                Dis_Z1 = abs(little_Left_NoShift_Switch[0].index(text[Z-1]) - little_Left_NoShift_Switch[0].index('shift'))
+                                dis = Dis_Z + Dis_Z1
+                                totaltime += timeText+(dis*timedistance)
+                            # กรณีที่ Z-1 ใช้นิ้วก้อยกด และ Z ไม่ใช้นิ้วก้อยฝั่งขวา
+                            elif (text[Z-1] in concat__Left_NoShift_Switch) and (text[Z] not in KeyBroad_Rigth_Little_Shift):
+                                Dis_Z1 = abs(little_Left_NoShift_Switch[0].index(text[Z-1]) - little_Left_NoShift_Switch[0].index('shift'))
+                                #  Z ไม่ใช้นิ้วก้อยฝั่งขวา เป็น กลาง นาง
+                                if text[Z] in KeyBroad_Rigth_MR_Shift:
+                                    for Posi_Z_current_swicth in range(len(KeyBroad_Rigth_Shift)):
+                                        if(text[Z] in KeyBroad_Rigth_Shift[Posi_Z_current_swicth]):
+                                            Posi_Z_current = Posi_Z_current_swicth
+                                            break
+                                    Dis_Z = abs(KeyBroad_Rigth_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_Z_current].index(KeyBroad_Rigth_Shift[Posi_Z_current][2]))
+                                    dis = Dis_Z + Dis_Z1
 
+                                    totaltime += timeText+(dis*timedistance)
+                                #  Z ไม่ใช้นิ้วก้อยฝั่งขวา เป็น ชี้
+                                elif text[Z] in KeyBroad_Rigth_index_Shift:
+                                    for Posi_Z_current_swicth in range(len(KeyBroad_Rigth_Indexfinger_Shift)):
+                                        if(text[Z] in KeyBroad_Rigth_Indexfinger_Shift[Posi_Z_current_swicth]):
+                                            Posi_Z_current = Posi_Z_current_swicth
+                                            break
+                                    Dis_Z = abs(KeyBroad_Rigth_Indexfinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[0].index(KeyBroad_Rigth_Indexfinger_Shift[0][2]))+Posi_Z_current 
+                                    dis = Dis_Z + Dis_Z1
+                                    totaltime += timeText+(dis*timedistance)
+                            # กรณีที่ Z-1 ไม่ใช้นิ้วก้อย แต่ Z ใช้นิ้วก้อย
+                            elif (text[Z-1] not in concat__Left_NoShift_Switch) and (text[Z] in KeyBroad_Rigth_Little_Shift):
+                                for Posi_Z_current_swicth in range(len(KeyBroad_Rigth_Littlefinger_Shift)):
+                                    if text[Z] in KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current_swicth]:
+                                        Posi_Z_current = Posi_Z_current_swicth
+                                        break
 
+                                dis = abs(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index( KeyBroad_Rigth_Littlefinger_Shift[0][2]))+Posi_Z_current
+                                totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                            elif (text[Z-1] not in concat__Left_NoShift_Switch) and (text[Z] not in KeyBroad_Rigth_Little_Shift):
+                                print("w,j.=h97'd^jgvvkt")
 
     print(totaltime)
-
-
-
 
 
 test()
