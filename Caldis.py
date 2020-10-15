@@ -1,11 +1,11 @@
 import numpy as np
 
 def test():
-    timeText = 1000
+    timeText = 500
     # Shift = 1000 เมื่อมีการ กด Shift
     timedistance = 500 #เวลาของระยะห่างต่อ 1 จุด
-    timeSpacbar = 1000 #เวลาของ Spacbar
-    timetextnumber = 1000 #เวลาของตัวเลข
+    timeSpacbar = 300 #เวลาของ Spacbar
+
     timeDuplicate = 100 #เวลาของตัวอักษรที่ซ้ำ
     totaltime = 0.0 #เวลาโดยรวม
 
@@ -275,6 +275,8 @@ def test():
         #เมื่อเกดตัวซ้ำกัน
         if text[Z] == text[Z-1]:
             totaltime += timeDuplicate
+        elif text[Z].isspace():
+            totaltime += timeSpacbar
         else:
             if(text[Z] in All_Alphabet_Shift):
                 # ตัวถัดไปเป็นตัวพิมพ์ใหญ่เหมือนกัน
@@ -361,10 +363,10 @@ def test():
                                 # เมื่อ text[0] อยู่ใน colume1 
                                 else:
                                     # เมื่อ text[0] == G ระยะห่างจาก F ถึง G เท่ากัน 1 Dis รวมกับ นิ้วก้อนขวากดShif
-                                    if KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) == KeyBroad_Left_Indexfinger_Shift[Z].index('F'):
+                                    if KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) == KeyBroad_Left_Indexfinger_Shift[0].index(KeyBroad_Left_Indexfinger_Shift[0][2]):
                                         totaltime += timeText+(1*timedistance)
                                     else:
-                                        dis = abs(KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index(text[0]) - KeyBroad_Left_Indexfinger_Shift[Z].index('F'))+1
+                                        dis = abs(KeyBroad_Left_Indexfinger_Shift[Posi_indexfinger].index(text[0]) - KeyBroad_Left_Indexfinger_Shift[0].index(KeyBroad_Left_Indexfinger_Shift[0][2]))+1
                                         totaltime += timeText+(dis*timedistance)
                     # เมื่อ text[z] และ text[z-1] อยู่ฝั่งขวาเหมือนกัน
                     elif (text[Z] in KeyBroad_RigthShift) and (text[Z-1] in KeyBroad_RigthShift):
@@ -818,6 +820,7 @@ def test():
                                         distanceColume = abs(Posi_Z_current-0)
                                         dis = abs(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index(KeyBroad_Rigth_Littlefinger_Shift[0][2]))+distanceColume
                                         totaltime += timeText+(dis*timedistance)+(2*timedistance)
+
                         # กรณีที่ Z-1 ตัวเล็กซ้ายเปลี่ยนเป็น Z ย้ายมากดฝั่งขวา
                         elif (text[Z-1] in KeyBroad_LeftNoShift) and (text[Z] in KeyBroad_RigthShift):
                             # กรณีที่ Z-1 ใช้นิ้วก้อยกด และ Z ต้องใช้นิ้วก้อยฝั่งขวา
@@ -861,8 +864,588 @@ def test():
 
                                 dis = abs(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index( KeyBroad_Rigth_Littlefinger_Shift[0][2]))+Posi_Z_current
                                 totaltime += timeText+(dis*timedistance)+(2*timedistance)
+
                             elif (text[Z-1] not in concat__Left_NoShift_Switch) and (text[Z] not in KeyBroad_Rigth_Little_Shift):
-                                print("w,j.=h97'd^jgvvkt")
+                                print("ไม่ก้อยทั้งสอง")
+                                if text[Z] in KeyBroad_Rigth_index_Shift:
+                                    # หา ตน ของนิ้วชี้ที่กด เนื่องจาก นิ้วชิ้วต้องกด 2 colume
+                                    for posi_text0_indexfinger in range(len(KeyBroad_Rigth_Indexfinger_Shift)):
+                                        if text[Z] in KeyBroad_Rigth_Indexfinger_Shift[posi_text0_indexfinger]:
+                                            Posi_indexfinger = posi_text0_indexfinger
+                                            # print(Posi_indexfinger)
+                                            break
+                                    if Posi_indexfinger == 0:
+                                        if text[Z] == 'J':
+                                            # (2*timedistance) ได้จากระยะห่างจากนิ้วก้อยซ้ายไปกด Shift
+                                            totaltime += timeText+(2*timedistance)
+                                        else:
+                                            dis = abs(KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index('J'))
+                                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                    else:
+                                        # เมื่อ text[0] == J ระยะห่างจาก J ถึง H เท่ากัน 1 Dis รวมกับ นิ้วก้อยซ้ายกดShif
+                                        if KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) == KeyBroad_Rigth_Indexfinger_Shift[0].index('J'):
+                                            totaltime += timeText+(1*timedistance)+(2*timedistance)
+                                        else:
+                                            dis = abs(KeyBroad_Rigth_Indexfinger_Shift[Posi_indexfinger].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[0].index('J'))+1
+                                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+
+                                # นิ้ว กลางและนาง ขวา กด Shilf
+                                elif text[Z] in KeyBroad_Rigth_MR_Shift:
+                                    for posi_textZ in range(len(KeyBroad_Rigth_Shift)):
+                                        if text[Z] in KeyBroad_Rigth_Shift[posi_textZ]:
+                                            Posi_finger = posi_textZ
+                                            break
+                                    if text[Z] == KeyBroad_Rigth_Shift[Posi_finger][2]:
+                                        totaltime += timeText+(2*timedistance)
+                                    else:
+                                        dis = abs(KeyBroad_Rigth_Shift[Posi_finger].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_finger].index(KeyBroad_Rigth_Shift[Posi_finger][2])) 
+                                        totaltime += timeText+(dis*timedistance)+(2*timedistance)
+
+                        # กรณีที่ Z-1 ตัวเล็กขวาเปลี่ยนเป็น Z ย้ายมากดฝั่งซ้าย
+                        elif (text[Z-1] in KeyBroad_RigthNoShift) and (text[Z] in KeyBroad_LeftShift):
+
+                            # เมื่อ Z-1 ต้องใช้นิ้วก้อยขวากด และ Z ต้องใช้นิ้วก้อยซ้าย
+                            if(text[Z-1] in concat__Rigth_NoShift_Switch) and (text[Z] in concat_little_Left_Shift_Switch):
+                                for Posi_Z1_NoShift in range(len(little_Rigth_NoShift_Switch)):
+                                    if text[Z-1] in little_Rigth_NoShift_Switch[Posi_Z1_NoShift]:
+                                        Posi_Z1_No_Shift = Posi_Z1_NoShift
+                                        break
+                                Dis_Z1 = abs(little_Rigth_NoShift_Switch[Posi_Z1_No_Shift].index(text[Z-1]) - little_Rigth_NoShift_Switch[Posi_Z1_No_Shift].index('shift'))
+                                Dis_Z = abs(KeyBroad_Left_Shift[0].index(text[Z]) - KeyBroad_Left_Shift[0].index(KeyBroad_Left_Shift[0][2]))
+                                dis = Dis_Z + Dis_Z1
+                                totaltime += timeText+(dis*timedistance)
+                            #------------------------- งง ----------------------------------------
+                            # เมื่อ Z-1 ไม่ต้องใช้นิ้วก้อยขวากด และ Z ต้องใช้นิ้วก้อยซ้าย
+                            elif(text[Z-1] not in concat__Rigth_NoShift_Switch) and (text[Z] in concat_little_Left_Shift_Switch):
+
+                                Dis_Z = abs(KeyBroad_Left_Shift[0].index(text[Z]) - KeyBroad_Left_Shift[0].index(KeyBroad_Left_Shift[0][2]))
+                                # totaltime += timeText+(Dis_Z*timedistance)+(2*timedistance)
+
+                                if(text[Z-1] in KeyBroad_Rigth_mr_NoShift):
+                                    for Posi_Z1_No_Shift in range(len(KeyBroad_Rigth_NoShift)):
+                                        if(text[Z-1] in KeyBroad_Rigth_NoShift[Posi_Z1_No_Shift]):
+                                            Posi_Z1_NoShift = Posi_Z1_No_Shift
+                                            break
+                                    Dis_Z1 = abs(KeyBroad_Rigth_NoShift[Posi_Z1_NoShift].index(text[Z-1]) - KeyBroad_Rigth_NoShift[Posi_Z1_NoShift].index(KeyBroad_Rigth_NoShift[Posi_Z1_NoShift][2]))
+                                    dis = Dis_Z + Dis_Z1
+                                    print(dis)
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                    
+                                elif(text[Z-1] in KeyBroad_Rigth_index_NoShift):
+                                    for Posi_Z1_No_Shift in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                        if(text[Z-1] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Z1_No_Shift]):
+                                            Posi_Z1_NoShift = Posi_Z1_No_Shift
+                                            break
+                                    
+                                    Dis_Z1 = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_Z1_NoShift].index(text[Z-1]) - KeyBroad_Rigth_Indexfinger_NoShift[0].index(KeyBroad_Rigth_Indexfinger_NoShift[0][2]))+Posi_Z1_NoShift
+                                    dis = Dis_Z + Dis_Z1
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+
+
+                            # เมื่อ Z-1 ต้องใช้นิ้วก้อยขวากด และ Z ไม่ต้องใช้นิ้วก้อยซ้าย
+                            elif(text[Z-1] in concat__Rigth_NoShift_Switch) and (text[Z] not in concat_little_Left_Shift_Switch):
+                                for Posi_Z1_NoShift in range(len(little_Rigth_NoShift_Switch)):
+                                    if text[Z-1] in little_Rigth_NoShift_Switch[Posi_Z1_NoShift]:
+                                        Posi_Z1_No_Shift = Posi_Z1_NoShift
+                                        break
+ 
+                                Dis_Z1 = abs(little_Rigth_NoShift_Switch[Posi_Z1_No_Shift].index(text[Z-1]) - little_Rigth_NoShift_Switch[Posi_Z1_No_Shift].index('shift'))+Posi_Z1_No_Shift
+
+                                if(text[Z] in KeyBroad_Left_LRM_Shift):
+                                    for Posi_Z_current_swicth in range(len(KeyBroad_Left_Shift)):
+                                        if text[Z] in KeyBroad_Left_Shift[Posi_Z_current_swicth]:
+                                            Posi_Z_current = Posi_Z_current_swicth
+                                            break
+                                    Dis_Z = abs(KeyBroad_Left_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Left_Shift[Posi_Z_current].index(KeyBroad_Left_Shift[Posi_Z_current][2]))
+                                    dis = Dis_Z + Dis_Z1
+
+                                    totaltime += timeText+(dis*timedistance)
+                                
+                                elif(text[Z] in KeyBroad_Left_Index_Shift):
+                                    for Posi_Z_current_swicth in range(len(KeyBroad_Left_Indexfinger_Shift)):
+                                        if text[Z] in KeyBroad_Left_Indexfinger_Shift[Posi_Z_current_swicth]:
+                                            Posi_Z_current = Posi_Z_current_swicth
+                                            break
+                                    Dis_Z = abs(KeyBroad_Left_Indexfinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Left_Indexfinger_Shift[0].index(KeyBroad_Left_Indexfinger_Shift[Posi_Z_current][2]))+Posi_Z_current
+                                    dis = Dis_Z + Dis_Z1
+                                    totaltime += timeText+(dis*timedistance)
+
+                            # เมื่อ Z-1 ไม่ต้องใช้นิ้วก้อยขวากด และ Z ไม่ต้องใช้นิ้วก้อยซ้าย
+                            elif(text[Z-1] not in concat__Rigth_NoShift_Switch) and (text[Z] not in concat_little_Left_Shift_Switch):
+                                if(text[Z] in KeyBroad_Left_LRM_Shift):
+                                    for Posi_Z_current_swicth in range(len(KeyBroad_Left_Shift)):
+                                        if text[Z] in KeyBroad_Left_Shift[Posi_Z_current_swicth]:
+                                            Posi_Z_current = Posi_Z_current_swicth
+                                            break
+                                    dis = abs(KeyBroad_Left_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Left_Shift[Posi_Z_current].index(KeyBroad_Left_Shift[Posi_Z_current][2]))
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                                
+                                elif(text[Z] in KeyBroad_Left_Index_Shift):
+                                    
+                                    for Posi_Z_current_swicth in range(len(KeyBroad_Left_Indexfinger_Shift)):
+                                        if text[Z] in KeyBroad_Left_Indexfinger_Shift[Posi_Z_current_swicth]:
+                                            Posi_Z_current = Posi_Z_current_swicth
+                                            break
+                                    dis = abs(KeyBroad_Left_Indexfinger_Shift[Posi_Z_current].index(text[Z]) - KeyBroad_Left_Indexfinger_Shift[0].index(KeyBroad_Left_Indexfinger_Shift[Posi_Z_current][2]))+Posi_Z_current
+
+                                    totaltime += timeText+(dis*timedistance)+(2*timedistance)
+
+                # ตัวก่อนหน้าเป็นตัว spacebar
+                elif (text[Z-1].isspace()) and (text[Z] in All_Alphabet_Shift):
+                    # ตัวก่อนหน้าเป็นตัว spacebar Z อยู่ฝั่งซ้าย
+                    if(text[Z] in KeyBroad_LeftShift):
+                        if(text[Z] in KeyBroad_Left_LRM_Shift):
+                            for Posi_Z_current in range(len(KeyBroad_Left_Shift)):
+                                if(text[Z] in KeyBroad_Left_Shift[Posi_Z_current]):
+                                    Posi_Z = Posi_Z_current
+                                    break
+                            dis = abs(KeyBroad_Left_Shift[Posi_Z].index(text[Z]) - KeyBroad_Left_Shift[Posi_Z].index(KeyBroad_Left_Shift[Posi_Z][2]))
+                            
+                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                        elif(text[Z] in KeyBroad_Left_Index_Shift):
+                            for Posi_Z_current in range(len(KeyBroad_Left_Indexfinger_Shift)):
+                                if(text[Z] in KeyBroad_Left_Indexfinger_Shift[Posi_Z_current]):
+                                    Posi_Z = Posi_Z_current
+                                    break
+                            dis = abs(KeyBroad_Left_Indexfinger_Shift[Posi_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_Shift[0].index(KeyBroad_Left_Indexfinger_Shift[0][2]))+Posi_Z
+                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+
+                    elif(text[Z] in KeyBroad_RigthShift):
+                        if(text[Z] in KeyBroad_Rigth_index_Shift):
+                            for Posi_Z_current in range(len(KeyBroad_Rigth_Indexfinger_Shift)):
+                                if(text[Z] in KeyBroad_Rigth_Indexfinger_Shift[Posi_Z_current]):
+                                    Posi_Z = Posi_Z_current
+                                    break
+                            dis = abs(KeyBroad_Rigth_Indexfinger_Shift[Posi_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[0].index(KeyBroad_Rigth_Indexfinger_Shift[0][2]))+Posi_Z
+                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                        elif(text[Z] in KeyBroad_Rigth_MR_Shift):
+                            for Posi_Z_current in range(len(KeyBroad_Rigth_Shift)):
+                                if(text[Z] in KeyBroad_Rigth_Shift[Posi_Z_current]):
+                                    Posi_Z = Posi_Z_current
+                                    break
+                            dis = abs(KeyBroad_Rigth_Shift[Posi_Z].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_Z].index(KeyBroad_Rigth_Shift[Posi_Z][2]))
+                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+                        elif(text[Z] in KeyBroad_Rigth_Little_Shift):
+                            for Posi_Z_current in range(len(KeyBroad_Rigth_Littlefinger_Shift)):
+                                if(text[Z] in KeyBroad_Rigth_Littlefinger_Shift[Posi_Z_current]):
+                                    Posi_Z1 = Posi_Z_current
+                                    break
+                            dis = abs(KeyBroad_Rigth_Littlefinger_Shift[Posi_Z1].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index(KeyBroad_Rigth_Littlefinger_Shift[0][2]))+Posi_Z1
+                            totaltime += timeText+(dis*timedistance)+(2*timedistance)
+            # text[Z] เป็นตัวพิมพ์เล็ก
+            if(text[Z] in All_Alphabet_NoShift):
+                # text[Z] เป็นตัวพิมพ์เล็ก text[Z-1] เป็นตัวพิมพ์เล็ก
+                if(text[Z] in All_Alphabet_NoShift) and (text[Z-1] in All_Alphabet_NoShift):
+                    # text[Z] เป็นตัวพิมพ์เล็ก text[Z-1] เป็นตัวพิมพ์เล็ก และอยู่ฝั่งซ้าย
+                    if(text[Z] in KeyBroad_LeftNoShift) and(text[Z-1] in KeyBroad_LeftNoShift):
+                        # อยู่ในนิ้ว ก น กล ทั้ง 2
+                        if(text[Z] in KeyBroad_Left_lrm_NoShift) and (text[Z-1] in KeyBroad_Left_lrm_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_NoShift)):
+                                if text[Z] in KeyBroad_Left_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Left_NoShift)):
+                                if text[Z-1] in KeyBroad_Left_NoShift[Posi_Noshift_Z1]:
+                                    Posi_NoS_Z1 = Posi_Noshift_Z1
+                                    break
+
+                            if Posi_NoS_Z == Posi_NoS_Z1:
+                                position = Posi_NoS_Z1
+                                dis = abs(KeyBroad_Left_NoShift[position].index(text[Z]) - KeyBroad_Left_NoShift[position].index(text[Z-1]))
+                                totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Left_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_NoShift[Posi_NoS_Z].index(KeyBroad_Left_NoShift[Posi_NoS_Z][2]))
+                                totaltime += timeText+(dis*timedistance)
+                        # อยู่ในนิ้วชี้ทั้ง 2
+                        elif (text[Z] in KeyBroad_Left_index_NoShift) and (text[Z-1] in KeyBroad_Left_index_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                if text[Z] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                if text[Z-1] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z1]:
+                                    Posi_NoS_Z1 = Posi_Noshift_Z1
+                                    break
+                            if Posi_NoS_Z == Posi_NoS_Z1:
+                                position = Posi_NoS_Z1
+                                dis = abs(KeyBroad_Left_Indexfinger_NoShift[position].index(text[Z]) - KeyBroad_Left_Indexfinger_NoShift[position].index(text[Z-1]))
+                                totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_NoShift[Posi_NoS_Z1].index(text[Z-1]))+1
+                                totaltime += timeText+(dis*timedistance)
+                        else:
+                            if(text[Z] in KeyBroad_Left_lrm_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Left_NoShift)):
+                                    if text[Z] in KeyBroad_Left_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Left_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_NoShift[Posi_NoS_Z].index(KeyBroad_Left_NoShift[Posi_NoS_Z][2]))
+                                
+                                totaltime += timeText+(dis*timedistance)
+                            elif (text[Z] in KeyBroad_Left_index_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                    if text[Z] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_NoShift[0].index(KeyBroad_Left_Indexfinger_NoShift[0][2]))+Posi_NoS_Z
+                                totaltime += timeText+(dis*timedistance)
+
+                    #ตัวเล็กอยู่ฝั่งขวาทั้งคู่
+                    elif(text[Z] in KeyBroad_RigthNoShift) and(text[Z-1] in KeyBroad_RigthNoShift):
+                        #นิ้วชี้ขวาทั้งสอง
+                        if(text[Z] in KeyBroad_Rigth_index_NoShift) and (text[Z-1] in KeyBroad_Rigth_index_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                if text[Z-1] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z1]:
+                                    Posi_NoS_Z1 = Posi_Noshift_Z1
+                                    break
+                            if Posi_NoS_Z == Posi_NoS_Z1:
+                                position = Posi_NoS_Z1
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[position].index(text[Z]) - KeyBroad_Rigth_Indexfinger_NoShift[position].index(text[Z-1]))
+                                totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_NoShift[Posi_NoS_Z1].index(text[Z-1]))+1
+                                totaltime += timeText+(dis*timedistance)
+                        #นิ้วกลาง นางขวาทั้งสอง
+                        elif(text[Z] in KeyBroad_Rigth_mr_NoShift) and (text[Z-1] in KeyBroad_Rigth_mr_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Rigth_NoShift)):
+                                if text[Z-1] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z1]:
+                                    Posi_NoS_Z1 = Posi_Noshift_Z1
+                                    break
+                            if Posi_NoS_Z1 == Posi_NoS_Z:
+                                position = Posi_NoS_Z
+                                dis = abs(KeyBroad_Rigth_NoShift[position].index(text[Z]) - KeyBroad_Rigth_NoShift[position].index(text[Z-1]))
+                                totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(KeyBroad_Rigth_NoShift[Posi_NoS_Z][2]))
+                                totaltime += timeText+(dis*timedistance)
+
+                        elif(text[Z] in KeyBroad_Rigth_little_NoShift) and (text[Z-1] in KeyBroad_Rigth_little_NoShift):
+
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                if text[Z-1] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z1]:
+                                    Posi_NoS_Z1 = Posi_Noshift_Z1
+                                    break
+                            if Posi_NoS_Z == Posi_NoS_Z1:
+                                position = Posi_NoS_Z1
+                                dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[position].index(text[Z]) - KeyBroad_Rigth_Littlefinger_NoShift[position].index(text[Z-1]))
+                                totaltime += timeText+(dis*timedistance)
+                            else:
+                                distanceColume = abs(Posi_NoS_Z1 - Posi_NoS_Z)
+                                dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z1].index(text[Z-1]))+distanceColume
+                                totaltime += timeText+(dis*timedistance)
+                        else:
+                            if text[Z] in KeyBroad_Rigth_index_NoShift:
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_NoShift[0].index(KeyBroad_Rigth_Indexfinger_NoShift[0][2]))+Posi_NoS_Z
+                                totaltime += timeText+(dis*timedistance)
+                            elif text[Z] in KeyBroad_Rigth_mr_NoShift:
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(KeyBroad_Rigth_NoShift[Posi_NoS_Z][2]))
+
+                                totaltime += timeText+(dis*timedistance)
+                            elif text[Z] in KeyBroad_Rigth_little_NoShift:
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Littlefinger_NoShift[0].index(KeyBroad_Rigth_Littlefinger_NoShift[0][2]))+Posi_Noshift_Z
+                                totaltime += timeText+(dis*timedistance)
+                    # กรณีที่ฝั่งซ้ายย้ายมากฝั่งขวา
+                    elif(text[Z-1] in KeyBroad_LeftNoShift) and(text[Z] in KeyBroad_RigthNoShift):
+                        if text[Z] in KeyBroad_Rigth_index_NoShift:
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_NoShift[0].index(KeyBroad_Rigth_Indexfinger_NoShift[0][2]))+Posi_NoS_Z
+                                totaltime += timeText+(dis*timedistance)
+                        elif text[Z] in KeyBroad_Rigth_mr_NoShift:
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(KeyBroad_Rigth_NoShift[Posi_NoS_Z][2]))
+                            totaltime += timeText+(dis*timedistance)
+
+                        elif text[Z] in KeyBroad_Rigth_little_NoShift:
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Littlefinger_NoShift[0].index(KeyBroad_Rigth_Littlefinger_NoShift[0][2]))+Posi_Noshift_Z
+                            totaltime += timeText+(dis*timedistance)
+                    # กรณีที่ฝั่งซ้ายขวามากฝั่งซ้าย
+                    elif(text[Z-1] in KeyBroad_RigthNoShift) and(text[Z] in KeyBroad_LeftNoShift):
+                        if(text[Z] in KeyBroad_Left_lrm_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_NoShift)):
+                                if text[Z] in KeyBroad_Left_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Left_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_NoShift[Posi_NoS_Z].index(KeyBroad_Left_NoShift[Posi_NoS_Z][2]))
+                            totaltime += timeText+(dis*timedistance)
+                        elif (text[Z] in KeyBroad_Left_index_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                if text[Z] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_NoShift[0].index(KeyBroad_Left_Indexfinger_NoShift[0][2]))+Posi_NoS_Z
+                            totaltime += timeText+(dis*timedistance)
+                # กรณีที่ตัว Z-1 เป็นตัวพิมพ์ใหญ่ แล้ว Z เป็นตัวพิมพ์เล็ก
+                elif(text[Z] in All_Alphabet_NoShift) and (text[Z-1] in All_Alphabet_Shift):
+                    
+                    # กรณีที่ตัว Z-1 เป็นตัวพิมพ์ใหญ่ แล้ว Z เป็นตัวพิมพ์เล็ก อยู่ฝั่งซ้ายเหมือนกัน
+                    if(text[Z] in KeyBroad_LeftNoShift) and (text[Z-1] in KeyBroad_LeftShift):
+                        
+                        if(text[Z] in KeyBroad_Left_lrm_NoShift) and (text[Z-1] in KeyBroad_Left_LRM_Shift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_NoShift)):
+                                if text[Z] in KeyBroad_Left_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+
+                            for Posi_shift_Z1 in range(len(KeyBroad_Left_Shift)):
+                                if text[Z-1] in KeyBroad_Left_Shift[Posi_shift_Z1]:
+                                    Posi_S_Z1 = Posi_shift_Z1
+                                    break
+
+                            if Posi_NoS_Z == Posi_S_Z1:
+                                position = Posi_S_Z1
+                                if KeyBroad_Left_NoShift[position].index(text[Z]) == KeyBroad_Left_Shift[position].index(text[Z-1]):
+                                    totaltime += timeDuplicate
+                                else:
+                                    dis = abs(KeyBroad_Left_NoShift[position].index(text[Z]) - KeyBroad_Left_Shift[position].index(text[Z-1]))
+                                    totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Left_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_NoShift[Posi_NoS_Z].index(KeyBroad_Left_NoShift[Posi_NoS_Z][2]))
+                                totaltime += timeText+(dis*timedistance)
+
+                        elif(text[Z] in KeyBroad_Left_index_NoShift) and (text[Z-1] in KeyBroad_Left_Index_Shift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                if text[Z] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+
+                            for Posi_shift_Z1 in range(len(KeyBroad_Left_Indexfinger_Shift)):
+                                if text[Z-1] in KeyBroad_Left_Indexfinger_Shift[Posi_shift_Z1]:
+                                    Posi_S_Z1 = Posi_shift_Z1
+                                    break
+                            if Posi_NoS_Z == Posi_S_Z1:
+                                position = Posi_S_Z1
+                                if KeyBroad_Left_Indexfinger_NoShift[position].index(text[Z]) == KeyBroad_Left_Indexfinger_Shift[position].index(text[Z-1]):
+                                    totaltime += timeDuplicate
+                                else:
+                                    dis = abs(KeyBroad_Left_Indexfinger_NoShift[position].index(text[Z]) - KeyBroad_Left_Indexfinger_Shift[position].index(text[Z-1]))
+                                    totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_Shift[Posi_S_Z1].index(text[Z-1]))+1
+                                totaltime += timeText+(dis*timedistance)
+                        else:
+                            if(text[Z] in KeyBroad_Left_lrm_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Left_NoShift)):
+                                    if text[Z] in KeyBroad_Left_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Left_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_NoShift[Posi_NoS_Z].index(KeyBroad_Left_NoShift[Posi_NoS_Z][2]))
+                                totaltime += timeText+(dis*timedistance)
+
+                            elif(text[Z] in KeyBroad_Left_index_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                    if text[Z] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_NoShift[0].index(KeyBroad_Left_Indexfinger_NoShift[0][2]))+Posi_NoS_Z
+                                totaltime += timeText+(dis*timedistance)
+                    # กรณีที่ตัว Z-1 เป็นตัวพิมพ์ใหญ่ แล้ว Z เป็นตัวพิมพ์เล็ก อยู่ฝั่งขวาเหมือนกัน
+                    elif(text[Z] in KeyBroad_RigthNoShift) and (text[Z-1] in KeyBroad_RigthShift):
+                        if(text[Z] in KeyBroad_Rigth_index_NoShift) and (text[Z-1] in KeyBroad_Rigth_index_Shift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Rigth_Indexfinger_Shift)):
+                                if text[Z-1] in KeyBroad_Rigth_Indexfinger_Shift[Posi_Noshift_Z1]:
+                                    Posi_S_Z1 = Posi_Noshift_Z1
+                                    break
+
+                            if Posi_S_Z1 == Posi_NoS_Z:
+                                position = Posi_NoS_Z
+                                if KeyBroad_Rigth_Indexfinger_NoShift[position].index(text[Z]) == KeyBroad_Rigth_Indexfinger_Shift[position].index(text[Z-1]):
+                                    timeText += timeDuplicate
+                                else:
+                                    dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[position].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[position].index(text[Z-1]))
+                                    totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[Posi_S_Z1].index(text[Z-1]))+1
+                                totaltime += timeText+(dis*timedistance)
+
+                        elif(text[Z] in KeyBroad_Rigth_mr_NoShift) and (text[Z-1] in KeyBroad_Rigth_MR_Shift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Rigth_Shift)):
+                                if text[Z-1] in KeyBroad_Rigth_Shift[Posi_Noshift_Z1]:
+                                    Posi_S_Z1 = Posi_Noshift_Z1
+                                    break
+                            if Posi_S_Z1 == Posi_NoS_Z:
+                                position = Posi_NoS_Z
+                                if KeyBroad_Rigth_NoShift[position].index(text[Z]) == KeyBroad_Rigth_Shift[position].index(text[Z-1]):
+                                    timeText += timeDuplicate
+                                else:
+                                    dis = abs(KeyBroad_Rigth_NoShift[position].index(text[Z]) - KeyBroad_Rigth_Shift[position].index(text[Z-1]))
+                                    totaltime += timeText+(dis*timedistance)
+                            else:
+                                dis = abs(KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_NoS_Z].index(KeyBroad_Rigth_Shift[Posi_NoS_Z][2]))
+                                totaltime += timeText+(dis*timedistance)
+                        
+                        elif(text[Z] in KeyBroad_Rigth_little_NoShift) and (text[Z-1] in KeyBroad_Rigth_Little_Shift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            for Posi_Noshift_Z1 in range(len(KeyBroad_Rigth_Littlefinger_Shift)):
+                                if text[Z-1] in KeyBroad_Rigth_Littlefinger_Shift[Posi_Noshift_Z1]:
+                                    Posi_S_Z1 = Posi_Noshift_Z1
+                                    break
+                            if Posi_S_Z1 == Posi_NoS_Z:
+                                position = Posi_NoS_Z
+                                if KeyBroad_Rigth_Littlefinger_NoShift[position].index(text[Z]) == KeyBroad_Rigth_Littlefinger_Shift[position].index(text[Z-1]):
+                                    timeText += timeDuplicate
+                                else:
+                                    dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[position].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[position].index(text[Z-1]))
+                                    totaltime += timeText+(dis*timedistance)
+                            else:
+                                distanceColume = abs(Posi_S_Z1 - Posi_NoS_Z)
+                                dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[Posi_S_Z1].index(text[Z-1]))+distanceColume
+                                totaltime += timeText+(dis*timedistance)
+                        else:
+                            if(text[Z] in KeyBroad_Rigth_index_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[0].index(KeyBroad_Rigth_Indexfinger_Shift[0][2]))+Posi_NoS_Z
+
+                                totaltime += timeText+(dis*timedistance)
+                            elif(text[Z] in KeyBroad_Rigth_mr_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_NoS_Z].index(KeyBroad_Rigth_Shift[Posi_NoS_Z][2]))
+
+                                totaltime += timeText+(dis*timedistance)
+                            elif(text[Z] in KeyBroad_Rigth_little_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index(KeyBroad_Rigth_Littlefinger_Shift[0][2]))+Posi_NoS_Z
+                                totaltime += timeText+(dis*timedistance)
+                    # กรณีที่ Z-1 อยู่ซ้าย แล้ว Z ต้องกดขวา
+                    elif (text[Z-1] in KeyBroad_LeftShift) and (text[Z] in KeyBroad_RigthNoShift):
+                        if(text[Z] in KeyBroad_Rigth_index_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[0].index(KeyBroad_Rigth_Indexfinger_Shift[0][2]))+Posi_NoS_Z
+
+                                totaltime += timeText+(dis*timedistance)
+                        elif(text[Z] in KeyBroad_Rigth_mr_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_NoS_Z].index(KeyBroad_Rigth_Shift[Posi_NoS_Z][2]))
+                            totaltime += timeText+(dis*timedistance)
+                        elif(text[Z] in KeyBroad_Rigth_little_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index(KeyBroad_Rigth_Littlefinger_Shift[0][2]))+Posi_NoS_Z
+                            totaltime += timeText+(dis*timedistance)
+                    
+                    # กรณีที่ Z-1 อยู่ซ้าย แล้ว Z ต้องกดขวา
+                    elif (text[Z-1] in KeyBroad_RigthShift) and (text[Z] in KeyBroad_LeftNoShift):
+                        if(text[Z] in KeyBroad_Left_lrm_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_NoShift)):
+                                if text[Z] in KeyBroad_Left_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Left_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_NoShift[Posi_NoS_Z].index(KeyBroad_Left_NoShift[Posi_NoS_Z][2]))
+                            totaltime += timeText+(dis*timedistance)
+
+                        elif(text[Z] in KeyBroad_Left_index_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                if text[Z] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_NoShift[0].index(KeyBroad_Left_Indexfinger_NoShift[0][2]))+Posi_NoS_Z
+                            totaltime += timeText+(dis*timedistance)
+                # กรณีที่ตัว Z-1 เป็นตัวพิมพ์ใหญ่ แล้ว Z เป็นตัวพิมพ์เล็ก
+                elif(text[Z] in All_Alphabet_NoShift) and (text[Z-1].isspace()):
+
+                    if(text[Z] in KeyBroad_LeftNoShift):
+                        if(text[Z] in KeyBroad_Left_lrm_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_NoShift)):
+                                if text[Z] in KeyBroad_Left_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Left_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_NoShift[Posi_NoS_Z].index(KeyBroad_Left_NoShift[Posi_NoS_Z][2]))
+                            totaltime += timeText+(dis*timedistance)
+
+                        elif(text[Z] in KeyBroad_Left_index_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Left_Indexfinger_NoShift)):
+                                if text[Z] in KeyBroad_Left_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Left_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Left_Indexfinger_NoShift[0].index(KeyBroad_Left_Indexfinger_NoShift[0][2]))+Posi_NoS_Z
+                            totaltime += timeText+(dis*timedistance)
+
+                    elif(text[Z] in KeyBroad_RigthNoShift):
+                        if(text[Z] in KeyBroad_Rigth_index_NoShift):
+                                for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Indexfinger_NoShift)):
+                                    if text[Z] in KeyBroad_Rigth_Indexfinger_NoShift[Posi_Noshift_Z]:
+                                        Posi_NoS_Z = Posi_Noshift_Z
+                                        break
+                                dis = abs(KeyBroad_Rigth_Indexfinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Indexfinger_Shift[0].index(KeyBroad_Rigth_Indexfinger_Shift[0][2]))+Posi_NoS_Z
+
+                                totaltime += timeText+(dis*timedistance)
+                        elif(text[Z] in KeyBroad_Rigth_mr_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Rigth_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Shift[Posi_NoS_Z].index(KeyBroad_Rigth_Shift[Posi_NoS_Z][2]))
+                            totaltime += timeText+(dis*timedistance)
+                        elif(text[Z] in KeyBroad_Rigth_little_NoShift):
+                            for Posi_Noshift_Z in range(len(KeyBroad_Rigth_Littlefinger_NoShift)):
+                                if text[Z] in KeyBroad_Rigth_Littlefinger_NoShift[Posi_Noshift_Z]:
+                                    Posi_NoS_Z = Posi_Noshift_Z
+                                    break
+                            dis = abs(KeyBroad_Rigth_Littlefinger_NoShift[Posi_NoS_Z].index(text[Z]) - KeyBroad_Rigth_Littlefinger_Shift[0].index(KeyBroad_Rigth_Littlefinger_Shift[0][2]))+Posi_NoS_Z
+                            totaltime += timeText+(dis*timedistance)
+
+
 
     print(totaltime)
 
