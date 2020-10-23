@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/AddSub.css') }}">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>SUBJECT</title>
     <style>
         body{
@@ -84,22 +84,27 @@
         }
         .Show-Detil-Quiz{
           /* border: 2px solid black; */
-          width: 1500px;
-          margin-top: 30px ;
-          margin-left: 50px ;
+          border: 2px solid black;
+          border-radius: 10px;
+          
+          box-shadow: 0 0 15px black;
+          background-color: rgb(255, 255, 255);
+          width: 1400px;
+          margin-left: 50px;
+          margin-top: 20px ;
           font-family: 'Sarabun', sans-serif;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz thead th{
           text-align: center;
           border: 2px solid black;
           background: rgba(78, 150, 78, 0.905);
-          height: 25px;
-          font-size: 20px;
+
+          font-size: 18px;
           font-family: 'Sarabun', sans-serif;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .No input[type='text']{
             font-family: 'Sarabun', sans-serif;
-          width: 50px;
+
           text-align: center;
           border-collapse: collapse;
           background: none;
@@ -168,6 +173,14 @@
   background:rgba(29, 29, 29, 0.671);
 
 }
+.container-table{
+          background: rgba(216, 216, 216, 0.555);
+          box-shadow: 0 0 15px black;
+          border: 2px solid black;
+          width: 550px;
+          margin-top: 20px;
+          margin-left: 450px;
+        }
 .cssload-circle{
       margin: 300px auto;
       width:120px;
@@ -444,6 +457,12 @@
 
   $(document).ready(function(){
     $(".But-edit").click(function(){
+      swal({
+        title: "Delete Choice Success!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "Aww yiss!",
+      });
       $(".Box-Animation").show();
       setTimeout(function(){
         $(".But-edit").addClass("Success");
@@ -453,11 +472,19 @@
       }, 2000)
     });
     $(".But-delete").click(function(){
+      swal({
+        title: "Delete Choice Success!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "Aww yiss!",
+      });
+      $(".container-table").hide();
       $(".Box-Animation").show();
       setTimeout(function(){
         $(".But-delete").addClass("Success");
       }, 3700);
       setTimeout(function(){
+        $(".container-table").show();
         $(".Box-Animation").hide();
       }, 2000)
     });
@@ -473,10 +500,27 @@
 
   });
   $(document).ready(function(){
-    $('#example').DataTable();
-    // $('#ShowDetil').DataTable();
+    $('#Subject-Show').DataTable();
+    $('#ShowDetil').DataTable();
     
   });
+  function btu_Success(){
+    var Sub = document.getElementById('Sub_1').value;
+    if(Sub == "" || Sub == null){
+      alert("กรุณากรอกวิชาที่ต้องการเพิ่มด้วยครับ !!")
+      return false;
+
+      
+    }
+    swal({
+      title: "Add Subject Success!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "OK!",
+    });
+ 
+    
+  }
 
 
 
@@ -610,7 +654,9 @@
           </div>
         </div>
       </div>
-      <table class="Select-Sub" >
+
+      <div class="container-table">
+      <table class="Select-Sub" id="Subject-Show">
           <thead>
               <tr>
                   <th class="title-Select-Sub">ชื่อรายวิชา</th>
@@ -620,16 +666,25 @@
           </thead>
           <tbody>
               {% for k in data.each() %}
-              <form action="/Subject_TH" method="POST">
+              
               <tr>
-                  <td class="detil-Select-Sub"> <input type="text" value="{%print(k.key())%}" name="Subname" readonly></td>
-                  <td class="detil-Select-Sub"> {% print(k.val()['DataNum']) %}</td>
-                  <td class="detil-Select-Sub"> <button type="Submit" >View <img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
-              </tr>
-              </form>
+                <form action="/Subject_TH" method="POST">
+                  {% if (k.key() == Headtext)%}
+                    <td style="background: rosybrown;" class="detil-Select-Sub">{%print(k.key())%}</td>
+                    <td style="background: rosybrown;" class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
+                    <td style="background: rosybrown;" class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                  {% else %}
+                  <td class="detil-Select-Sub">{%print(k.key())%}</td>
+                  <td class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
+                  <td class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                  {% endif %}
+                </form>
+                </tr>
+              
               {% endfor %}
           </tbody>
       </table>
+    </div>
 
       <!-- โชว์ข้อมูล คำถามในแต่ละรายวิชา -->
       
@@ -640,11 +695,11 @@
         {% elif haveData %}
         <div class="Show-Detil-Quiz">
               <h1 style="margin-left: 500px; font-weight: bold;">{{Headtext}}</h1>
-              <div style="width: 90%;">
-              <table class="table-Show-Detil-Quiz" id="example">
+              <div >
+              <table class="table-Show-Detil-Quiz" id="ShowDetil">
                   <thead>
                   <tr>
-                      <th>NO.</th>
+                      <th style="display: none;">NO</th>
                       <th >โจทย์ ?</th>
                       <th> ตัวเลือกที่ 1</th>
                       <th >ตัวเลือกที่ 2</th>
@@ -659,10 +714,10 @@
               <tbody>
                   {% for k in Show.each() %}
 
-                  <form action="/Sub_Update" method="POST">
+                  
                       <tr>
-                        <td>{%print(k.val()['ID'])%}</td>
-                          <td class="No" style="display: none;"><input type="text" value="{%print(k.val()['ID'])%}" readonly name="NO_Sub"></td>
+                        <form action="/Sub_Update" method="POST">
+                        <td style="display: none;"><input type="text" name="NO_Sub" value="{%print(k.val()['ID'])%}"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
@@ -675,9 +730,10 @@
                             <button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">แก้ไข <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button>
                             <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">ลบ<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button>
                           </td>
-                         
+
+                        </form>
                       </tr>
-                  </form>
+                
 
                   {% endfor %}
                   

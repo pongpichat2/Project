@@ -169,7 +169,7 @@
       var langua = document.getElementById('select-langua-Op').value;
 
       if(langua == 'TH'){
-        window.location.href = "/AddTeacher_TH";
+        window.location.href = "";
       }
     });
     
@@ -267,12 +267,9 @@
             <li class="nav-item active">
               <a class="nav-link"  href="" style="color: rgb(255, 68, 0);">Add Teacher </a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link"  href="/Edittime" >Edit Time</a>
-            </li>
-          <li class="nav-item">
+            <li class="nav-item">
 
-            <p style="margin-left: 700px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
+            <p style="margin-left: 900px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
             
             <li class="nav-item dropdown">
 
@@ -354,7 +351,7 @@
             
         <div class="borderform">
             <div class="title-web">
-                <h1 style="text-align: center; font-family: 'Odibee Sans', cursive; font-size: 45px; margin: 10px;"> Add Teacher</h1>
+                <h1 style="text-align: center; font-family: 'Odibee Sans', cursive; font-size: 45px; margin: 10px;"> เพิ่มอาจารย์ </h1>
             </div>
             
             <div class="AddTeacher">
@@ -363,11 +360,11 @@
                     <form action="/Register" name="Regis" method="POST">
                             
                         <p>Username : <br><input type="text"  name="Username" id="recipient-name-username" placeholder="Please enter Username" pattern="[A-Z,a-z,0-9]{8,}" title="Username is 8 characters or more."></p>
-                        <p>Password : <br><input type="password" name="Password" id="recipient-name-pass" placeholder="Please enter Password" pattern="[A-Z,a-z,0-9]{8,}" title="Password is 8 characters or more."></p>
-                        <p>Co-Password : <br><input type="password" name="Con_Pass" id="recipient-name-Conpass" placeholder="Please enter Co-Password"></p>
+                        <p>รหัสผ่าน : <br><input type="password" name="Password" id="recipient-name-pass" placeholder="Please enter Password" pattern="[A-Z,a-z,0-9]{8,}" title="Password is 8 characters or more."></p>
+                        <p>ยืนยันรหัสผ่าน : <br><input type="password" name="Con_Pass" id="recipient-name-Conpass" placeholder="Please enter Co-Password"></p>
                         <p>E-mail : <br><input type="email"  name="Email" id="recipient-name-email" placeholder="Please enter E-mail"></p>
 
-                        <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]" placeholder="Please enter Subject"> <button type="button" class="but-add" onclick="add()">+</button></p>
+                        <p>ประจำรายวิชา : <br><input type="text" class="" id="Sub_1" name="Sub[]" placeholder="Please enter Subject"> <button type="button" class="but-add" onclick="add()">+</button></p>
                         <div id="new_chq"> </div>
                         <input type="hidden" value="1" id="total_chq">
                       

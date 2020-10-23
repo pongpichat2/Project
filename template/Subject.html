@@ -28,14 +28,13 @@
             
           background-size: 100% 100%;
           background-position: center;
-          height: 100vh;
+          height: 100%;
           margin: 0 0;
             /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
             background-image: url("/static/image/G13Wall.jpg");
         }
         .table-Show-sub{
           font-family: 'Odibee Sans', cursive;
-          /* position: fixed; */
 
           margin-top: 10px;
 
@@ -98,17 +97,23 @@
         }
         .Show-Detil-Quiz{
           /* border: 2px solid black; */
+          border: 2px solid black;
+          border-radius: 10px;
+          
+          box-shadow: 0 0 15px black;
+          background-color: rgb(255, 255, 255);
           width: 1400px;
           margin-left: 50px;
           margin-top: 20px ;
           font-family: 'Odibee Sans', cursive;
         }
+
         .Show-Detil-Quiz .table-Show-Detil-Quiz thead th{
           text-align: center;
           border: 2px solid black;
           background: rgba(78, 150, 78, 0.705);
 
-          /* font-size: 18px; */
+          font-size: 18px;
           font-family: 'Odibee Sans', cursive;
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .No input[type='text']{
@@ -122,7 +127,7 @@
         }
         .Show-Detil-Quiz .table-Show-Detil-Quiz tbody .Data input[type='text']{
           width: 120px;
-          height: 35px;
+          height: 20px;
           text-align: center;
           border-collapse: collapse;
           background: none;
@@ -150,7 +155,7 @@
           background: rgba(44, 43, 43, 0.568);
         }
         .table-Show-Detil-Quiz tbody .But-edit{
-          margin-left: 5px;
+          margin-left: 2px;
           border: 2px solid black;
           border-radius: 20px;
           background:linear-gradient(135deg, rgb(255, 255, 255) 30%, rgb(23, 201, 17));
@@ -174,13 +179,13 @@
           background:linear-gradient(135deg,  rgb(202, 69, 69) 30%, rgb(245, 2, 2));
         }
         .Box-Animation{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  border: 2px solid black;
-  background:rgba(29, 29, 29, 0.671);
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          border: 2px solid black;
+          background:rgba(29, 29, 29, 0.671);
 
-}
+        }
 
 .cssload-circle{
       margin: 300px auto;
@@ -507,7 +512,7 @@ box-shadow: 0 0 15px black;
 
   });
   $(document).ready(function(){
-    $('#example').DataTable();
+    $('#Subject-Show').DataTable();
     $('#ShowDetil').DataTable();
     
   });
@@ -661,7 +666,7 @@ box-shadow: 0 0 15px black;
         </div>
       </div>
       <div class="container-table">
-        <table class="table-Show-sub" id="example">
+        <table class="table-Show-sub" id="Subject-Show">
             <thead>
                 <tr>
                     <th class="title-Select-Sub">Subject Name</th>
@@ -674,9 +679,16 @@ box-shadow: 0 0 15px black;
                 
                 <tr>
                 <form action="/Subject" method="POST">
-                    <td class="detil-Select-Sub">{%print(k.key())%}</td>
-                    <td class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
-                    <td class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                  {% if (k.key() == Headtext)%}
+
+                    <td style="background: rosybrown;" class="detil-Select-Sub">{%print(k.key())%}</td>
+                    <td style="background: rosybrown;" class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
+                    <td style="background: rosybrown;" class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                  {% else %}
+                  <td class="detil-Select-Sub">{%print(k.key())%}</td>
+                  <td class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
+                  <td class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                  {% endif %}
                 </form>
                   </tr>
                 
@@ -698,8 +710,8 @@ box-shadow: 0 0 15px black;
               <table class="table-Show-Detil-Quiz" id="ShowDetil">
                   <thead>
                   <tr>
-                      <!-- <th>No.</th> -->
-                      <th >Quiz ?</th>
+                      <th style="display: none;">NO</th>
+                      <th>Quiz ?</th>
                       <th>Choice 1</th>
                       <th >Choice 2</th>
                       <th >Choice 3</th>
@@ -714,7 +726,7 @@ box-shadow: 0 0 15px black;
                   {% for k in Show.each() %}
                       <tr>
                         <form action="/Sub_Update" method="POST">
-                          <td class="No" style="display: none;"><input type="text" value="{%print(k.val()['ID'])%}"  readonly name="NO_Sub"></td>
+                          <td style="display: none;"><input type="text" name="NO_Sub" value="{%print(k.val()['ID'])%}"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
                           <td class="Data"><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>

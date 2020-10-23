@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, url_for, redirect, session, jsonify
 import math
+import json
 # import pyrebase
 from firebase import Firebase
 import Calculat as Cal
 from array import *
+import random
 
 config = {
     "apiKey": "AIzaSyAh2ji3JKKX-QHZv53sxXlNbpc_qet9yDU",
@@ -22,6 +24,7 @@ auth = firebase.auth()
 
 app = Flask(__name__,template_folder='template')
 app.secret_key = "hello"
+
 
 
 @app.route("/")
@@ -75,8 +78,19 @@ def HomeAdmin():
     else:
         IDAdmin = session['Admin']
         EmailAdmin = session['EmailAdmin']
-        Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-        return render_template('HomeAdmin.html',name = EmailAdmin ,DataSubject = Admin_Subject)
+
+        return render_template('HomeAdmin.html',name = EmailAdmin)
+
+
+@app.route("/HomeAdmin_TH")
+def HomeAdmin_TH():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
+ 
+        return render_template('HomeAdmin_TH.html',name = EmailAdmin )
 
 @app.route("/Home_TH")
 def Home_TH():
@@ -608,6 +622,69 @@ def AddTeacher():
 
         return render_template('AddTeacher.html',name = EmailAdmin)
 
+
+
+@app.route("/AddTeacher_TH", methods=['GET','POST'])
+def AddTeacher_TH():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
+
+        return render_template('AddTeacher_TH.html',name = EmailAdmin)
+
+@app.route("/Edittime")
+def Edittime():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
+        with open('Time.json') as f:
+            data = json.load(f)
+
+        for emp in data['TimeManhattan']:
+            
+  
+            timeText = emp['TimeText']
+    
+            timedistance = emp['timedistance']
+
+            timeSpacbar = emp['TimeText'] 
+
+            timeDuplicate = emp['timeDuplicate']
+
+        return render_template('Edittime.html',name = EmailAdmin,timeText=timeText,timedistance=timedistance,timeSpacbar=timeSpacbar,timeDuplicate=timeDuplicate)
+
+@app.route("/EdittimeJson", methods=['GET','POST'])
+def EdittimeJson():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        if request.method == 'POST':
+            timeText = request.form['timeText']
+            timeSpacbar = request.form['timeSpacbar']
+            timeDuplicate = request.form['timeDuplicate']
+            timeDistance = request.form['Distance']
+
+            a_file = open("Time.json", "r")
+            json_object = json.load(a_file)
+
+            data = json_object["TimeManhattan"]
+
+            for time in data:
+                time["TimeText"] = timeText
+                time["timedistance"] = timeDistance
+                time["timeDuplicate"] = timeDuplicate
+                time["timeSpacbar"] = timeSpacbar
+
+            a_file = open("Time.json", "w")
+            json.dump(json_object, a_file)
+            a_file.close()
+            
+        return redirect(url_for('Edittime'))
+
 @app.route("/ChangePass_allPage_Admin", methods=['GET','POST'])
 def ChangePass_allPage_Admin():
     Admin = session['Admin']
@@ -670,8 +747,53 @@ def Register():
                         db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
                         db.child("All_Subject").child(Sub[i]).set({"owner":Username})
 
-            # return redirect(url_for('Home'))
+  
     return redirect(url_for('AddTeacher'))
+
+@app.route("/Register_TH", methods=['GET','POST'])
+def Register_TH():
+    if request.method == 'POST':
+        EmailAdmin = session['EmailAdmin']
+        Username = request.form['Username']
+        Pass = request.form['Password']
+        Co_pass = request.form['Con_Pass']
+        Email = request.form['Email']
+        Sub = request.form.getlist('Sub[]')
+
+        CheckMember = db.child('Admin').get().val()
+
+        CheckSubject = db.child('All_Subject').get().val()
+            # การเช็คว่า มี Username ซ้ำ
+        
+        if Username in CheckMember :
+            Usernamerepea = "Already have a user account"
+            return render_template('AddTeacher.html',name = EmailAdmin, Usernamerepea = Usernamerepea)
+        
+        else:
+            
+            db.child("Admin").child(Username).set({"Username":Username,"Password":Pass,"Co_Pass": Co_pass,"Email":Email,"Status":"teacher"})
+
+                # การบันทึก Subject หลายๆค่า หรือค่าเดียว
+            if (len(Sub) == 1 ):
+                
+                if Sub[0] in CheckSubject:
+                    Suberror = "Adding Subject Error"
+                    db.child("Admin").child(Username).remove()
+                    return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
+                else:
+                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
+                    db.child("All_Subject").child(Sub[0]).set({"owner":Username})
+            else:
+                for i in range(len(Sub)):
+                    if Sub[i] in CheckSubject:
+                        Suberror = Sub[i]+" Adding Subject Error please Login"
+                        return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
+                    else:
+                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
+                        db.child("All_Subject").child(Sub[i]).set({"owner":Username})
+
+  
+    return redirect(url_for('AddTeacher_TH'))
 
 @app.route("/DataChart_GameAlpha")
 def DataChart_GameAlpha():

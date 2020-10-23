@@ -12,154 +12,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/Login.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Login.css') }}">
     <title>Document</title>
-    <style>
-        body{
-            background-size: 100% 100%;
-            background-position: center;
-            height: 100vh;
-            margin: 0;
-            /* background-image: linear-gradient(-20deg, #0b0b31 0%, #181131 100%); */
-            background-image: url("/static/image/G8Wall.jpg");
-        }
 
-        .form-login{
-            margin: 2% 33%;
-            width: 460px;
-            height: 280px;
-            background-color: rgba(126, 126, 126, 0.8);
-            border-radius: 20px;
-            color: rgba(190, 51, 0, 0.89);
-            border: 1px solid rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 20px rgba(0, 0, 0);
-            font-family: 'Acme', sans-serif;
-            font-size: 20px;
-        }
-        .form-login input[type=text],input[type=password]{
-            /* background-color: rgba(255, 255, 255, 0.2); */
-            width: 270px;
-            height: 50px;
-            text-align: center;
-            /* color: rgb(255, 255, 255); */
-            border:2px solid black ;
-     
-            border-radius: 25px;
-            font-size: 20px;
-            font-family: 'Acme', sans-serif;
-            transition: 0.8s;
-        }
-        .form-login input[type=text]:focus ,input[type=password]:focus{
-            width: 300px;
-            /* background: rgb(255, 255, 255,0.8);
-            color: rgb(255, 115, 0); */
-            box-shadow: 0 0 15px rgb(255, 30, 0);
-
-        }
-        .form-login .title{
-            text-align: center;
-            font-weight: bold;
-            font-size: 35px;
-            color: rgb(131, 34, 10);
-        }
-        .form-login .Datainput{
-            text-align: center;
-            margin: 10px 20px;
-        }
-        .Logo {
-            margin: 2% 38%;
-            width: 300px;
-            height: 300px;
-            background:none;
-        }
-        .form-login .GoPlay{
-            margin: 5% 10%;
-            width: 100%;
-            height: 20px;
-            color: rgb(6, 95, 51);
-        }
-        .form-login .buttonSub{
-
-            width: 100px;
-            height: 45px;
-            color: white;
-            background: rgb(3, 84, 206,0.6);
-            border: rgb(255, 255, 255) solid 2px ;
-            border-radius: 20px;
-            font-family: 'Acme', sans-serif;
-            font-weight: bold;
-            font-size: 20px;
-            transition: 0.8s;
-        }
-        .form-login .buttonSub:hover{
-            background: rgba(27, 102, 216, 0.6);
-            color: rgb(0, 255, 0);
-            border: rgb(9, 255, 0) solid 2px ;
-            box-shadow: 0 0 15px rgb(9, 255, 0) ;
-        }
-        .modal-body input[type='text'], input[type='password']{
-          border: 2px solid black;
-        }
-        .modal-body .but-add{
-          border: black 2px solid;
-          font-weight: bold;
-          background: rgba(63, 63, 206, 0.658);
-          margin-left: 10px;
-          transition: 0.8s;
-        }
-        .modal-body .but-add:hover{
-          border-radius: 10px;
-          background: rgb(9, 99, 24);
-        }
-        .modal-body .but-Delete{
-          border: black 2px solid;
-          font-weight: bold;
-          background: rgba(255, 0, 34, 0.658);
-          margin-left: 10px;
-          margin-top: 10px;
-          transition: 0.8s;
-        }
-        .modal-body .but-Delete:hover{
-          background: brown;
-          border-radius: 10px;
-        }
-        .but-Regis{
-            margin-left: 200px;
-            width: 100px;
-            height: 45px;
-            color: white;
-            background: rgba(190, 102, 43, 0.6);
-            border: rgb(255, 255, 255) solid 2px ;
-            border-radius: 20px;
-            font-family: 'Acme', sans-serif;
-            font-weight: bold;
-            font-size: 20px;
-            transition: 0.8s;
-        }
-        .but-Regis:hover{
-          border: rgba(255, 115, 0, 0.753) solid 2px ;
-          box-shadow: 0 0 15px rgba(255, 115, 0)  ;
-          color: rgba(255, 115, 0, 0.753) ;
-        }
-    </style>
-    <script>
-        function CheckLogin(){
-            var email = document.forms["Login"]["Username"].value;
-            var pass = document.forms["Login"]["password"].value;
-
-            if (email == "" || email == null) {
-                alert("กรุณากรอก Username ด้วยครับ!! ");
-                document.getElementById("Username").focus();
-                return false;
-            }
-            if (pass == "" || pass == null) {
-                alert("กรุณากรอก Password ด้วยครับ!! ");
-                document.getElementById("password").focus();
-                return false;
-            }
-        }
-        
-
-    </script>
 </head>
 <body>
 
@@ -195,62 +52,13 @@
                 <p style="font-weight: bold;" class="Datainput">Username &nbsp;:&nbsp;&nbsp; <input type="text" id="Username" name="Username"></p>
                 <p style="font-weight: bold;" class="Datainput">Password &nbsp;:&nbsp;&nbsp; <input type="password" id="password" name="password"></p>
                 
-                <p><button type="button"  data-toggle="modal" class="but-Regis" data-target="#exampleModal" data-whatever="@mdo">Register</button>
+                <p>
                     <button type="submit" class="buttonSub" onclick="return CheckLogin()">Log in</button> 
-        </form>
-        
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document" >
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 40%;">REGISTER</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/Register" name="Regis" method="POST">
-                            
-                              <p>Username : <br><input type="text" class="form-control" id="recipient-name-username" name="Username" ></p>
-                              <p>Password : <br><input type="password" class="form-control" id="recipient-name-pass" name="Password"></p>
-                              <p>Co-Password : <br><input type="password" class="form-control" id="recipient-name-Conpass" name="Con_Pass"></p>
-                              <p>E-mail : <br><input type="text" class="form-control" id="recipient-name-email" name="Email" ></p>
-
-                              <p>Pro-Subject : <br><input type="text" class="" id="Sub_1" name="Sub[]"> <button type="button" class="but-add" onclick="add()">+</button></p>
-                              <div id="new_chq"> </div>
-                              <input type="hidden" value="1" id="total_chq">
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-                                <button type="submit" class="btn btn-primary" onclick="return CheckRegister()">Submit</button>
-                              </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </p>
             </div>
-        
+        </form>
+
 </body>
-<script>
-    var i=1;
-    function add(){
-    i++;
-    var new_input="<input type='text' id='Sub_"+i+"' name='Sub[]'  required><button type='button' class='but-Delete' onclick='remove();' id='Subbut_"+i+"'>x</button><br id = 'br_"+i+"'>";
-    $('#new_chq').append(new_input);
-    $('#total_chq').val(i)
-  }
-  function remove(){
-    var last_chq_no = $('#total_chq').val();
-    if(last_chq_no>0){
-      $('#Sub_'+last_chq_no).remove();
-      $('#Subbut_'+last_chq_no).remove();
-      $('#br_'+last_chq_no).remove();
-      $('#total_chq').val(last_chq_no-1);
-    }
-  }
-  
-</script>
+
 
 
 

@@ -45,13 +45,14 @@
         height: 505px;
    }
    .Add-Teacher #Title{
+
         width: 100%;
         margin: 20% 38%;
         color: rgb(218, 218, 218);
         font-weight: bold;
         font-size: 50px;
         position: absolute;
-        font-family: 'Odibee Sans', cursive;
+        font-family: 'Sarabun', sans-serif;
     } 
 
     .Add-Teacher img{
@@ -84,12 +85,12 @@
     }
     .AddSub .TitleSub{
         width: 100%;
-        margin: 25% 38%;
+        margin: 25% 30%;
         color: rgb(218, 218, 218);
         font-weight: bold;
         font-size: 50px;
         position: absolute;
-        font-family: 'Odibee Sans', cursive;
+        font-family: 'Sarabun', sans-serif;
     }
     .AddSub img{
         position: absolute;
@@ -132,9 +133,11 @@
       margin-right: 900px !important;
     }
     .nav-item{
+        font-family: 'Sarabun', sans-serif;
       font-size: 20px;
     }
     .nav-link{
+        font-family: 'Sarabun', sans-serif;
       margin-left: 20px;
       transition: 0.8s;
     }
@@ -155,7 +158,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="AddTeacher">Add Teacher</a>
+                <a class="nav-link" href="AddTeacher_TH">เพิ่มอาจารย์</a>
             </li>
 
             
@@ -179,7 +182,7 @@
             <div class="Select-Langua">
               <select class="select-langua-Op"  id="select-langua-Op" style="border: none; background: none; margin-top: 5px;">
                   <a href=""><option  value="EN">EN</option></a>
-                  <a href="/Home_TH"><option  value="TH">TH</option></a>
+                  <a href=""><option  value="TH" selected>TH</option></a>
               </select>
             </div>
           </ul>
@@ -241,9 +244,9 @@
         <a href="/AddTeacher" class="AddTeacher">
             <div class="Add-Teacher">
                 <img src="/static/image/teacher.png" width="128px" height="128px" alt="">
-                <p  id="Title"  key='Add-title' class="trasla">Add - Teacher</p>
+                <p  id="Title"  key='Add-title' class="trasla">เพิ่มอาจารย์</p>
 
-                <p style="color: white; position: absolute; margin: 400px 120px;" class="trasla" key='Add-detil'>* Go To the page Add Teacher is a function to Add Teacher.</p>
+                <p style="color: white; position: absolute; margin: 400px 150px; font-family: 'Sarabun', sans-serif;" class="trasla" key='Add-detil'>* จะไปยังหน้าเพิ่มอาจารย์ เพื่อทำการเพิ่มอออาจารผู้สอน</p>
             </div>
         </a>
 
@@ -251,9 +254,9 @@
             <div class="Add-Sub">
                 <img src="/static/image/teachers.png"  width="128px" height="128px"  alt="">
 
-                <p class="TitleSub" id="traslation" key='Sub-title'>Wait Update</p>
+                <p class="TitleSub" id="traslation" key='Sub-title'>รอการอัปเดท</p>
 
-                <p style="color: white; position: absolute; margin: 600px 120px;" class="trasla" key='Sub-detil'>* Wait Update.</p>
+                <p style="color: white; position: absolute; margin: 600px 120px; font-family: 'Sarabun', sans-serif;" class="trasla" key='Sub-detil' >* รอการอัปเดท.</p>
             </div>
         </a>
 
@@ -298,8 +301,8 @@
     $('.select-langua-Op').change(function(){
       var langua = document.getElementById('select-langua-Op').value;
       console.log(langua)
-      if(langua == 'TH'){
-        window.location.href = "/HomeAdmin_TH";
+      if(langua == 'EN'){
+        window.location.href = "/HomeAdmin";
       }
     });
 

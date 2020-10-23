@@ -1,18 +1,28 @@
 import numpy as np
+import json
 
 def test():
-    timeText = 500
-    # Shift = 1000 เมื่อมีการ กด Shift
-    timedistance = 500 #เวลาของระยะห่างต่อ 1 จุด
-    timeSpacbar = 300 #เวลาของ Spacbar
+    with open('Time.json') as f:
+        data = json.load(f)
 
-    timeDuplicate = 100 #เวลาของตัวอักษรที่ซ้ำ
-    totaltime = 0.0 #เวลาโดยรวม
+    for emp in data['TimeManhattan']:
+            
+  
+        timeText = emp['TimeText']
+ 
+        timedistance = emp['timedistance']
 
-    # นิ้วก้อย นาง กลาง ฝั่งซ้าย
+        timeSpacbar = emp['TimeText'] 
+
+        timeDuplicate = emp['timeDuplicate']
+        totaltime = 0.0 #เวลาโดยรวม
+
+
+    # นิ้วก้อย นาง กลาง ฝั่งซ้าย boarb
     KeyBroad_Left_Shift = [['!','Q','A','Z',], ['@','W','S','X'], ['#','E','D','C']]
     # นิ้วชี้ฝั่งซ้าย
     KeyBroad_Left_Indexfinger_Shift = [['$','R','F','V'],['%','T','G','B']]
+    
     # นิ้ว กลาง  ฝั่งขวา
     KeyBroad_Rigth_Shift = [['*','I','K','<'], ['(','O','L','>']]
     #นิ้วชี้ฝั่งขวา

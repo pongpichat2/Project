@@ -507,7 +507,7 @@
                     {% for Member in ShowData.each() %}
                     
                         <tr>
-                          <form action="/ShowEvoShoot" method="POST">
+                          <form action="/ShowEvoShoot_TH" method="POST">
                             {% if (Member.val()['Email'] == email)%}
                             <td class="data" style="background: rosybrown;">{% print(Member.val()['Email'])%}</td>
                             <td class="data" style="background: rosybrown;">{%print(Member.val()['Name'])%}</td>
