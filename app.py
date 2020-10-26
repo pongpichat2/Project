@@ -68,8 +68,30 @@ def Home():
     else:
         IDAdmin = session['Admin']
         EmailAdmin = session['EmailAdmin']
+
+        SubLock = ""
         Admin_Subject = db.child('Admin').child(IDAdmin).child('Subject_pro').get()
-        return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject)
+        
+        for Check in Admin_Subject.each():
+            Check_Status = db.child('Admin').child(IDAdmin).child('Subject_pro').child(Check.key()).get()
+            if(Check_Status.val()['Status'] == "Unlock"):
+                # SubLock = Check.key()+" Locked"+SubLock
+                # print(SubLock)
+                continue
+                # return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject)
+            elif((Check_Status.val()['Status'] == "Lock")):
+                
+                SubLock = Check.key()+" , "+SubLock
+                # print(SubLock)
+ 
+        if(len(SubLock) == 0):
+            return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject)
+        else:
+            return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject,SubLock = SubLock)
+        
+        
+
+        
 
 @app.route("/HomeAdmin")
 def HomeAdmin():
@@ -589,6 +611,8 @@ def AddSub_allPage():
                 return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, ErrorSub = SubError)
             else:
                 db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0"})
+                db.child("All_Subject").child(AddSub[i]).set({"owner":Admin,"Status":"Unlock"})
+                db.child("Class").child(AddSub[i]).set({"Status":"Unlock","owner":Admin})
 
     return redirect(url_for('Home'))
 
@@ -633,6 +657,36 @@ def AddTeacher_TH():
         EmailAdmin = session['EmailAdmin']
 
         return render_template('AddTeacher_TH.html',name = EmailAdmin)
+
+@app.route("/LockSubject")
+def LockSubject():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        IDAdmin = session['Admin']
+        EmailAdmin = session['EmailAdmin']
+
+        dataSub = db.child("Class").get()
+        return render_template('LockSubject.html',name = EmailAdmin ,dataSub = dataSub)
+
+@app.route("/Up_LockSubject", methods=['GET','POST'])
+def Up_LockSubject():
+    if session.get('Admin') == None:
+        return redirect(url_for('Login'))
+    else:
+        if request.method == 'POST':
+            Name_Sub = request.form['Sub_name']
+            Status = request.form['Status']
+
+            db.child('Class').child(Name_Sub).update({'Status':Status})
+            Key = db.child('Class').child(Name_Sub).get().val()
+            if(Status == 'Lock'):
+                db.child('Admin').child(Key['owner']).child('Subject_pro').child(Name_Sub).update({'Status':Status})
+            elif(Status == 'Unlock'):
+                db.child('Admin').child(Key['owner']).child('Subject_pro').child(Name_Sub).update({'Status':Status})
+                
+
+            return redirect(url_for('LockSubject'))
 
 @app.route("/Edittime")
 def Edittime():
@@ -683,6 +737,19 @@ def EdittimeJson():
             json.dump(json_object, a_file)
             a_file.close()
             
+            Class = db.child('Class').get()
+            for AllClass in Class.each():
+                Sub = db.child('Class').child(AllClass.key()).get()
+                for AllSub in Sub.each():
+                    if AllSub.key() == 'Status':
+                        continue
+                    elif AllSub.key() == 'owner':
+                        continue
+                    else:
+                        Answer = AllSub.val()['ans']
+                        Avgtime = Cal.Calchoice(Answer)
+
+                        db.child('Class').child(AllClass.key()).child(AllSub.key()).update({"Time":Avgtime})
         return redirect(url_for('Edittime'))
 
 @app.route("/ChangePass_allPage_Admin", methods=['GET','POST'])
@@ -738,6 +805,7 @@ def Register():
                 else:
                     db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
                     db.child("All_Subject").child(Sub[0]).set({"owner":Username})
+                    db.child("Class").child(Sub[0]).set({"Status":"Unlock","owner":Username})
             else:
                 for i in range(len(Sub)):
                     if Sub[i] in CheckSubject:
@@ -746,6 +814,7 @@ def Register():
                     else:
                         db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
                         db.child("All_Subject").child(Sub[i]).set({"owner":Username})
+                        db.child("Class").child(Sub[i]).set({"Status":"Unlock","owner":Username})
 
   
     return redirect(url_for('AddTeacher'))
@@ -783,6 +852,7 @@ def Register_TH():
                 else:
                     db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
                     db.child("All_Subject").child(Sub[0]).set({"owner":Username})
+                    db.child("Class").child(Sub[0]).set({"Status":"Unlock","owner":Username})
             else:
                 for i in range(len(Sub)):
                     if Sub[i] in CheckSubject:
@@ -791,6 +861,7 @@ def Register_TH():
                     else:
                         db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
                         db.child("All_Subject").child(Sub[i]).set({"owner":Username})
+                        db.child("Class").child(Sub[i]).set({"Status":"Unlock","owner":Username})
 
   
     return redirect(url_for('AddTeacher_TH'))
@@ -1023,9 +1094,11 @@ def DataChart():
                             arrayGame3[CountArray_3].remove(sortArray_G3[(removeData_G3+1)*-1])
         
         for AVG_G3 in range(len(arrayGame3)):
+     
             AVG_Score_G3 = '%.1f'%(sum(arrayGame3[AVG_G3])/len(arrayGame3[AVG_G3]))
 
             AVG_Array3.append(AVG_Score_G3)
+
 
 
     return jsonify({'ChartDataGame3':DatachartGame3,'AVGGame3':AVG_Array3,'Label_G3':labels_G3})

@@ -641,7 +641,11 @@ $(document).ready(function(){
                 <form action="{{ url_for('insertChoice') }}" method="POST" name="AddChoice" >
                     <p>SUBJECT : <br> <select name="Subject" id="Subject" class="Select">
                         {% for Sub in data.each() %}
-                        <option value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>
+                          {% if Sub.val()['Status'] == 'Lock' %}
+                            <option style="display: none;" value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>
+                          {% else %}
+                            <option value="{% print(Sub.key()) %}">{% print(Sub.key()) %}</option>
+                          {% endif %}
 
                         {% endfor %}
                         

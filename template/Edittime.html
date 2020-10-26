@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Edit Time</title>
@@ -87,7 +87,12 @@
     margin-top: 30px;
 }
 .EditTime input{
+  border: 2px solid black;
     text-align: center;
+    transition: 0.6s;
+}
+.EditTime input:focus{
+  box-shadow: 0 0 0 3px red;
 }
 .EditTime .container-but{
           margin-top: 100px;
@@ -127,6 +132,208 @@
           border: rgba(255, 0, 0, 0.726) solid 1.5px;
           color: rgb(255, 255, 255);
         }
+        .cssload-circle{
+      margin: 300px auto;
+      width:120px;
+      height:120px;
+      background:rgb(236,240,241);
+      border:solid 8px rgb(44,62,80);
+      border-radius:100%;
+      overflow:hidden;
+      animation: cssload-rotates 2.3s infinite linear;
+      -o-animation: cssload-rotates 2.3s infinite linear;
+      -ms-animation: cssload-rotates 2.3s infinite linear;
+      -webkit-animation: cssload-rotates 2.3s infinite linear;
+      -moz-animation: cssload-rotates 2.3s infinite linear;
+  }
+  .cssload-up{
+      width: 45px;
+      height: 60px;
+      left:30px;
+      overflow:hidden;
+      background:rgb(204,238,255);
+      position:absolute;
+  }
+  .cssload-up:before,.cssload-up:after{
+      content:"";
+      width:45px;height:45px;
+      background:rgb(236,240,241);
+      position:absolute;
+      z-index:1;
+  }
+  .cssload-up:before{
+      top:45px;
+      left:-26px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-up:after{
+      top:45px; left:26px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-innera{
+      position:relative;
+      top:23px;
+      width:45px;height:45px;
+      background:rgb(241,196,15);
+      animation: cssload-mymove 2.3s infinite linear;
+      -o-animation: cssload-mymove 2.3s infinite linear;
+      -ms-animation: cssload-mymove 2.3s infinite linear;
+      -webkit-animation: cssload-mymove 2.3s infinite linear;
+      -moz-animation: cssload-mymove 2.3s infinite linear;
+  }
+  .cssload-down{
+      width: 45px;
+      height: 60px;
+      left:30px;
+      top:60px;
+      overflow:hidden;
+      background:rgb(204,238,255);
+      position:absolute;
+      z-index:1;
+  }
+  .cssload-down:before,.cssload-down:after{
+      content:"";
+      width:45px;
+      height:60px;
+      background:rgb(236,240,241);
+      position:absolute;
+      z-index:1;
+  }
+  .cssload-down:before{
+      top:-38px;
+      left:-26px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-down:after{
+      top:-38px;
+      left:36px;
+      transform:rotate(45deg);
+      -o-transform:rotate(45deg);
+      -ms-transform:rotate(45deg);
+      -webkit-transform:rotate(45deg);
+      -moz-transform:rotate(45deg);
+  }
+  .cssload-innerb{
+      position:relative;
+      top:60px;
+      width:45px;height:45px; background:rgb(241,196,15);
+      animation: cssload-mymoveb 2.3s infinite linear;
+      -o-animation: cssload-mymoveb 2.3s infinite linear;
+      -ms-animation: cssload-mymoveb 2.3s infinite linear;
+      -webkit-animation: cssload-mymoveb 2.3s infinite linear;
+      -moz-animation: cssload-mymoveb 2.3s infinite linear;
+  }
+  .bg-light:hover {
+
+background-color: #444444cb!important;
+box-shadow: 0 0 15px black;
+}
+
+
+  @keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-o-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-ms-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-webkit-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @-moz-keyframes cssload-mymove{
+      0%{top:23px;}
+      100%{top:68px;}
+  }
+
+  @keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-o-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-ms-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-webkit-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @-moz-keyframes cssload-mymoveb{
+      0%{top:60px;}
+      90%{top:30px;}
+      100%{top:-8px;}
+  }
+
+  @keyframes cssload-rotates{
+      0%{transform:rotate(0deg);}
+      80%{transform:rotate(0deg);}
+      100%{transform:rotate(180deg);}
+  }
+
+  @-o-keyframes cssload-rotates{
+      0%{-o-transform:rotate(0deg);}
+      80%{-o-transform:rotate(0deg);}
+      100%{-o-transform:rotate(180deg);}
+  }
+
+  @-ms-keyframes cssload-rotates{
+      0%{-ms-transform:rotate(0deg);}
+      80%{-ms-transform:rotate(0deg);}
+      100%{-ms-transform:rotate(180deg);}
+  }
+
+  @-webkit-keyframes cssload-rotates{
+      0%{-webkit-transform:rotate(0deg);}
+      80%{-webkit-transform:rotate(0deg);}
+      100%{-webkit-transform:rotate(180deg);}
+  }
+
+  @-moz-keyframes cssload-rotates{
+      0%{-moz-transform:rotate(0deg);}
+      80%{-moz-transform:rotate(0deg);}
+      100%{-moz-transform:rotate(180deg);}
+  }
+  .Box-Animation{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border: 2px solid black;
+  background:rgba(29, 29, 29, 0.671);
+
+}
 </style>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -145,9 +352,11 @@
             <li class="nav-item active">
                 <a class="nav-link"  href="" style="color: rgb(255, 68, 0);">Edit Time</a>
               </li>
-            <li class="nav-item">
+              <li class="nav-item ">
+                <a class="nav-link"  href="/LockSubject" >Lock Subject </a>
+              </li>
 
-            <p style="margin-left: 700px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
+            <p style="margin-left: 650px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
             
             <li class="nav-item dropdown">
 
@@ -195,19 +404,30 @@
           </div>
         </div>
       </div>
-    
+
+      <div class="Box-Animation" style="display: none;">
+        <div class="cssload-circle" >
+          <div class="cssload-up">
+              <div class="cssload-innera"></div>
+          </div>
+          <div class="cssload-down">
+              <div class="cssload-innerb"></div>
+          </div>
+        </div>
+      </div>
+
       <div class="borderform">
         <div class="title-web">
             <h1 style="text-align: center; font-family: 'Odibee Sans', cursive; font-size: 45px; margin: 10px;"> Edit Time <img src="/static/image/clock.png" alt="" style="width: 60px; height: 60px; margin-left: 10px;"> </h1>
         </div>
         <div class="EditTime">
             <form action="/EdittimeJson"  method="POST">
-            <p>Time for one press &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : <input type="number" name="timeText" placeholder="Current time is {%print timeText%}"> /ms.</p>
-            <p>Time for Spacbar &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;: <input type="number" name="timeSpacbar" placeholder="Current time is {%print timeSpacbar%}"> /ms.</p>
-            <p>Time for Repeat letters : <input type="number" placeholder="Current time is {%print timeDuplicate%}" name="timeDuplicate"> /ms.</p>
-            <p>Time for Distance &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; : <input type="number" name="Distance" placeholder="Current time is {%print timedistance%}"  > 1 Button/ms.</p>
+            <p>Time for one press &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; :&nbsp;&nbsp; <input type="number" id="timetext" name="timeText" placeholder="Current time is {%print timeText%}"> /ms.</p>
+            <p>Time for Spacbar &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;:&nbsp;&nbsp; <input type="number" id="timeSpacbar" name="timeSpacbar" placeholder="Current time is {%print timeSpacbar%}"> /ms.</p>
+            <p>Time for Repeat letters :&nbsp;&nbsp; <input type="number" placeholder="Current time is {%print timeDuplicate%}" id="timeDuplicate" name="timeDuplicate"> /ms.</p>
+            <p>Time for Distance &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp; <input type="number" id="Distance" name="Distance" placeholder="Current time is {%print timedistance%}"  > 1 Button/ms.</p>
             <div class="container-but">
-                <button type="submit" class="but-Submit" onclick="">Submit</button>
+                <button type="submit" class="but-Submit" onclick="return Checkdata();">Submit</button>
                 <button type="reset" class="BTReset">Reset</button>
               </div>
             </form>
@@ -217,4 +437,50 @@
       </div>
 
 </body>
+<script>
+  function Checkdata(){
+    var timetext = document.getElementById('timetext').value;
+    var timeSpacbar = document.getElementById('timeSpacbar').value;
+    var timeDuplicate = document.getElementById('timeDuplicate').value;
+    var Distance = document.getElementById('Distance').value;
+
+    if(timetext == "" || timetext == null){
+      alert("Please enter Time for one press ")
+      document.getElementById('timetext').focus();
+      return false;
+    }
+    else if(timeSpacbar == "" || timeSpacbar == null){
+      alert("Please enter Time for Spacbar ")
+      document.getElementById('timeSpacbar').focus();
+      return false;
+    }
+    else if(timeDuplicate == "" || timeDuplicate == null){
+      alert("Please enter Time for  Repeat letters ")
+      document.getElementById('timeDuplicate').focus();
+      return false;
+    }
+    else if(Distance == "" || Distance == null){
+      alert("Please enter Time for Distance ")
+      document.getElementById('Distance').focus();
+      return false;
+    }
+    else{
+      swal({
+            title: "Add Teacher Success!",
+            text: "You clicked the button!",
+            icon: "success",
+            });
+      $(".Box-Animation").show();
+          setTimeout(function(){
+            $(".but-Submit").addClass("Success");
+          }, 8000);
+          setTimeout(function(){
+            $(".Box-Animation").hide();
+          }, 10000)
+        
+    }
+    
+  }
+
+</script>
 </html>

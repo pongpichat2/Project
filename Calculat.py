@@ -8,16 +8,16 @@ def Calchoice(Answer):
     for time in data['TimeManhattan']:
             
         # timeText = 500
-        timeText = time['TimeText']
+        timeText = float(time['TimeText'])
         # Shift = 1000 เมื่อมีการ กด Shift
         # timedistance = 200 #เวลาของระยะห่างต่อ 1 จุด
-        timedistance = time['timedistance']
+        timedistance = float(time['timedistance']) 
 
-        timeSpacbar = time['TimeText'] #เวลาของ Spacbar
+        timeSpacbar = float(time['TimeText'])  #เวลาของ Spacbar
 
 
         # timeDuplicate = 100 #เวลาของตัวอักษรที่ซ้ำ
-        timeDuplicate = time['timeDuplicate']
+        timeDuplicate = float(time['timeDuplicate'])
         totaltime = 0.0 #เวลาโดยรวม
     
 

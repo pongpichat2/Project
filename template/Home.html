@@ -12,7 +12,10 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+
     <title>Home Page</title>
 </head>
 <style>
@@ -23,7 +26,8 @@
       background-size: 100% 100%;
       background-position: center;
       height: 100vh;
-      margin: 0;
+      margin: 0 0;
+      background-repeat: no-repeat;
     }
     .AddChoice{
         position: fixed;
@@ -308,6 +312,11 @@
       <p class="trasla" id="" key='Name-Test'>Nook</p>
       <p class="trasla" id="" key='fname'>Pongpichat</p> -->
 
+      {% if SubLock %}
+      <span style="display: none;" id="Sublocked">{%print(SubLock)%}</span>
+
+      {% endif %}
+
     <div style="position: absolute;">
         <a href="/Addchoice" class="AddChoice">
             <div class="Add-Choice">
@@ -404,6 +413,24 @@
       }
     });
 
+    $('#Sublocked').ready(function(){
+    var span_Text = document.getElementById("Sublocked").innerText;
+     if((span_Text.length) > 1){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops ! Subject is Locked',
+        text: span_Text,
+  
+      })
+      $("#Sublocked").remove();
+     }
+     
+
+
+    // console.log($('#Sublocked').val().length)
+    // console.log(span_Text.length)
+      
+    });
   });
 
   

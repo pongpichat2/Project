@@ -5,16 +5,19 @@ def test():
     with open('Time.json') as f:
         data = json.load(f)
 
-    for emp in data['TimeManhattan']:
+    for time in data['TimeManhattan']:
             
   
-        timeText = emp['TimeText']
- 
-        timedistance = emp['timedistance']
+        timeText = float(time['TimeText'])
+        # Shift = 1000 เมื่อมีการ กด Shift
+        # timedistance = 200 #เวลาของระยะห่างต่อ 1 จุด
+        timedistance = float(time['timedistance']) 
 
-        timeSpacbar = emp['TimeText'] 
+        timeSpacbar = float(time['TimeText'])  #เวลาของ Spacbar
 
-        timeDuplicate = emp['timeDuplicate']
+
+        # timeDuplicate = 100 #เวลาของตัวอักษรที่ซ้ำ
+        timeDuplicate = float(time['timeDuplicate'])
         totaltime = 0.0 #เวลาโดยรวม
 
 

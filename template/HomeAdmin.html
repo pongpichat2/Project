@@ -59,8 +59,41 @@
         margin-top: 30%;
         margin-left: 41%;
     }
+    .LockSub{
+        margin-top: 400px;
+        margin-left: 800px;
+        text-decoration: none;
+        display: inline-block;
+        position: fixed;
+        width: 530px;
+        height: 230px;
+        border-radius: 15px;
+        background-color: rgba(31, 30, 30, 0.822);
 
-
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 0 20px black;
+        transition: 0.8s;
+    }
+    .LockSub:hover{
+        border: rgb(29, 28, 28) solid 4px;
+        width: 535px;
+        height: 235px;
+    }
+    .LockSub .TitleLock{
+        width: 100%;
+        margin: 0px 35%;
+        color: rgb(218, 218, 218);
+        font-weight: bold;
+        font-size: 45px;
+        position: absolute;
+        font-family: 'Odibee Sans', cursive;
+    }
+    .LockSub img{
+      position: absolute;
+      margin-top: 13%;
+      margin-left: 40%;
+    }
     .AddSub{
         margin-top: 130px;
         margin-left: 800px;
@@ -68,10 +101,10 @@
         display: inline-block;
         position: fixed;
         width: 530px;
-        height: 500px;
+        height: 250px;
         border-radius: 15px;
         background-color: rgba(31, 30, 30, 0.822);
-        background-image: url("/static/image/bookwal.png");
+
         background-size: cover;
         background-position: center;
         box-shadow: 0 0 20px black;
@@ -80,21 +113,21 @@
     .AddSub:hover{
         border: rgb(29, 28, 28) solid 4px;
         width: 535px;
-        height: 505px;
+        height: 255px;
     }
     .AddSub .TitleSub{
         width: 100%;
-        margin: 25% 38%;
+        margin: 6% 38%;
         color: rgb(218, 218, 218);
         font-weight: bold;
-        font-size: 50px;
+        font-size: 45px;
         position: absolute;
         font-family: 'Odibee Sans', cursive;
     }
     .AddSub img{
         position: absolute;
-        margin-top: 39%;
-        margin-left: 42%;
+        margin-top: 18%;
+        margin-left: 38%;
     }
     
     .Select-Langua{
@@ -155,12 +188,19 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="AddTeacher">Add Teacher</a>
+                <a class="nav-link" href="/AddTeacher">Add Teacher</a>
             </li>
+            <li class="nav-item ">
+              <a class="nav-link"  href="/Edittime" >Edit Time</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link"  href="/LockSubject" >Lock Subject </a>
+            </li>
+          <li class="nav-item">
 
             
             
-            <p style="margin-left: 900px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
+            <p style="margin-left: 630px;margin-top: 8px;color: white;font-size: 18px;">{{name}}</p>
 
             <!-- dropdow -->
 
@@ -247,15 +287,24 @@
             </div>
         </a>
 
-        <a href="#" class="AddSub">
+        <a href="/Edittime" class="AddSub">
             <div class="Add-Sub">
-                <img src="/static/image/teachers.png"  width="128px" height="128px"  alt="">
+                <img src="/static/image/clock.png"  width="100px" height="100px"  alt="">
 
-                <p class="TitleSub" id="traslation" key='Sub-title'>Wait Update</p>
+                <p class="TitleSub" id="traslation" key='Sub-title'>Edit Time</p>
 
-                <p style="color: white; position: absolute; margin: 600px 120px;" class="trasla" key='Sub-detil'>* Wait Update.</p>
+                <p style="color: white; position: absolute; margin: 200px 180px;" class="trasla" key='Sub-detil'>*function to Edit Time.</p>
             </div>
         </a>
+        <a href="/LockSubject" class="LockSub">
+          <div class="Lock-Sub">
+              <img src="/static/image/lock2.png"  width="100px" height="100px"  alt="">
+
+              <p class="TitleLock" id="traslation" key='Sub-title'>Lock Subject</p>
+
+              <p style="color: white; position: absolute; margin: 200px 180px;width: 100%;" class="trasla" key='Sub-detil'>*function to Lock Subject.</p>
+          </div>
+      </a>
 
  
     </div>

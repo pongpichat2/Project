@@ -679,15 +679,22 @@ box-shadow: 0 0 15px black;
                 
                 <tr>
                 <form action="/Subject" method="POST">
-                  {% if (k.key() == Headtext)%}
+                  {% if (k.key() == Headtext) %}
 
                     <td style="background: rosybrown;" class="detil-Select-Sub">{%print(k.key())%}</td>
                     <td style="background: rosybrown;" class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
                     <td style="background: rosybrown;" class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+
                   {% else %}
-                  <td class="detil-Select-Sub">{%print(k.key())%}</td>
-                  <td class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
-                  <td class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                    {% if k.val()['Status'] == 'Lock' %}
+                    <td class="detil-Select-Sub" style="background: red;">{%print(k.key())%}</td>
+                    <td class="detil-Select-Sub" style="background: red;">{% print(k.val()['DataNum']) %}</td>
+                    <td class="detil-Select-Sub" style="background: red;">{% print(k.key()+" Locked") %}<img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/lock-2.png"/></td>
+                    {% else %}
+                    <td class="detil-Select-Sub">{%print(k.key())%}</td>
+                    <td class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
+                    <td class="detil-Select-Sub"><button type="Submit" value="{%print(k.key())%}" name="Subname" >View<img style="width: 20px; height: 20px;" src="https://img.icons8.com/cotton/64/000000/detective.png"/></button></td>
+                    {% endif %}
                   {% endif %}
                 </form>
                   </tr>
@@ -724,21 +731,27 @@ box-shadow: 0 0 15px black;
               </thead>
               <tbody>
                   {% for k in Show.each() %}
-                      <tr>
-                        <form action="/Sub_Update" method="POST">
-                          <td style="display: none;"><input type="text" name="NO_Sub" value="{%print(k.val()['ID'])%}"></td>
-                          <td class="Data"><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
-                          <td class="Data"><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
-                          <td class="Data"><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
-                          <td class="Data"><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
-                          <td class="Data"><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
-                          <td class=""><input type="text" value="{%print(k.val()['ans'])%}" readonly style="color: red; text-align: center; border: none; background: none;"></td>
-                          <td class="Data"><input type="radio" id="Answer" name="Answer" value="1">Choice1 <input type="radio" id="Answer" name="Answer" value="2">
-                            Choice2<input type="radio" name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
-                          <td class="Data"><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button>
-                            <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
-                          </form>
-                      </tr>
+                      {% if (k.key() == 'Status') %}
+                      <p style="display: none;">{% print("") %}</p>
+                      {% elif k.key() == 'owner' %}
+                      <p style="display: none;">{% print("") %}</p>
+                      {% else %}
+                        <tr>
+                          <form action="/Sub_Update" method="POST">
+                            <td style="display: none;"><input type="text" name="NO_Sub" value="{%print(k.val()['ID'])%}"></td>
+                            <td class="Data"><input type="text" value="{%print(k.val()['Qu'])%}" name="Quiz"></td>
+                            <td class="Data"><input type="text" value="{%print(k.val()['C1'])%}" name="C1"></td>
+                            <td class="Data"><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
+                            <td class="Data"><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
+                            <td class="Data"><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
+                            <td class=""><input type="text" value="{%print(k.val()['ans'])%}" readonly style="color: red; text-align: center; border: none; background: none;"></td>
+                            <td class="Data"><input type="radio" id="Answer" name="Answer" value="1">Choice1 <input type="radio" id="Answer" name="Answer" value="2">
+                              Choice2<input type="radio" name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
+                            <td class="Data"><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button>
+                              <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
+                            </form>
+                        </tr>
+                      {% endif %}
                   {% endfor %}
 
               </tbody>
