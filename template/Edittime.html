@@ -70,7 +70,7 @@
     }
     .borderform{
     background-color: rgba(255, 255, 255, 0.9);
-    margin: 3% 28%;
+    margin: 3% 33%;
     width:600px;
     height: 550px;
     border:rgb(0, 0, 0, 0.8) solid 2px;
@@ -422,10 +422,10 @@ box-shadow: 0 0 15px black;
         </div>
         <div class="EditTime">
             <form action="/EdittimeJson"  method="POST">
-            <p>Time for one press &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; :&nbsp;&nbsp; <input type="number" id="timetext" name="timeText" placeholder="Current time is {%print timeText%}"> /ms.</p>
-            <p>Time for Spacbar &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;:&nbsp;&nbsp; <input type="number" id="timeSpacbar" name="timeSpacbar" placeholder="Current time is {%print timeSpacbar%}"> /ms.</p>
-            <p>Time for Repeat letters :&nbsp;&nbsp; <input type="number" placeholder="Current time is {%print timeDuplicate%}" id="timeDuplicate" name="timeDuplicate"> /ms.</p>
-            <p>Time for Distance &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp; <input type="number" id="Distance" name="Distance" placeholder="Current time is {%print timedistance%}"  > 1 Button/ms.</p>
+            <p>Time for one press &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; :&nbsp;&nbsp; <input type="text" id="timetext" name="timeText" placeholder="Current time is {%print timeText%}"> /ms.</p>
+            <p>Time for Spacbar &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;:&nbsp;&nbsp; <input type="text" id="timeSpacbar" name="timeSpacbar" placeholder="Current time is {%print timeSpacbar%}"> /ms.</p>
+            <p>Time for Repeat letters :&nbsp;&nbsp; <input type="text" placeholder="Current time is {%print timeDuplicate%}" id="timeDuplicate" name="timeDuplicate"> /ms.</p>
+            <p>Time for Distance &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp; <input type="text" id="Distance" name="Distance" placeholder="Current time is {%print timedistance%}"  > 1 Button/ms.</p>
             <div class="container-but">
                 <button type="submit" class="but-Submit" onclick="return Checkdata();">Submit</button>
                 <button type="reset" class="BTReset">Reset</button>

@@ -87,7 +87,8 @@ def Home():
         if(len(SubLock) == 0):
             return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject)
         else:
-            return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject,SubLock = SubLock)
+            AdminNameLock = Check_Status.val()['AdminLock']
+            return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject,SubLock = SubLock,AdminNameLock =AdminNameLock)
         
         
 
@@ -177,11 +178,17 @@ def insertChoice():
         if checkdata == None:
             db.child('Class').child(subject).child("NO1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
             # db.child("Subject").child(subject).child("Quiz").child("NO_1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
-            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
+            db.child("Admin").child(user).child("Subject_pro").child(subject).update({'DataNum':'1','Sub_name':subject})
+            db.child("Class_Subject").child(subject).set({'Status':'Unlock'})
         else:
+
             countDataQuiz = str(len(db.child('Class').child(subject).get().val())+1)
+            # for 
+            # countDataQuiz= 1
+          
             db.child('Class').child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
-            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
+            db.child("Admin").child(user).child("Subject_pro").child(subject).update({'DataNum':countDataQuiz,'Sub_name':subject})
+            db.child("Class_Subject").child(subject).set({'Status':'Unlock'})
         return redirect(url_for('hello'))
 
 # Insert คำถามลงใน Database #
@@ -215,11 +222,13 @@ def insertChoice_TH():
         if checkdata == None:
             db.child('Class').child(subject).child("NO1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
             # db.child("Subject").child(subject).child("Quiz").child("NO_1").set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':'1'})
-            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':'1','Sub_name':subject})
+            db.child("Admin").child(user).child("Subject_pro").child(subject).update({'DataNum':'1','Sub_name':subject})
+            db.child("Class_Subject").child(subject).set({'Status':'Unlock'})
         else:
             countDataQuiz = str(len(db.child('Class').child(subject).get().val())+1)
             db.child('Class').child(subject).child('NO'+countDataQuiz).set({'subject':subject,'Qu':Propo,'C1':choice1,'C2':choice2,'C3':choice3,'C4':choice4,'ans':Answer,'Time':Avgtime,'ID':countDataQuiz})
-            db.child("Admin").child(user).child("Subject_pro").child(subject).set({'DataNum':countDataQuiz,'Sub_name':subject})
+            db.child("Admin").child(user).child("Subject_pro").child(subject).update({'DataNum':countDataQuiz,'Sub_name':subject})
+            db.child("Class_Subject").child(subject).set({'Status':'Unlock'})
         return redirect(url_for('Addchoice_TH'))
 
 
@@ -588,7 +597,8 @@ def DeleteSub_allPage():
     if request.method == 'POST':
         Sub_Before = request.form['Subject_Befor']
         db.child('Admin').child(Admin).child('Subject_pro').child(Sub_Before).remove()
-        db.child('Subject').child(Sub_Before).remove()
+        db.child('Class').child(Sub_Before).remove()
+        db.child('All_Subject').child(Sub_Before).remove()
 
     return redirect(url_for('Home'))
 
@@ -599,20 +609,35 @@ def AddSub_allPage():
     Admin_Subject = db.child('Admin').child(Admin).child('Subject_pro').get()
     if request.method == 'POST':
         AddSub = request.form.getlist('Sub[]')
+        CheckSubject = db.child('Admin').child(Admin).child("Subject_pro").get()
+        CheckSubjectAll = db.child('Class').get()
         Subindata = "มีอยู่แล้วในฐานข้อมูล"
-        for i in range(len(AddSub)) :
-            CheckSubject = db.child('Admin').child(Admin).child("Subject_pro").get()
-            CheckSubjectAll = db.child('Class').get()
-            if AddSub[i] in CheckSubject.val():
-                SubError = "วิชา : "+AddSub[i]+" "+Subindata
+        if(len(AddSub) == 1):
+            if(AddSub[0] in CheckSubject.val()):
+                SubError = "วิชา : "+AddSub[0]+" "+Subindata
                 return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, ErrorSub = SubError)
-            if AddSub[i] in CheckSubjectAll.val():
+            elif(AddSub[0] in CheckSubjectAll.val()):
                 SubError = "วิชา : "+AddSub[i]+" "+Subindata
                 return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, ErrorSub = SubError)
             else:
-                db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0"})
-                db.child("All_Subject").child(AddSub[i]).set({"owner":Admin,"Status":"Unlock"})
-                db.child("Class").child(AddSub[i]).set({"Status":"Unlock","owner":Admin})
+                
+                db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[0]).set({"Sub_name":AddSub[0],"DataNum":"0","Status":"Unlock"})
+                db.child("All_Subject").child(AddSub[0]).set({"owner":Admin,"Status":"Unlock"})
+          
+        else:
+            for i in range(len(AddSub)) :
+                
+                if AddSub[i] in CheckSubject.val():
+                    SubError = "วิชา : "+AddSub[i]+" "+Subindata
+                    return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, ErrorSub = SubError)
+                elif AddSub[i] in CheckSubjectAll.val():
+                    SubError = "วิชา : "+AddSub[i]+" "+Subindata
+                    return render_template('Home.html',name = EmailAdmin ,DataSubject = Admin_Subject, ErrorSub = SubError)
+                else:
+
+                    db.child("Admin").child(Admin).child("Subject_pro").child(AddSub[i]).set({"Sub_name":AddSub[i],"DataNum":"0","Status":"Unlock"})
+                    db.child("All_Subject").child(AddSub[i]).set({"owner":Admin,"Status":"Unlock"})
+  
 
     return redirect(url_for('Home'))
 
@@ -666,7 +691,7 @@ def LockSubject():
         IDAdmin = session['Admin']
         EmailAdmin = session['EmailAdmin']
 
-        dataSub = db.child("Class").get()
+        dataSub = db.child("All_Subject").get()
         return render_template('LockSubject.html',name = EmailAdmin ,dataSub = dataSub)
 
 @app.route("/Up_LockSubject", methods=['GET','POST'])
@@ -674,16 +699,19 @@ def Up_LockSubject():
     if session.get('Admin') == None:
         return redirect(url_for('Login'))
     else:
+        IDAdmin = session['Admin']
         if request.method == 'POST':
             Name_Sub = request.form['Sub_name']
             Status = request.form['Status']
 
-            db.child('Class').child(Name_Sub).update({'Status':Status})
-            Key = db.child('Class').child(Name_Sub).get().val()
+            db.child('All_Subject').child(Name_Sub).update({'Status':Status})
+            Key = db.child('All_Subject').child(Name_Sub).get().val()
             if(Status == 'Lock'):
-                db.child('Admin').child(Key['owner']).child('Subject_pro').child(Name_Sub).update({'Status':Status})
+                db.child('Admin').child(Key['owner']).child('Subject_pro').child(Name_Sub).update({'Status':Status,'AdminLock':IDAdmin})
+                db.child("Class_Subject").child(Name_Sub).update({'Status':Status})
             elif(Status == 'Unlock'):
-                db.child('Admin').child(Key['owner']).child('Subject_pro').child(Name_Sub).update({'Status':Status})
+                db.child('Admin').child(Key['owner']).child('Subject_pro').child(Name_Sub).update({'Status':Status,'AdminLock':IDAdmin})
+                db.child("Class_Subject").child(Name_Sub).update({'Status':Status})
                 
 
             return redirect(url_for('LockSubject'))
@@ -803,18 +831,18 @@ def Register():
                     db.child("Admin").child(Username).remove()
                     return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
                 else:
-                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
-                    db.child("All_Subject").child(Sub[0]).set({"owner":Username})
-                    db.child("Class").child(Sub[0]).set({"Status":"Unlock","owner":Username})
+                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0","Status":"Unlock"})
+                    db.child("All_Subject").child(Sub[0]).set({"owner":Username,"Status":"Unlock"})
+     
             else:
                 for i in range(len(Sub)):
                     if Sub[i] in CheckSubject:
                         Suberror = Sub[i]+" Adding Subject Error please Login"
                         return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
                     else:
-                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
-                        db.child("All_Subject").child(Sub[i]).set({"owner":Username})
-                        db.child("Class").child(Sub[i]).set({"Status":"Unlock","owner":Username})
+                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0","Status":"Unlock"})
+                        db.child("All_Subject").child(Sub[i]).set({"owner":Username,"Status":"Unlock"})
+        
 
   
     return redirect(url_for('AddTeacher'))
@@ -850,18 +878,18 @@ def Register_TH():
                     db.child("Admin").child(Username).remove()
                     return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
                 else:
-                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0"})
-                    db.child("All_Subject").child(Sub[0]).set({"owner":Username})
-                    db.child("Class").child(Sub[0]).set({"Status":"Unlock","owner":Username})
+                    db.child("Admin").child(Username).child("Subject_pro").child(Sub[0]).set({"Sub_name":Sub[0],"DataNum":"0","Status":"Unlock"})
+                    db.child("All_Subject").child(Sub[0]).set({"owner":Username,"Status":"Unlock"})
+        
             else:
                 for i in range(len(Sub)):
                     if Sub[i] in CheckSubject:
                         Suberror = Sub[i]+" Adding Subject Error please Login"
                         return render_template('AddTeacher.html',name = EmailAdmin , Suberror = Suberror)
                     else:
-                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0"})
-                        db.child("All_Subject").child(Sub[i]).set({"owner":Username})
-                        db.child("Class").child(Sub[i]).set({"Status":"Unlock","owner":Username})
+                        db.child("Admin").child(Username).child("Subject_pro").child(Sub[i]).set({"Sub_name":Sub[i],"DataNum":"0","Status":"Unlock"})
+                        db.child("All_Subject").child(Sub[i]).set({"owner":Username,"Status":"Unlock"})
+         
 
   
     return redirect(url_for('AddTeacher_TH'))

@@ -198,7 +198,7 @@
                         <th style="display: none;">dsfsdf</th>
                         <th class="title-table">Name Subject</th>
                         <th class="title-table">Name Teacher</th>
-                        <th class="title-table">Status</th>
+                
                         <th class="title-table">Action</th>
                     </tr>
                 </thead>
@@ -206,15 +206,20 @@
                     {% for Show in dataSub.each() %}
                     <tr>
                         <form action="Up_LockSubject" method="POST">
-                            <td style="display: none;"><input type="text" id="Subname" name="Sub_name" value="{%print(Show.key())%}"></td>
-                            <td class="data">{% print(Show.key())%}</td>
-                            <td class="data">{% print(Show.val()['owner'])%}</td>
-                            {% if Show.val()['Status'] == 'Unlock' %}
-                            <td style="color: chartreuse;" class="data">{% print(Show.val()['Status'])%}</td>
+                          {% if Show.val()['Status'] == 'Unlock' %}
+                            <td style="display: none;" ><input type="text" id="Subname" name="Sub_name" value="{%print(Show.key())%}"></td>
+                            <td class="data" style="background: rgba(11, 230, 58, 0.678);" >{% print(Show.key())%}</td>
+                            <td class="data" style="background: rgba(11, 230, 58, 0.678);">{% print(Show.val()['owner'])%}</td>
+                            <td class="data" ><button type="submit" class="Unlock" style="background: rgba(11, 230, 58, 0.678) ;" value="Unlock" name="Status" onclick="return Confirm_Un();">Unlock <img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/unlock-2.png"/></button> <button type="submit" value="Lock" class="lock" name="Status" onclick="return Confirm_L();">Lock <img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/lock-2.png"/></button></td>
+                   
                             {% elif Show.val()['Status'] == 'Lock' %}
-                            <td style="color:red;" class="data">{% print(Show.val()['Status'])%}</td>
-                            {% endif %}
-                            <td class="data"><button type="submit" class="Unlock" value="Unlock" name="Status" onclick="return Confirm_Un();">Unlock <img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/unlock-2.png"/></button> <button type="submit" value="Lock" class="lock" name="Status" onclick="return Confirm_L();">Lock <img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/lock-2.png"/></button></td>
+                            <td style="display: none;" style="background: rgba(211, 3, 3, 0.733);color: white;"><input type="text" id="Subname" name="Sub_name" value="{%print(Show.key())%}"></td>
+                            <td class="data" style="background:  rgba(211, 3, 3, 0.733);color: white;">{% print(Show.key())%}</td>
+                            <td class="data" style="background: rgba(211, 3, 3, 0.733);color: white;">{% print(Show.val()['owner'])%}</td>
+                            <td class="data"><button type="submit" class="Unlock" value="Unlock" name="Status" onclick="return Confirm_Un(); ">Unlock <img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/unlock-2.png"/></button> <button type="submit" value="Lock"  style="background: rgba(211, 3, 3, 0.733);color: white;" class="lock" name="Status" onclick="return Confirm_L();">Lock <img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/lock-2.png"/></button></td>
+                           
+                            
+                         {% endif %}
                         </form>
                     </tr>
                     

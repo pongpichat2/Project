@@ -687,9 +687,9 @@ box-shadow: 0 0 15px black;
 
                   {% else %}
                     {% if k.val()['Status'] == 'Lock' %}
-                    <td class="detil-Select-Sub" style="background: red;">{%print(k.key())%}</td>
-                    <td class="detil-Select-Sub" style="background: red;">{% print(k.val()['DataNum']) %}</td>
-                    <td class="detil-Select-Sub" style="background: red;">{% print(k.key()+" Locked") %}<img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/lock-2.png"/></td>
+                    <td class="detil-Select-Sub" style="background: red; color: white;">{%print(k.key())%}</td>
+                    <td class="detil-Select-Sub" style="background: red; color: white;">{% print(k.val()['DataNum']) %}</td>
+                    <td class="detil-Select-Sub" style="background: red; color: white;">{% print(k.key()+" Locked") %}<img style="width: 20px; height: 20px;" src="https://img.icons8.com/fluent/48/000000/lock-2.png"/></td>
                     {% else %}
                     <td class="detil-Select-Sub">{%print(k.key())%}</td>
                     <td class="detil-Select-Sub">{% print(k.val()['DataNum']) %}</td>
@@ -723,7 +723,7 @@ box-shadow: 0 0 15px black;
                       <th >Choice 2</th>
                       <th >Choice 3</th>
                       <th >Choice 4</th>
-                      <th style="color: red;">Answer(Before)</th>
+                      <th >Time/Ms.</th>
                       <th>Answer(After)</th>
                       <th>Action</th>
 
@@ -744,9 +744,21 @@ box-shadow: 0 0 15px black;
                             <td class="Data"><input type="text" value="{%print(k.val()['C2'])%}" name="C2"></td>
                             <td class="Data"><input type="text" value="{%print(k.val()['C3'])%}" name="C3"></td>
                             <td class="Data"><input type="text" value="{%print(k.val()['C4'])%}" name="C4"></td>
-                            <td class=""><input type="text" value="{%print(k.val()['ans'])%}" readonly style="color: red; text-align: center; border: none; background: none;"></td>
-                            <td class="Data"><input type="radio" id="Answer" name="Answer" value="1">Choice1 <input type="radio" id="Answer" name="Answer" value="2">
+                            
+                            <td class="" style="background: rgba(252, 252, 48, 0.623);"><input type="text" value="{%print(k.val()['Time'])%}" readonly style="text-align: center; border: none; background: none;"></td>
+                            {% if k.val()['ans'] == k.val()['C1']%}
+                            <td class="Data"><input type="radio" id="Answer" checked name="Answer" value="1">Choice1 <input type="radio" id="Answer" name="Answer" value="2">
                               Choice2<input type="radio" name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
+                            {% elif k.val()['ans'] == k.val()['C2']%}
+                            <td class="Data"><input type="radio" id="Answer"  name="Answer" value="1">Choice1 <input type="radio" id="Answer" checked name="Answer" value="2">
+                              Choice2<input type="radio" name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
+                            {% elif k.val()['ans'] == k.val()['C3']%}
+                              <td class="Data"><input type="radio" id="Answer"  name="Answer" value="1">Choice1 <input type="radio" id="Answer"  name="Answer" value="2">
+                                Choice2<input type="radio" checked name="Answer" id="Answer" value="3">Choice3<input type="radio" name="Answer" id="Answer" value="4">Choice4</td>
+                            {% elif k.val()['ans'] == k.val()['C4']%}
+                            <td class="Data"><input type="radio" id="Answer"  name="Answer" value="1">Choice1 <input type="radio" id="Answer"  name="Answer" value="2">
+                              Choice2<input type="radio"  name="Answer" id="Answer" value="3">Choice3<input type="radio" checked name="Answer" id="Answer" value="4">Choice4</td>
+                            {% endif %}
                             <td class="Data"><button type="Submit" value="Edit" name="Type_Up" class="But-edit" onclick="return Con_edit()">Edit <img style="height: 30px; width: 30px;" src="https://img.icons8.com/cotton/64/000000/edit--v1.png"/></button>
                               <button type="Submit" value="Delete" name="Type_Up" class="But-delete" onclick="return Con_delete()">Delete<img style="height: 30px; width: 30px;" src="https://img.icons8.com/plasticine/100/000000/filled-trash.png"/></button></td>
                             </form>

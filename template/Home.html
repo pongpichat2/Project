@@ -314,7 +314,8 @@
 
       {% if SubLock %}
       <span style="display: none;" id="Sublocked">{%print(SubLock)%}</span>
-
+      <span style="display: none;" id="Adminlocked">{%print(AdminNameLock)%}</span>
+      
       {% endif %}
 
     <div style="position: absolute;">
@@ -414,13 +415,15 @@
     });
 
     $('#Sublocked').ready(function(){
+      
     var span_Text = document.getElementById("Sublocked").innerText;
+    var Adminlocked = document.getElementById("Adminlocked").innerText;
      if((span_Text.length) > 1){
       Swal.fire({
         icon: 'error',
         title: 'Oops ! Subject is Locked',
-        text: span_Text,
-  
+        text: span_Text+" By "+ Adminlocked,
+        footer: 'Please contact <a href = "https://www.facebook.com/pomgpichat.sumetha"> Facebook Admin </a>'
       })
       $("#Sublocked").remove();
      }
